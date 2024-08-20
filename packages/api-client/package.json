@@ -1,0 +1,16 @@
+{
+    "name": "api-contract",
+    "types": "./dist/index.ts",
+    "exports": {
+        ".": "./dist/index.js"
+    },
+    "dependencies": {
+        "@ts-rest/core": "latest",
+        "typescript": "latest",
+        "zod": "latest"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch"
+    }
+}
