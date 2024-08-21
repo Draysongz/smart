@@ -3,13 +3,15 @@ import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import contactIcon from "../../assets/contact 1.png";
 import coin from "../../assets/coin.png";
-import bolt from "../../assets/BOLT 1.png";
+import power from "../../assets/_0010_Power.png"
+import bolt from "../../assets/kwph.png";
 import fanBlade from "../../assets/FAN blade 1.png";
 import fanStand from "../../assets/Fan Stand.png";
 import fanSpinning from "../../assets/set-fan.gif"
 import NavigationBar from "../NavigationBar";
+import ProgressBar from "../ProgressBar"
 import bg from "../../assets/bg.png";
-import smcoin from "../../assets/smcoin.png";
+import windIcon from "../../assets/Icons/_0007_Wind.png"
 import spaceship from '../../assets/spaceship.svg';
 import { Link } from "react-router-dom";
 import { Users } from "api-contract";
@@ -191,38 +193,39 @@ const calculateLostTime = (): number => {
           <img src={contactIcon} alt="" />
           <p className="text-white">Welcome {name}</p>
         </div>
-        <div className="border-t-custom-large-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-goldyellow max-h-700:border-t-custom-top">
+        <ProgressBar />
+        <div className="border-t-custom-large-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-goldyellow max-h-700:border-t-custom-top h-[100%]">
           <Box
-            className="w-full h-[80vh] border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center py-9 max-h-700:flex max-h-700:flex-col max-h-700:gap-4"
+            className="w-full border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center py-9 flex flex-col gap-3 h-[100%] max-h-700:p-3"
             backgroundImage={bg}
           >
             <div className="w-full flex gap-4 text-center justify-center items-center max-h-700:gap-2 max-h-700:px-2">
-              <div className="w-custom-sm h-24 max-h-700:h-20 bg-dark-green flex flex-col justify-center items-center gap-2 rounded-2xl">
-                <p className="bg-custom-greentxt py-2 rounded-3xl w-custom-tiny text-sm">
+              <div className="w-custom-sm h-24 bg-dark-green flex flex-col justify-center items-center gap-2 rounded-2xl">
+                <p className="bg-custom-greentxt py-2 rounded-xl w-[95%] text-sm">
                   Power
                 </p>
                 <span className="flex gap-2 text-white items-center">
-                  <img src={smcoin} alt="" />
+                  <img src={power} alt="" className="w-[30px]"/>
                   <p>{tappingPower}</p>
                 </span>
               </div>
-              <div className="w-custom-sm h-24 bg-dark-green flex flex-col justify-center items-center gap-2 rounded-2xl max-h-700:h-20">
-                <p className="bg-custom-greentxt py-2 rounded-3xl w-custom-tiny text-sm">
+              <div className="w-custom-sm h-24 bg-dark-green flex flex-col justify-center items-center gap-4 rounded-2xl">
+                <p className="bg-custom-greentxt py-2 rounded-xl w-[95%] text-sm">
                   kw per Hour
                 </p>
                 <span className="flex gap-2 text-white items-center">
-                  <img src={smcoin} alt="" />
+                  <img src={bolt} alt="" className="w-[12px]" />
                   <p>{coinsPerHour}</p>
                 </span>
               </div>
-              <div className="w-custom-sm h-24 max-h-700:h-20 bg-dark-green flex flex-col justify-center items-center gap-4 rounded-2xl">
-                <p className="bg-custom-greentxt py-2 rounded-3xl w-custom-tiny text-sm">
-                  Energy
+              <div className="w-custom-sm h-24 bg-dark-green flex flex-col justify-center items-center gap-4 rounded-2xl">
+                <p className="bg-custom-greentxt py-2 rounded-xl w-[95%] text-sm">
+                  Energy Source
                 </p>
-                <span className="flex gap-2 max-h-700:gap-0 text-white items-center">
-                  <img src={bolt} alt="" className="w-6" />
+                <span className="flex gap-2 text-white items-center">
+                  <img src={windIcon} alt="" className="w-[20px]" />
                   <p>
-                    {floatingEnergy}/{tappingEnergy}
+                    Wind
                   </p>
                 </span>
               </div>
@@ -233,10 +236,6 @@ const calculateLostTime = (): number => {
                 {new Intl.NumberFormat().format(Number(coinsEarned.toFixed(0)))}
               </p>
             </div>
-            <div className="w-full flex justify-center py-6 max-h-700:py-2 ">
-              <span className="bg-custom-goldyellow w-10/12 h-3 rounded-2xl max-h-700:h-1 "></span>
-            </div>
-
             <div className="w-full flex justify-center">
               <Box
                 bg={"rgba(0,0,0,0)"}
