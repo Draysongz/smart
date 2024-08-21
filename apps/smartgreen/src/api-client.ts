@@ -4,7 +4,7 @@
 
  const apiClient = initQueryClient(contract, {
     baseHeaders: {},
-    baseUrl: '/api'
+    baseUrl: ''
  })
 
  export default apiClient
