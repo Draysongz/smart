@@ -5,10 +5,10 @@ import { db } from "../firebase/firebase"
 import { getCard } from "../helper-functions/cards"
 import { updateUserData } from "../helper-functions/getUser"
 
-export function useUpdateCoinsPerHour() {
+export function usesPerHour() {
   const [isLoading, setIsLoading] = useState(true)
 
-  const updateCoinsPerHour = async (
+  const sPerHour = async (
     userId: number | undefined,
     price: number,
     perHr: number,
@@ -42,7 +42,7 @@ export function useUpdateCoinsPerHour() {
         coinsEarned: userData?.coinsEarned - price,
       })
     } catch (err) {
-      console.log("Error from useUpdateCoinsPerHour", err)
+      console.log("Error from usesPerHour", err)
     }
 
     const updateCards = [...cards]
@@ -61,7 +61,7 @@ export function useUpdateCoinsPerHour() {
     setIsLoading(false)
   }
 
-  return { isLoading, updateCoinsPerHour }
+  return { isLoading, sPerHour }
 }
 
 async function updateLevels(
