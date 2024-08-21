@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {cors: {
-    origin: false,
+    origin: 'https://smartgreen.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 
   }});
