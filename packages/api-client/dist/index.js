@@ -104,6 +104,24 @@ exports.contract = c.router({
                 }),
             },
         },
+        purchaseEnergySource: {
+            method: "POST",
+            path: "/users/purchase/:userId:/:energyType",
+            pathParams: zod_1.z.object({
+                userId: zod_1.z.coerce.number(),
+                energyType: zod_1.z.string(),
+            }),
+            body: zod_1.z.any(),
+            responses: {
+                200: exports.UserSchema,
+                400: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
     },
     energy: {
         create: {

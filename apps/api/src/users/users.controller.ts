@@ -67,6 +67,25 @@ export class UsersController {
           body: result.body,
         };
       },
+
+      purchaseEnergySource: async ({params : {userId, energyType}}) =>{
+        const result = await this.usersService.purchaseEnergySource(userId, energyType);
+        if (result.status === 404) {
+          return {
+            status: 404,
+            body: result.body,
+          };
+        }else if(result.status === 400){
+           return {
+            status: 400,
+            body: result.body,
+          };
+        }
+        return {
+          status: 200,
+          body: result.body,
+        };
+      }
     });
   }
 }

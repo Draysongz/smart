@@ -1010,6 +1010,164 @@ export declare const contract: {
             };
             strictStatusCodes: true;
         };
+        purchaseEnergySource: {
+            pathParams: z.ZodObject<{
+                userId: z.ZodNumber;
+                energyType: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                userId: number;
+                energyType: string;
+            }, {
+                userId: number;
+                energyType: string;
+            }>;
+            method: "POST";
+            body: z.ZodAny;
+            path: "/api/users/purchase/:userId:/:energyType";
+            responses: {
+                200: z.ZodObject<{
+                    username: z.ZodString;
+                    name: z.ZodString;
+                    coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
+                    referralLink: z.ZodOptional<z.ZodString>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    refillEnergy: z.ZodDefault<z.ZodNumber>;
+                    refillTime: z.ZodDefault<z.ZodNumber>;
+                    status: z.ZodOptional<z.ZodString>;
+                    userLevel: z.ZodOptional<z.ZodNumber>;
+                    tapEnergy: z.ZodDefault<z.ZodNumber>;
+                    tapPower: z.ZodDefault<z.ZodNumber>;
+                    userId: z.ZodNumber;
+                    energyLevel: z.ZodDefault<z.ZodNumber>;
+                    rechargeLevel: z.ZodDefault<z.ZodNumber>;
+                    coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
+                    energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        type: z.ZodString;
+                        productionRate: z.ZodNumber;
+                        purchaseCost: z.ZodNumber;
+                        operational: z.ZodBoolean;
+                        country: z.ZodString;
+                        licenseFee: z.ZodNumber;
+                        dailyOperatingHours: z.ZodNumber;
+                    }, "strip", z.ZodTypeAny, {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }, {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }>, "many">>;
+                    assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        type: z.ZodString;
+                        name: z.ZodString;
+                        value: z.ZodNumber;
+                        status: z.ZodString;
+                    }, "strip", z.ZodTypeAny, {
+                        type: string;
+                        name: string;
+                        value: number;
+                        status: string;
+                    }, {
+                        type: string;
+                        name: string;
+                        value: number;
+                        status: string;
+                    }>, "many">>;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    username: string;
+                    coinsEarned: number;
+                    floatingTapEnergy: number;
+                    refillEnergy: number;
+                    refillTime: number;
+                    tapEnergy: number;
+                    tapPower: number;
+                    userId: number;
+                    energyLevel: number;
+                    rechargeLevel: number;
+                    coinsPerHour: number;
+                    status?: string | undefined;
+                    referralLink?: string | undefined;
+                    referrals?: number[] | undefined;
+                    userLevel?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
+                    energySources?: {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }[] | undefined;
+                    assets?: {
+                        type: string;
+                        name: string;
+                        value: number;
+                        status: string;
+                    }[] | undefined;
+                }, {
+                    name: string;
+                    username: string;
+                    userId: number;
+                    status?: string | undefined;
+                    coinsEarned?: number | undefined;
+                    floatingTapEnergy?: number | undefined;
+                    referralLink?: string | undefined;
+                    referrals?: number[] | undefined;
+                    refillEnergy?: number | undefined;
+                    refillTime?: number | undefined;
+                    userLevel?: number | undefined;
+                    tapEnergy?: number | undefined;
+                    tapPower?: number | undefined;
+                    energyLevel?: number | undefined;
+                    rechargeLevel?: number | undefined;
+                    coinsPerHour?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
+                    energySources?: {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }[] | undefined;
+                    assets?: {
+                        type: string;
+                        name: string;
+                        value: number;
+                        status: string;
+                    }[] | undefined;
+                }>;
+                400: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
     };
     energy: {
         create: {

@@ -10,6 +10,8 @@ import { Energy, EnergySchema } from 'src/schemas/Energy.schema';
   imports: [MongooseModule.forFeature([{
     name: Energy.name,
     schema: EnergySchema
-  }])]
+  }])],
+
+  exports:[MongooseModule]
 })
 export class EnergyModule {}

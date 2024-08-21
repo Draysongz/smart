@@ -3,12 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Users } from 'api-contract';
 import { User } from 'src/schemas/User.schema';
+import { Energy } from 'src/schemas/Energy.schema';
 
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<User>
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Energy.name) private energyModel: Model<Energy>
   ) {}
 
   async create(createUserDto: Users): Promise<{ status: 201; body: Users }> {
@@ -177,5 +179,66 @@ const newUser = new this.userModel(createUserDto);
       status: 204,
       body: {},
     };
+  }
+
+  
+  async purchaseEnergySource(userId: number, energyType: string): Promise<{ status: 200; body: Users } | { status: 404; body: { message: string } } | { status: 400; body: { message: string } }> {
+    // Retrieve the user
+    const user = await this.userModel.findOne({ userId }).exec();
+    if (!user) {
+      return {
+        status: 404,
+        body: { message: `User with ID ${userId} not found` },
+      };
+    }
+
+    // Retrieve the energy source
+    const energySource = await this.energyModel.findOne({ type: energyType }).exec();
+    if (!energySource) {
+      return {
+        status: 404,
+        body: { message: `Energy source with type ${energyType} not found` },
+      };
+    }
+
+    // Check if user has enough coins
+    if (user.coinsEarned < energySource.purchaseCost) {
+      return {
+        status: 400,
+        body: { message: `Not enough coins to purchase energy source` },
+      };
+    }
+
+    // Deduct the cost from user's coins and add the energy source to user's energy sources
+    user.coinsEarned -= energySource.purchaseCost;
+    user.energySources = user.energySources || [];
+    user.energySources.push({
+      type: energySource.type,
+      productionRate: energySource.productionRate,
+      purchaseCost: energySource.purchaseCost,
+      operational: energySource.operational,
+      country: energySource.country,
+      licenseFee: energySource.licenseFee,
+      dailyOperatingHours: energySource.dailyOperatingHours,
+    });
+
+    // Use the existing update method
+    const updateUserDto = {
+      coinsEarned: user.coinsEarned,
+      energySources: user.energySources,
+    };
+
+    const result = await this.update(userId, updateUserDto);
+
+    // Ensure the result matches the expected type
+    if (result.status === 200) {
+      return {
+        status: 200,
+        body: result.body, // Ensure this matches the Users type
+      };
+    }
+
+    // Return the error if any
+    return result;
   }
 }

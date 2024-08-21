@@ -1,5 +1,5 @@
 import { initContract } from "@ts-rest/core";
-import {  z } from "zod";
+import {  any, z } from "zod";
 
 const c = initContract();
 
@@ -110,6 +110,25 @@ export const contract = c.router(
         body: z.any(),
         responses: {
           204: z.object({}),
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+
+      purchaseEnergySource: { // New endpoint for purchasing energy sources
+        method: "POST",
+        path: "/users/purchase/:userId:/:energyType",
+        pathParams: z.object({
+          userId: z.coerce.number(),
+          energyType: z.string(),
+        }),
+        body: z.any(),
+        responses: {
+          200: UserSchema,
+          400: z.object({
+            message: z.string(),
+          }),
           404: z.object({
             message: z.string(),
           }),
