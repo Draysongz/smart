@@ -29,6 +29,7 @@
     "@ts-rest/nest": "^3.50.0",
     "api-contract": "*",
     "class-validator": "^0.14.1",
+    "cors": "^2.8.5",
     "mongoose": "^8.5.3",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
