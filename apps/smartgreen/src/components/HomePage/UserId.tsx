@@ -6,6 +6,7 @@ import coin from "../../assets/coin.png";
 import bolt from "../../assets/BOLT 1.png";
 import fanBlade from "../../assets/FAN blade 1.png";
 import fanStand from "../../assets/Fan Stand.png";
+import fanSpinning from "../../assets/set-fan.gif"
 import NavigationBar from "../NavigationBar";
 import bg from "../../assets/bg.png";
 import smcoin from "../../assets/smcoin.png";
@@ -256,21 +257,22 @@ const calculateLostTime = (): number => {
                   animation: `${rotateAnim} 0.1s ease`,
                 }}
                 onAnimationEnd={() => setRotateAnim("")}
-                className="flex flex-col rounded-full justify-center border-custom-large-top border-custom-yellow items-center bg-custom-radial max-h-700:border-custom-top max-h-700:w-[220px] max-h-700:h-[220px]"
+                className="w-[300px] h-[300px] flex flex-col rounded-full justify-center border-custom-large-top border-custom-yellow items-center bg-custom-radial max-h-700:border-custom-top max-h-700:w-[220px] max-h-700:h-[220px]"
               >
                 <img
                   src={fanBlade}
                   alt="Fan Blade"
-                  className={`w-[80%] mt-[10px] ml-[33px] max-h-700:w-[60%] max-h-700:h-[180px] max-h-700:mb-[-5px] max-h-700:ml-[22px]`}
+                  className={`w-[80%] mt-[10px] ml-[33px] max-h-700:w-[60%] max-h-700:h-[180px] max-h-700:mb-[-5px] max-h-700:ml-[22px] hidden`}
                   style={{
                     animation: `${fanBladeAnim} 2s ease`
                   }}
                   onAnimationEnd={() => setFanBladeAnim("")}
                 />
+                <img src={fanSpinning} alt="" className={`max-h-700:w-[100%] max-h-700:h-[200px] max-h-700:mb-[-5px]`} />
                 <img
                   src={fanStand}
                   alt=""
-                  className="w-[80%] mt-[-225px] mb-[-13px] h-[270px] max-h-700:w-[70%] max-h-700:h-[240px] max-h-700:mt-[-200px]"
+                  className="w-[80%] mt-[-250px] mb-[-13px] h-[260px] max-h-700:w-[70%] max-h-700:h-[230px] max-h-700:mt-[-210px]"
                 />
               </div>
               {screenAxis.map(screen => (
@@ -290,14 +292,22 @@ const calculateLostTime = (): number => {
                 </Text>
               ))}
             </div>
+            <div className=" flex items-center justify-between mt-5 max-h-700:mt-2 px-5">
+            <span className="flex gap-2 text-white items-center">
+                  <img src={bolt} alt="" className="w-6" />
+                  <p className="font-semibold">
+                    {floatingEnergy}/{tappingEnergy}
+                  </p>
+                </span>
             <Link to={"/powerUps"}>
-            <div className="flex gap-3 justify-end px-5 items-center">
+            <div className="flex gap-2 items-center mr-2">
             <img src={spaceship} alt=""className=' w-8' />
             <p className="text-white font-semibold text-[18px]">
               Boost
             </p>
             </div>
             </Link>
+            </div>
           </Box>
         </div>
       </div>
