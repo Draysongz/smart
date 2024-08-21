@@ -1,5 +1,4 @@
-import { useStaticUserData } from "./hooks/useUserData"
-import { ContextProvdider } from "./context/ContextProvider"
+
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import { useEffect } from "react"
@@ -11,8 +10,13 @@ import EarnPage from "./components/EarnPage/EarnPage"
 import ReferralPage from "./components/referralPage/referralPage"
 import AirdropPage from "./components/Airdrop/AirdropPage"
 import PowerUps from "./components/powerUps/powerUps"
-// import { useState } from "react"
+import { useState } from "react"
+import { useUserApi } from "./hooks/useUserData"
+import { Users } from "api-contract"
 function App() {
+const [isLoading, setIsLoading] = useState(true)
+const [userData, setUserData] = useState<Users | null>(null);
+
 
 // const [userId, setUserId] = useState<number>()
 //   const [firstName, setFirstName] = useState<string | null>(null)
@@ -20,11 +24,34 @@ function App() {
 //   const referralId = Number(params.get("referralId"))
 
   const userId = 2146305061
-  const firstName = "habibilord"
-  const referralId = 123
+  const username = "habibilord"
+  const firstName = "crypto dray"
+  const referralId = 2146305061
+
+
+const {getUserData} = useUserApi()
   
 
-  const { isLoading, name } = useStaticUserData(userId, firstName, referralId)
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await getUserData(userId, firstName, username, referralId);
+      if (response) {
+        setUserData(response.data);
+      } else {
+        setUserData(null); // Handle case where response is null
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setUserData(null); // Handle error case
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchData();
+}, [userId, firstName, username, referralId]);
+
 
 
 
@@ -41,25 +68,22 @@ function App() {
     return <MainContent />
   }
   return (
-    <ContextProvdider
-      userId={userId}
-      firstName={name}
-      referralId={referralId}
-    >
+    <>
       <BrowserRouter>
-        <AppContent userId={userId} name={name} />
+        <AppContent userId={userId} name={firstName} userData={userData} />
       </BrowserRouter>
       <ToastContainer />
-    </ContextProvdider>
+      </>
   )
 }
 
 interface BoostProps {
-  userId: number | undefined
+  userId: number 
   name: string | null
+  userData: Users | null
 }
  
-function AppContent({ userId, name }: BoostProps) {
+function AppContent({ userId, name, userData }: BoostProps) {
   const navigate = useNavigate()
 
   const goBack = () => {
@@ -82,12 +106,12 @@ function AppContent({ userId, name }: BoostProps) {
 
   return (
     <Routes>
-      <Route index element={<UserId userId={userId} name={name} />}/>
-      <Route path="/referral" element={<ReferralPage userId={userId} name={name} />} />
+      <Route index element={<UserId userId={userId} name={name} userData={userData} />}/>
+      {/* <Route path="/referral" element={<ReferralPage userId={userId} name={name} />} />
       <Route path="/boost" element={<Boost userId={userId} name={name} />} />
       <Route path="/tasks" element={<EarnPage userId={userId} name={name} />} />
       <Route path="/airdrop" element={<AirdropPage userId={userId} name={name} />} />
-      <Route path="/powerUps" element={<PowerUps userId={userId} name={name} />} />
+      <Route path="/powerUps" element={<PowerUps userId={userId} name={name} />} /> */}
     </Routes>
   )
 }

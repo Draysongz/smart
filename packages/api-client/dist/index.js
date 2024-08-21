@@ -19,6 +19,7 @@ exports.EnergySourceSchema = zod_1.z.object({
     operational: zod_1.z.boolean(), // Whether the energy source is currently operational
     country: zod_1.z.string(), // The country where the energy source is located
     licenseFee: zod_1.z.number(), // Cost for licensing in other countries
+    dailyOperatingHours: zod_1.z.number()
 });
 // Define the User schema
 exports.UserSchema = zod_1.z.object({
@@ -31,12 +32,14 @@ exports.UserSchema = zod_1.z.object({
     refillEnergy: zod_1.z.number().default(5),
     refillTime: zod_1.z.number().default(3),
     status: zod_1.z.string().optional(),
+    userLevel: zod_1.z.number().optional(),
     tapEnergy: zod_1.z.number().default(1000),
     tapPower: zod_1.z.number().default(1),
     userId: zod_1.z.number(),
     energyLevel: zod_1.z.number().default(1),
     rechargeLevel: zod_1.z.number().default(1),
     coinsPerHour: zod_1.z.number().default(0),
+    lastUpdatedTime: zod_1.z.number().optional(),
     energySources: zod_1.z.array(exports.EnergySourceSchema).optional(), // Array of energy sources owned by the user
     assets: zod_1.z.array(exports.AssetSchema).optional(), // Array of assets owned by the user
 });
@@ -92,6 +95,72 @@ exports.contract = c.router({
             path: "/users/:userId",
             pathParams: zod_1.z.object({
                 userId: zod_1.z.coerce.number(),
+            }),
+            body: zod_1.z.any(),
+            responses: {
+                204: zod_1.z.object({}),
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+    },
+    energy: {
+        create: {
+            method: "POST",
+            path: "/energy",
+            body: exports.EnergySourceSchema,
+            responses: {
+                201: exports.EnergySourceSchema,
+            },
+        },
+        createBatch: {
+            method: "POST",
+            path: "/energy/batch",
+            body: zod_1.z.array(exports.EnergySourceSchema), // Expecting an array of EnergySourceSchema
+            responses: {
+                201: zod_1.z.array(exports.EnergySourceSchema), // Returning an array of created energy sources
+            },
+        },
+        getAll: {
+            method: "GET",
+            path: "/energy",
+            responses: {
+                200: exports.EnergySourceSchema.array(),
+            },
+        },
+        getOne: {
+            method: "GET",
+            path: "/energy/:energyId",
+            pathParams: zod_1.z.object({
+                energyId: zod_1.z.coerce.number(),
+            }),
+            responses: {
+                200: exports.EnergySourceSchema,
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+        update: {
+            method: "PUT",
+            path: "/energy/:energyId",
+            pathParams: zod_1.z.object({
+                energyId: zod_1.z.coerce.number(),
+            }),
+            body: exports.EnergySourceSchema.partial(),
+            responses: {
+                200: exports.EnergySourceSchema,
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+        remove: {
+            method: "DELETE",
+            path: "/energy/:energyId",
+            pathParams: zod_1.z.object({
+                energyId: zod_1.z.coerce.number(),
             }),
             body: zod_1.z.any(),
             responses: {

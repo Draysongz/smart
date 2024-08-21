@@ -11,11 +11,19 @@ export class UsersService {
     @InjectModel(User.name) private userModel: Model<User>
   ) {}
 
-  async create(createUserDto: Omit<Users, 'userId'>): Promise<{ status: 201; body: Users }> {
-    const newUser = new this.userModel(createUserDto);
-    const savedUser = await newUser.save();
-    const userObject = savedUser.toObject();
-    
+  async create(createUserDto: Users): Promise<{ status: 201; body: Users }> {
+    const existingUser = await this.userModel.findOne({ userId: createUserDto.userId }).exec();
+
+  if (existingUser) {
+    // If user exists, return the existing user
+    return {
+      status: 201,
+      body: existingUser.toObject(), // Return the existing user data
+    };
+  }else{
+const newUser = new this.userModel(createUserDto);
+  const savedUser = await newUser.save();
+  const userObject = savedUser.toObject();
 
     return {
       status: 201,
@@ -35,10 +43,15 @@ export class UsersService {
         energyLevel: userObject.energyLevel,
         rechargeLevel: userObject.rechargeLevel,
         coinsPerHour: userObject.coinsPerHour,
+         lastUpdatedTime: userObject.lastupdatedTime,
         energySources: userObject.energySources,
         assets: userObject.assets,
       },
     };
+  }
+
+  // If user doesn't exist, create a new user
+  
   }
 
   async getAll(query: { userId?: number }): Promise<{ status: 200; body: Users[] }> {
@@ -72,6 +85,7 @@ export class UsersService {
         energyLevel: user.energyLevel,
         rechargeLevel: user.rechargeLevel,
         coinsPerHour: user.coinsPerHour,
+         lastUpdatedTime: user.lastupdatedTime,
         energySources: user.energySources,
         assets: user.assets,
       })),
@@ -105,6 +119,7 @@ export class UsersService {
         energyLevel: userObject.energyLevel,
         rechargeLevel: userObject.rechargeLevel,
         coinsPerHour: userObject.coinsPerHour,
+         lastUpdatedTime: userObject.lastupdatedTime,
         energySources: userObject.energySources,
         assets: userObject.assets,
       },
@@ -145,6 +160,7 @@ export class UsersService {
         coinsPerHour: userObject.coinsPerHour,
         energySources: userObject.energySources,
         assets: userObject.assets,
+        lastUpdatedTime: userObject.lastupdatedTime
       },
     };
   }

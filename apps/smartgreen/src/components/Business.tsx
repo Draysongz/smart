@@ -1,21 +1,22 @@
 import { useState } from "react"
 import { ClipLoader } from "react-spinners"
 import { useCards } from "../hooks/useCards"
-import { useRealtimeUserData } from "../hooks/useUserData"
 import { useUpdateCoinsPerHour } from "../hooks/useUpdateCoinsPerHour"
 import { Image } from "@chakra-ui/react"
 import smcoin from "../assets/smcoin.png";
+import { Users } from "api-contract"
 
 
 
 interface BusinessProps {
   userId: number | undefined
   name: string | null
+  userData: Users | null
 }
 
-export default function Business({ userId, name }: BusinessProps) {
-  const { userData } = useRealtimeUserData(userId, name)
+export default function Business({ userId, name, userData }: BusinessProps) {
   const { isLoading, cards, setCards } = useCards("trade", userId)
+  console.log(name)
   const { updateCoinsPerHour } = useUpdateCoinsPerHour()
   if (isLoading) {
     return (

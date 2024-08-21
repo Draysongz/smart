@@ -2,19 +2,20 @@ import { useState } from "react"
 import { ClipLoader } from "react-spinners"
 import { useCards } from "../hooks/useCards"
 import { useUpdateCoinsPerHour } from "../hooks/useUpdateCoinsPerHour"
-import { useRealtimeUserData } from "../hooks/useUserData"
 import { Image } from "@chakra-ui/react"
 import smcoin from "../assets/smcoin.png";
+import { Users } from "api-contract"
 
 
 interface LifestyleProps {
   userId: number | undefined
   name: string | null
+  userData: Users | null
 }
 
-export default function Lifestyle({ userId, name }: LifestyleProps) {
-  const { userData } = useRealtimeUserData(userId, name)
+export default function Lifestyle({ userId, name, userData }: LifestyleProps) {
   const { isLoading, cards, setCards } = useCards("business", userId)
+  console.log(name)
   const { updateCoinsPerHour } = useUpdateCoinsPerHour()
   if (isLoading) {
     return (

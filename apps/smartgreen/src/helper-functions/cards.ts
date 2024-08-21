@@ -2,7 +2,6 @@ import { addDoc, collection, getDocs, getFirestore, query, where } from "firebas
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as fs from 'fs';
 import { app } from "../firebase/firebase"
-import { getUserLevelData } from "./getUser"
  
 
 const db = getFirestore(app)

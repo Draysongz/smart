@@ -1,5 +1,5 @@
 import { initContract } from "@ts-rest/core";
-import { any, z } from "zod";
+import {  z } from "zod";
 
 const c = initContract();
 
@@ -19,6 +19,7 @@ export const EnergySourceSchema = z.object({
   operational: z.boolean(), // Whether the energy source is currently operational
   country: z.string(), // The country where the energy source is located
   licenseFee: z.number(), // Cost for licensing in other countries
+  dailyOperatingHours: z.number()
 });
 
 // Define the User schema
@@ -32,12 +33,14 @@ export const UserSchema = z.object({
   refillEnergy: z.number().default(5),
   refillTime: z.number().default(3),
   status: z.string().optional(),
+  userLevel: z.number().optional(),
   tapEnergy: z.number().default(1000),
   tapPower: z.number().default(1),
   userId: z.number(),
   energyLevel: z.number().default(1),
   rechargeLevel: z.number().default(1),
   coinsPerHour: z.number().default(0),
+  lastUpdatedTime: z.number().optional(),
   energySources: z.array(EnergySourceSchema).optional(), // Array of energy sources owned by the user
   assets: z.array(AssetSchema).optional(), // Array of assets owned by the user
 });
@@ -103,6 +106,79 @@ export const contract = c.router(
         path: "/users/:userId",
         pathParams: z.object({
           userId: z.coerce.number(),
+        }),
+        body: z.any(),
+        responses: {
+          204: z.object({}),
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+
+
+    energy: {
+      create: {
+        method: "POST",
+        path: "/energy",
+        body: EnergySourceSchema,
+        responses: {
+          201: EnergySourceSchema,
+        },
+      },
+
+       createBatch: { // New endpoint for batch creation
+        method: "POST",
+        path: "/energy/batch",
+        body: z.array(EnergySourceSchema), // Expecting an array of EnergySourceSchema
+        responses: {
+          201: z.array(EnergySourceSchema), // Returning an array of created energy sources
+        },
+      },
+
+      getAll: {
+        method: "GET",
+        path: "/energy",
+        responses: {
+          200: EnergySourceSchema.array(),
+        },
+      },
+
+      getOne: {
+        method: "GET",
+        path: "/energy/:energyId",
+        pathParams: z.object({
+          energyId: z.coerce.number(),
+        }),
+        responses: {
+          200: EnergySourceSchema,
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+
+      update: {
+        method: "PUT",
+        path: "/energy/:energyId",
+        pathParams: z.object({
+          energyId: z.coerce.number(),
+        }),
+        body: EnergySourceSchema.partial(),
+        responses: {
+          200: EnergySourceSchema,
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+
+      remove: {
+        method: "DELETE",
+        path: "/energy/:energyId",
+        pathParams: z.object({
+          energyId: z.coerce.number(),
         }),
         body: z.any(),
         responses: {

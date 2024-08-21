@@ -1,7 +1,6 @@
 // import { useState } from "react";
 import Lifestyle from "../components/Lifestyle";
 import Technology from "../components/Technology";
-import { useRealtimeUserData } from "../hooks/useUserData";
 import { Flex, useBreakpointValue, Image, Text } from "@chakra-ui/react";
 import cardBg from "../assets/cardBg.png";
 import coin from "../assets/coin.png";
@@ -9,16 +8,18 @@ import smcoin from "../assets/smcoin.png";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Business from "../components/Business";
 import NavigationBar from "../components/NavigationBar";
+import { Users } from "api-contract";
 
 interface BoostProps {
   userId: number | undefined;
   name: string | null;
+  userData: Users | null
 }
 
 
 
-const Boost = ({ userId, name }: BoostProps) => {
-  const { userData } = useRealtimeUserData(userId, name);
+const Boost = ({ userId, name, userData }: BoostProps) => {
+
 
 
   return (
@@ -55,7 +56,7 @@ const Boost = ({ userId, name }: BoostProps) => {
           <Flex justifyContent={"center"} alignItems={"center"}>
             <Image src={coin} alt="coin" />
             <Text fontSize={"40px"} color={"white"}>
-              {userData ? new Intl.NumberFormat().format(userData?.coinsEarned.toFixed(0)) : 0}
+              {userData ? new Intl.NumberFormat().format(Number(userData?.coinsEarned.toFixed(0))) : 0}
             </Text>
           </Flex>
 
@@ -116,13 +117,13 @@ const Boost = ({ userId, name }: BoostProps) => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Technology userId={userId} name={name} />
+                <Technology userId={userId} name={name} userData={userData} />
               </TabPanel>
               <TabPanel>
-               <Lifestyle userId={userId} name={name} />
+               <Lifestyle userId={userId} name={name} userData={userData}/>
               </TabPanel>
                <TabPanel>
-                <Business userId={userId} name={name} />
+                <Business userId={userId} name={name} userData={userData}/>
               </TabPanel>
             </TabPanels>
           </Tabs>

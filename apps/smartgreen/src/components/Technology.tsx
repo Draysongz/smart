@@ -1,18 +1,18 @@
 import { useState } from "react"
-import { useRealtimeUserData } from "../hooks/useUserData"
 import { useCards } from "../hooks/useCards"
 import { ClipLoader } from "react-spinners"
 import { useUpdateCoinsPerHour } from "../hooks/useUpdateCoinsPerHour"
 import { Image } from "@chakra-ui/react"
 import smcoin from "../assets/smcoin.png";
+import { Users } from "api-contract"
 
 interface TechProps {
   userId: number | undefined
   name: string | null
+  userData: Users | null
 }
 
-export default function Technology({ userId, name }: TechProps) {
-  const { userData } = useRealtimeUserData(userId, name)
+export default function Technology({ userId, name, userData }: TechProps) {
   const { isLoading, cards, setCards } = useCards("technology", userId)
   const { updateCoinsPerHour } = useUpdateCoinsPerHour()
 

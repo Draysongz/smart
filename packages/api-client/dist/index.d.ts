@@ -22,6 +22,7 @@ export declare const EnergySourceSchema: z.ZodObject<{
     operational: z.ZodBoolean;
     country: z.ZodString;
     licenseFee: z.ZodNumber;
+    dailyOperatingHours: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
     type: string;
     productionRate: number;
@@ -29,6 +30,7 @@ export declare const EnergySourceSchema: z.ZodObject<{
     operational: boolean;
     country: string;
     licenseFee: number;
+    dailyOperatingHours: number;
 }, {
     type: string;
     productionRate: number;
@@ -36,6 +38,7 @@ export declare const EnergySourceSchema: z.ZodObject<{
     operational: boolean;
     country: string;
     licenseFee: number;
+    dailyOperatingHours: number;
 }>;
 export declare const UserSchema: z.ZodObject<{
     username: z.ZodString;
@@ -47,12 +50,14 @@ export declare const UserSchema: z.ZodObject<{
     refillEnergy: z.ZodDefault<z.ZodNumber>;
     refillTime: z.ZodDefault<z.ZodNumber>;
     status: z.ZodOptional<z.ZodString>;
+    userLevel: z.ZodOptional<z.ZodNumber>;
     tapEnergy: z.ZodDefault<z.ZodNumber>;
     tapPower: z.ZodDefault<z.ZodNumber>;
     userId: z.ZodNumber;
     energyLevel: z.ZodDefault<z.ZodNumber>;
     rechargeLevel: z.ZodDefault<z.ZodNumber>;
     coinsPerHour: z.ZodDefault<z.ZodNumber>;
+    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
     energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
         type: z.ZodString;
         productionRate: z.ZodNumber;
@@ -60,6 +65,7 @@ export declare const UserSchema: z.ZodObject<{
         operational: z.ZodBoolean;
         country: z.ZodString;
         licenseFee: z.ZodNumber;
+        dailyOperatingHours: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
         type: string;
         productionRate: number;
@@ -67,6 +73,7 @@ export declare const UserSchema: z.ZodObject<{
         operational: boolean;
         country: string;
         licenseFee: number;
+        dailyOperatingHours: number;
     }, {
         type: string;
         productionRate: number;
@@ -74,6 +81,7 @@ export declare const UserSchema: z.ZodObject<{
         operational: boolean;
         country: string;
         licenseFee: number;
+        dailyOperatingHours: number;
     }>, "many">>;
     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
         type: z.ZodString;
@@ -107,6 +115,8 @@ export declare const UserSchema: z.ZodObject<{
     status?: string | undefined;
     referralLink?: string | undefined;
     referrals?: number[] | undefined;
+    userLevel?: number | undefined;
+    lastUpdatedTime?: number | undefined;
     energySources?: {
         type: string;
         productionRate: number;
@@ -114,6 +124,7 @@ export declare const UserSchema: z.ZodObject<{
         operational: boolean;
         country: string;
         licenseFee: number;
+        dailyOperatingHours: number;
     }[] | undefined;
     assets?: {
         type: string;
@@ -132,11 +143,13 @@ export declare const UserSchema: z.ZodObject<{
     referrals?: number[] | undefined;
     refillEnergy?: number | undefined;
     refillTime?: number | undefined;
+    userLevel?: number | undefined;
     tapEnergy?: number | undefined;
     tapPower?: number | undefined;
     energyLevel?: number | undefined;
     rechargeLevel?: number | undefined;
     coinsPerHour?: number | undefined;
+    lastUpdatedTime?: number | undefined;
     energySources?: {
         type: string;
         productionRate: number;
@@ -144,6 +157,7 @@ export declare const UserSchema: z.ZodObject<{
         operational: boolean;
         country: string;
         licenseFee: number;
+        dailyOperatingHours: number;
     }[] | undefined;
     assets?: {
         type: string;
@@ -169,12 +183,14 @@ export declare const contract: {
                 refillEnergy: z.ZodDefault<z.ZodNumber>;
                 refillTime: z.ZodDefault<z.ZodNumber>;
                 status: z.ZodOptional<z.ZodString>;
+                userLevel: z.ZodOptional<z.ZodNumber>;
                 tapEnergy: z.ZodDefault<z.ZodNumber>;
                 tapPower: z.ZodDefault<z.ZodNumber>;
                 userId: z.ZodNumber;
                 energyLevel: z.ZodDefault<z.ZodNumber>;
                 rechargeLevel: z.ZodDefault<z.ZodNumber>;
                 coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
                 energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
                     productionRate: z.ZodNumber;
@@ -182,6 +198,7 @@ export declare const contract: {
                     operational: z.ZodBoolean;
                     country: z.ZodString;
                     licenseFee: z.ZodNumber;
+                    dailyOperatingHours: z.ZodNumber;
                 }, "strip", z.ZodTypeAny, {
                     type: string;
                     productionRate: number;
@@ -189,6 +206,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }, {
                     type: string;
                     productionRate: number;
@@ -196,6 +214,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }>, "many">>;
                 assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
@@ -229,6 +248,8 @@ export declare const contract: {
                 status?: string | undefined;
                 referralLink?: string | undefined;
                 referrals?: number[] | undefined;
+                userLevel?: number | undefined;
+                lastUpdatedTime?: number | undefined;
                 energySources?: {
                     type: string;
                     productionRate: number;
@@ -236,6 +257,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }[] | undefined;
                 assets?: {
                     type: string;
@@ -254,11 +276,13 @@ export declare const contract: {
                 referrals?: number[] | undefined;
                 refillEnergy?: number | undefined;
                 refillTime?: number | undefined;
+                userLevel?: number | undefined;
                 tapEnergy?: number | undefined;
                 tapPower?: number | undefined;
                 energyLevel?: number | undefined;
                 rechargeLevel?: number | undefined;
                 coinsPerHour?: number | undefined;
+                lastUpdatedTime?: number | undefined;
                 energySources?: {
                     type: string;
                     productionRate: number;
@@ -266,6 +290,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }[] | undefined;
                 assets?: {
                     type: string;
@@ -286,12 +311,14 @@ export declare const contract: {
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
+                    userLevel: z.ZodOptional<z.ZodNumber>;
                     tapEnergy: z.ZodDefault<z.ZodNumber>;
                     tapPower: z.ZodDefault<z.ZodNumber>;
                     userId: z.ZodNumber;
                     energyLevel: z.ZodDefault<z.ZodNumber>;
                     rechargeLevel: z.ZodDefault<z.ZodNumber>;
                     coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
                     energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         productionRate: z.ZodNumber;
@@ -299,6 +326,7 @@ export declare const contract: {
                         operational: z.ZodBoolean;
                         country: z.ZodString;
                         licenseFee: z.ZodNumber;
+                        dailyOperatingHours: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         productionRate: number;
@@ -306,6 +334,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }, {
                         type: string;
                         productionRate: number;
@@ -313,6 +342,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }>, "many">>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -346,6 +376,8 @@ export declare const contract: {
                     status?: string | undefined;
                     referralLink?: string | undefined;
                     referrals?: number[] | undefined;
+                    userLevel?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -353,6 +385,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -371,11 +404,13 @@ export declare const contract: {
                     referrals?: number[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
+                    userLevel?: number | undefined;
                     tapEnergy?: number | undefined;
                     tapPower?: number | undefined;
                     energyLevel?: number | undefined;
                     rechargeLevel?: number | undefined;
                     coinsPerHour?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -383,6 +418,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -415,12 +451,14 @@ export declare const contract: {
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
+                    userLevel: z.ZodOptional<z.ZodNumber>;
                     tapEnergy: z.ZodDefault<z.ZodNumber>;
                     tapPower: z.ZodDefault<z.ZodNumber>;
                     userId: z.ZodNumber;
                     energyLevel: z.ZodDefault<z.ZodNumber>;
                     rechargeLevel: z.ZodDefault<z.ZodNumber>;
                     coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
                     energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         productionRate: z.ZodNumber;
@@ -428,6 +466,7 @@ export declare const contract: {
                         operational: z.ZodBoolean;
                         country: z.ZodString;
                         licenseFee: z.ZodNumber;
+                        dailyOperatingHours: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         productionRate: number;
@@ -435,6 +474,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }, {
                         type: string;
                         productionRate: number;
@@ -442,6 +482,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }>, "many">>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -475,6 +516,8 @@ export declare const contract: {
                     status?: string | undefined;
                     referralLink?: string | undefined;
                     referrals?: number[] | undefined;
+                    userLevel?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -482,6 +525,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -500,11 +544,13 @@ export declare const contract: {
                     referrals?: number[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
+                    userLevel?: number | undefined;
                     tapEnergy?: number | undefined;
                     tapPower?: number | undefined;
                     energyLevel?: number | undefined;
                     rechargeLevel?: number | undefined;
                     coinsPerHour?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -512,6 +558,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -544,12 +591,14 @@ export declare const contract: {
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
+                    userLevel: z.ZodOptional<z.ZodNumber>;
                     tapEnergy: z.ZodDefault<z.ZodNumber>;
                     tapPower: z.ZodDefault<z.ZodNumber>;
                     userId: z.ZodNumber;
                     energyLevel: z.ZodDefault<z.ZodNumber>;
                     rechargeLevel: z.ZodDefault<z.ZodNumber>;
                     coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
                     energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         productionRate: z.ZodNumber;
@@ -557,6 +606,7 @@ export declare const contract: {
                         operational: z.ZodBoolean;
                         country: z.ZodString;
                         licenseFee: z.ZodNumber;
+                        dailyOperatingHours: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         productionRate: number;
@@ -564,6 +614,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }, {
                         type: string;
                         productionRate: number;
@@ -571,6 +622,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }>, "many">>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -604,6 +656,8 @@ export declare const contract: {
                     status?: string | undefined;
                     referralLink?: string | undefined;
                     referrals?: number[] | undefined;
+                    userLevel?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -611,6 +665,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -629,11 +684,13 @@ export declare const contract: {
                     referrals?: number[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
+                    userLevel?: number | undefined;
                     tapEnergy?: number | undefined;
                     tapPower?: number | undefined;
                     energyLevel?: number | undefined;
                     rechargeLevel?: number | undefined;
                     coinsPerHour?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -641,6 +698,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -678,11 +736,13 @@ export declare const contract: {
                 referrals: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>>;
                 refillEnergy: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 refillTime: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
+                userLevel: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
                 tapEnergy: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 tapPower: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 energyLevel: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 rechargeLevel: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 coinsPerHour: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
+                lastUpdatedTime: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
                 energySources: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
                     productionRate: z.ZodNumber;
@@ -690,6 +750,7 @@ export declare const contract: {
                     operational: z.ZodBoolean;
                     country: z.ZodString;
                     licenseFee: z.ZodNumber;
+                    dailyOperatingHours: z.ZodNumber;
                 }, "strip", z.ZodTypeAny, {
                     type: string;
                     productionRate: number;
@@ -697,6 +758,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }, {
                     type: string;
                     productionRate: number;
@@ -704,6 +766,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }>, "many">>>;
                 assets: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
@@ -731,11 +794,13 @@ export declare const contract: {
                 referrals?: number[] | undefined;
                 refillEnergy?: number | undefined;
                 refillTime?: number | undefined;
+                userLevel?: number | undefined;
                 tapEnergy?: number | undefined;
                 tapPower?: number | undefined;
                 energyLevel?: number | undefined;
                 rechargeLevel?: number | undefined;
                 coinsPerHour?: number | undefined;
+                lastUpdatedTime?: number | undefined;
                 energySources?: {
                     type: string;
                     productionRate: number;
@@ -743,6 +808,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }[] | undefined;
                 assets?: {
                     type: string;
@@ -760,11 +826,13 @@ export declare const contract: {
                 referrals?: number[] | undefined;
                 refillEnergy?: number | undefined;
                 refillTime?: number | undefined;
+                userLevel?: number | undefined;
                 tapEnergy?: number | undefined;
                 tapPower?: number | undefined;
                 energyLevel?: number | undefined;
                 rechargeLevel?: number | undefined;
                 coinsPerHour?: number | undefined;
+                lastUpdatedTime?: number | undefined;
                 energySources?: {
                     type: string;
                     productionRate: number;
@@ -772,6 +840,7 @@ export declare const contract: {
                     operational: boolean;
                     country: string;
                     licenseFee: number;
+                    dailyOperatingHours: number;
                 }[] | undefined;
                 assets?: {
                     type: string;
@@ -792,12 +861,14 @@ export declare const contract: {
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
+                    userLevel: z.ZodOptional<z.ZodNumber>;
                     tapEnergy: z.ZodDefault<z.ZodNumber>;
                     tapPower: z.ZodDefault<z.ZodNumber>;
                     userId: z.ZodNumber;
                     energyLevel: z.ZodDefault<z.ZodNumber>;
                     rechargeLevel: z.ZodDefault<z.ZodNumber>;
                     coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
                     energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         productionRate: z.ZodNumber;
@@ -805,6 +876,7 @@ export declare const contract: {
                         operational: z.ZodBoolean;
                         country: z.ZodString;
                         licenseFee: z.ZodNumber;
+                        dailyOperatingHours: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         productionRate: number;
@@ -812,6 +884,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }, {
                         type: string;
                         productionRate: number;
@@ -819,6 +892,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }>, "many">>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -852,6 +926,8 @@ export declare const contract: {
                     status?: string | undefined;
                     referralLink?: string | undefined;
                     referrals?: number[] | undefined;
+                    userLevel?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -859,6 +935,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -877,11 +954,13 @@ export declare const contract: {
                     referrals?: number[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
+                    userLevel?: number | undefined;
                     tapEnergy?: number | undefined;
                     tapPower?: number | undefined;
                     energyLevel?: number | undefined;
                     rechargeLevel?: number | undefined;
                     coinsPerHour?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
                     energySources?: {
                         type: string;
                         productionRate: number;
@@ -889,6 +968,7 @@ export declare const contract: {
                         operational: boolean;
                         country: string;
                         licenseFee: number;
+                        dailyOperatingHours: number;
                     }[] | undefined;
                     assets?: {
                         type: string;
@@ -918,6 +998,294 @@ export declare const contract: {
             method: "DELETE";
             body: z.ZodAny;
             path: "/api/users/:userId";
+            responses: {
+                204: z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+    };
+    energy: {
+        create: {
+            method: "POST";
+            body: z.ZodObject<{
+                type: z.ZodString;
+                productionRate: z.ZodNumber;
+                purchaseCost: z.ZodNumber;
+                operational: z.ZodBoolean;
+                country: z.ZodString;
+                licenseFee: z.ZodNumber;
+                dailyOperatingHours: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                type: string;
+                productionRate: number;
+                purchaseCost: number;
+                operational: boolean;
+                country: string;
+                licenseFee: number;
+                dailyOperatingHours: number;
+            }, {
+                type: string;
+                productionRate: number;
+                purchaseCost: number;
+                operational: boolean;
+                country: string;
+                licenseFee: number;
+                dailyOperatingHours: number;
+            }>;
+            path: "/api/energy";
+            responses: {
+                201: z.ZodObject<{
+                    type: z.ZodString;
+                    productionRate: z.ZodNumber;
+                    purchaseCost: z.ZodNumber;
+                    operational: z.ZodBoolean;
+                    country: z.ZodString;
+                    licenseFee: z.ZodNumber;
+                    dailyOperatingHours: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        createBatch: {
+            method: "POST";
+            body: z.ZodArray<z.ZodObject<{
+                type: z.ZodString;
+                productionRate: z.ZodNumber;
+                purchaseCost: z.ZodNumber;
+                operational: z.ZodBoolean;
+                country: z.ZodString;
+                licenseFee: z.ZodNumber;
+                dailyOperatingHours: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                type: string;
+                productionRate: number;
+                purchaseCost: number;
+                operational: boolean;
+                country: string;
+                licenseFee: number;
+                dailyOperatingHours: number;
+            }, {
+                type: string;
+                productionRate: number;
+                purchaseCost: number;
+                operational: boolean;
+                country: string;
+                licenseFee: number;
+                dailyOperatingHours: number;
+            }>, "many">;
+            path: "/api/energy/batch";
+            responses: {
+                201: z.ZodArray<z.ZodObject<{
+                    type: z.ZodString;
+                    productionRate: z.ZodNumber;
+                    purchaseCost: z.ZodNumber;
+                    operational: z.ZodBoolean;
+                    country: z.ZodString;
+                    licenseFee: z.ZodNumber;
+                    dailyOperatingHours: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }>, "many">;
+            };
+            strictStatusCodes: true;
+        };
+        getAll: {
+            method: "GET";
+            path: "/api/energy";
+            responses: {
+                200: z.ZodArray<z.ZodObject<{
+                    type: z.ZodString;
+                    productionRate: z.ZodNumber;
+                    purchaseCost: z.ZodNumber;
+                    operational: z.ZodBoolean;
+                    country: z.ZodString;
+                    licenseFee: z.ZodNumber;
+                    dailyOperatingHours: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }>, "many">;
+            };
+            strictStatusCodes: true;
+        };
+        getOne: {
+            pathParams: z.ZodObject<{
+                energyId: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                energyId: number;
+            }, {
+                energyId: number;
+            }>;
+            method: "GET";
+            path: "/api/energy/:energyId";
+            responses: {
+                200: z.ZodObject<{
+                    type: z.ZodString;
+                    productionRate: z.ZodNumber;
+                    purchaseCost: z.ZodNumber;
+                    operational: z.ZodBoolean;
+                    country: z.ZodString;
+                    licenseFee: z.ZodNumber;
+                    dailyOperatingHours: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        update: {
+            pathParams: z.ZodObject<{
+                energyId: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                energyId: number;
+            }, {
+                energyId: number;
+            }>;
+            method: "PUT";
+            body: z.ZodObject<{
+                type: z.ZodOptional<z.ZodString>;
+                productionRate: z.ZodOptional<z.ZodNumber>;
+                purchaseCost: z.ZodOptional<z.ZodNumber>;
+                operational: z.ZodOptional<z.ZodBoolean>;
+                country: z.ZodOptional<z.ZodString>;
+                licenseFee: z.ZodOptional<z.ZodNumber>;
+                dailyOperatingHours: z.ZodOptional<z.ZodNumber>;
+            }, "strip", z.ZodTypeAny, {
+                type?: string | undefined;
+                productionRate?: number | undefined;
+                purchaseCost?: number | undefined;
+                operational?: boolean | undefined;
+                country?: string | undefined;
+                licenseFee?: number | undefined;
+                dailyOperatingHours?: number | undefined;
+            }, {
+                type?: string | undefined;
+                productionRate?: number | undefined;
+                purchaseCost?: number | undefined;
+                operational?: boolean | undefined;
+                country?: string | undefined;
+                licenseFee?: number | undefined;
+                dailyOperatingHours?: number | undefined;
+            }>;
+            path: "/api/energy/:energyId";
+            responses: {
+                200: z.ZodObject<{
+                    type: z.ZodString;
+                    productionRate: z.ZodNumber;
+                    purchaseCost: z.ZodNumber;
+                    operational: z.ZodBoolean;
+                    country: z.ZodString;
+                    licenseFee: z.ZodNumber;
+                    dailyOperatingHours: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }, {
+                    type: string;
+                    productionRate: number;
+                    purchaseCost: number;
+                    operational: boolean;
+                    country: string;
+                    licenseFee: number;
+                    dailyOperatingHours: number;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        remove: {
+            pathParams: z.ZodObject<{
+                energyId: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                energyId: number;
+            }, {
+                energyId: number;
+            }>;
+            method: "DELETE";
+            body: z.ZodAny;
+            path: "/api/energy/:energyId";
             responses: {
                 204: z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>;
                 404: z.ZodObject<{

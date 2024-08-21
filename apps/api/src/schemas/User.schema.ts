@@ -34,7 +34,10 @@ export class EnergySource {
   country: string; // The country where the energy source is located
 
   @Prop()
-  licenseFee: number; // Cost for licensing in other countries
+  licenseFee: number; 
+  
+  @Prop()
+  dailyOperatingHours: number
 }
 
 @Schema({ timestamps: true })
@@ -83,6 +86,12 @@ export class User extends Document {
 
   @Prop({default: 0})
   coinsPerHour?: number;
+
+  @Prop({default: 1})
+  userLevel?: number;
+
+   @Prop({default: Date.now()})
+  lastupdatedTime?: number;
 
   @Prop({ type: [EnergySource] })
   energySources?: EnergySource[]; // Array of energy sources owned by the user

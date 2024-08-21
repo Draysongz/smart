@@ -10,10 +10,9 @@ import NavigationBar from "../NavigationBar";
 import bg from "../../assets/bg.png";
 import smcoin from "../../assets/smcoin.png";
 import spaceship from '../../assets/spaceship.svg';
-import { useStaticUserData } from "../../hooks/useUserData";
-import { updateUserData } from "../../helper-functions/getUser";
 import { Link } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { Users } from "api-contract";
+import { useUserApi } from "../../hooks/useUserData";
 
 const floatUpAndFadeOut = keyframes`
   0% {
@@ -50,18 +49,22 @@ const rotateCoinRight = keyframes`
   }
 `;
 
-const UserId = ({ userId, name }: { userId: number | undefined; name: string | null; }) => {
+const UserId = ({ userId, name, userData  }: { userId: number ; name: string | null; userData: Users | null }) => {
   const [floatingEnergy, setFloatingEnergy] = useState(0);
   const [coinsEarned, setCoinsEarned] = useState(0);
   const [tappingEnergy, setTappingEnergy] = useState(0);
   const [tappingPower, setTappingPower] = useState(0);
-  const [params] = useSearchParams();
   const [rotateAnim, setRotateAnim] = useState("");
   const [coinsPerHour, setCoinsPerHour] = useState(0);
   const [fanBladeAnim, setFanBladeAnim] = useState(""); // State for fan blade animation
 
-  const referralId = Number(params.get("referralId"));
-  const { userData } = useStaticUserData(userId, name, referralId);
+
+
+
+const {updateUserData} = useUserApi()
+
+  
+
 
   const [screenAxis, setScreenAxis] = useState<{ x: number; y: number; id: number }[]>([]);
 
@@ -81,7 +84,7 @@ const UserId = ({ userId, name }: { userId: number | undefined; name: string | n
 
     
 
-    await updateUserData(userId, {
+    updateUserData(userId, {
       coinsEarned: coinsEarned + tappingPower,
       floatingTapEnergy: floatingEnergy - tappingPower,
     });
@@ -91,11 +94,12 @@ const UserId = ({ userId, name }: { userId: number | undefined; name: string | n
     setScreenAxis(screenAxis.filter(screen => screen.id !== id));
   };
 
-  const calculateLostTime = (): number => {
-    const lastUpdate = userData?.lastUpdatedTime;
-    const timeNowInSeconds = Date.now() / 1000;
-    return timeNowInSeconds - lastUpdate;
-  };
+const calculateLostTime = (): number => {
+  const lastUpdate = userData?.lastUpdatedTime ?? 0; // Default to 0 if undefined
+  const timeNowInSeconds = Date.now() / 1000;
+  return timeNowInSeconds - lastUpdate;
+};
+
 
   useEffect(() => {
     if (!userData) return;
@@ -134,7 +138,7 @@ const UserId = ({ userId, name }: { userId: number | undefined; name: string | n
   useEffect(() => {
     if (!userId) return;
     (async () => {
-      await updateUserData(userId, {
+      updateUserData(userId, {
         floatingTapEnergy: floatingEnergy,
         lastUpdatedTime: Date.now() / 1000,
       });
