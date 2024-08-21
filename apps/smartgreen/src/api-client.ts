@@ -4,7 +4,7 @@
 
  const apiClient = initQueryClient(contract, {
     baseHeaders: {},
-    baseUrl: ''
+    baseUrl: process.env.PRODUCTION_API_URL || 'http://localhost:3000'
  })
 
  export default apiClient
