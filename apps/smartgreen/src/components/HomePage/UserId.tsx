@@ -196,7 +196,7 @@ const calculateLostTime = (): number => {
         <ProgressBar />
         <div className="border-t-custom-large-top rounded-t-3xl border-t-custom-yellow w-full items-center bg-custom-goldyellow max-h-700:border-t-custom-top h-[100%]">
           <Box
-            className="w-full border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center py-9 flex flex-col gap-5 flex-grow max-h-700:p-3 h-screen"
+            className="w-full border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center py-9 flex flex-col gap-5 flex-grow max-h-700:p-3 h-[80vh]"
             backgroundImage={bg}
           >
             <div className="w-full flex gap-4 text-center justify-center items-center max-h-700:gap-2 max-h-700:px-2">
