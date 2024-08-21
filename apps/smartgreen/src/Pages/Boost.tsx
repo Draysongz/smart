@@ -1,12 +1,18 @@
 // import { useState } from "react";
-import Lifestyle from "../components/Lifestyle";
-import Technology from "../components/Technology";
+// import Lifestyle from "../components/Lifestyle";
+// import Technology from "../components/Technology";
 import { Flex, useBreakpointValue, Image, Text } from "@chakra-ui/react";
 import cardBg from "../assets/cardBg.png";
 import coin from "../assets/coin.png";
 import smcoin from "../assets/smcoin.png";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import Business from "../components/Business";
+import { 
+  Tabs, 
+  TabList, 
+  // TabPanels, 
+  Tab, 
+  // TabPanel 
+} from "@chakra-ui/react";
+// import Business from "../components/Business";
 import NavigationBar from "../components/NavigationBar";
 import { Users } from "api-contract";
 
@@ -21,7 +27,7 @@ interface BoostProps {
 const Boost = ({ userId, name, userData }: BoostProps) => {
 
 
-
+console.log(userId, name)
   return (
     <Flex direction={"column"} bgColor={"black"}>
       <Flex
@@ -115,7 +121,7 @@ const Boost = ({ userId, name, userData }: BoostProps) => {
                 Trade
               </Tab>
             </TabList>
-            <TabPanels>
+            {/* <TabPanels>
               <TabPanel>
                 <Technology userId={userId} name={name} userData={userData} />
               </TabPanel>
@@ -125,7 +131,7 @@ const Boost = ({ userId, name, userData }: BoostProps) => {
                <TabPanel>
                 <Business userId={userId} name={name} userData={userData}/>
               </TabPanel>
-            </TabPanels>
+            </TabPanels> */}
           </Tabs>
         </Flex>
 
