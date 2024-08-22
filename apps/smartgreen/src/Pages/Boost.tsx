@@ -12,36 +12,28 @@ import smcoin from "../assets/smcoin.png";
 import { 
   Tabs, 
   TabList, 
-  // TabPanels, 
+  TabPanels, 
   Tab, 
-  // TabPanel 
+  TabPanel 
 } from "@chakra-ui/react";
-// import Business from "../components/Business";
+import Business from "../components/Business";
 import NavigationBar from "../components/NavigationBar";
 import { Users } from "api-contract";
-import apiClient from "../api-client";
+
 
 
 
 interface BoostProps {
   userId: number | undefined;
-  name: string | null;
   userData: Users | null
 }
 
 
 
-const Boost = ({ userId, name, userData }: BoostProps) => {
-  const {data, isLoading} = apiClient.asset.getAll.useQuery(['assets'])
+const Boost = ({ userId, userData }: BoostProps) => {
+ 
   const breakpoint = useBreakpointValue({ base: "100vw", md: "78vw", lg: "100vw" });
-  console.log(data)
 
-
- // Handle loading state
-  if (isLoading) return <div>Loading...</div>;
-
-  // Handle the case when data is not available
-  if (!data) return <div>No data available</div>;
 
 
   return (
@@ -178,20 +170,20 @@ const Boost = ({ userId, name, userData }: BoostProps) => {
                   border: "none",
                 }}
               >
-                Trade
+               Assets
               </Tab>
             </TabList>
-            {/* <TabPanels>
-              <TabPanel>
+            <TabPanels>
+              {/* <TabPanel>
                 <Technology userId={userId} name={name} userData={userData} />
               </TabPanel>
               <TabPanel>
                <Lifestyle userId={userId} name={name} userData={userData}/>
-              </TabPanel>
+              </TabPanel> */}
                <TabPanel>
-                <Business userId={userId} name={name} userData={userData}/>
+                <Business userId={userId} userData={userData} />
               </TabPanel>
-            </TabPanels> */}
+            </TabPanels>
           </Tabs>
         </Flex>
 
