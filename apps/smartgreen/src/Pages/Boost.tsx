@@ -48,7 +48,7 @@ console.log(userId, name)
         mt={3}
         boxShadow="5px 10px 15px 20px  rgba(255, 204, 35, 0.4)" // Increased opacity and spread
       >
-        <Box className="w-full justify-center items-center z-0 fixed">
+        <Box className="w-full justify-center items-center z-10 fixed bg-[#FFCC23] py-2">
               <div
                 className="flex flex-col rounded-full justify-center border-custom-yellow items-center bg-custom-radial border-custom-top w-[220px] h-[220px] relative"
               >
@@ -133,7 +133,8 @@ console.log(userId, name)
           paddingTop={"15px"}
           gap={5}
           position={'relative'}
-          top={"220px"}
+          top={"250px"}
+          zIndex={'0'}
         >
 
           <Tabs variant="unstyled" px={3} align="center">
