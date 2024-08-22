@@ -4,13 +4,15 @@ import { Model } from 'mongoose';
 import { Users } from 'api-contract';
 import { User } from 'src/schemas/User.schema';
 import { Energy } from 'src/schemas/Energy.schema';
+import { Asset as AssetSchema } from 'src/schemas/Assets.schema';
 
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
-    @InjectModel(Energy.name) private energyModel: Model<Energy>
+    @InjectModel(Energy.name) private energyModel: Model<Energy>,
+    @InjectModel(AssetSchema.name) private assetModel: Model<AssetSchema>
   ) {}
 
   async create(createUserDto: Users): Promise<{ status: 201; body: Users }> {
@@ -241,4 +243,62 @@ const newUser = new this.userModel(createUserDto);
     // Return the error if any
     return result;
   }
+
+  async purchaseAsset(userId: number, name: string): Promise<{ status: 200; body: Users } | { status: 404; body: { message: string } } | { status: 400; body: { message: string } }> {
+  // Retrieve the user
+  const user = await this.userModel.findOne({ userId }).exec();
+  if (!user) {
+    return {
+      status: 404,
+      body: { message: `User with ID ${userId} not found` },
+    };
+  }
+
+  // Retrieve the asset
+  const asset = await this.assetModel.findOne({ name: name }).exec();
+  if (!asset) {
+    return {
+      status: 404,
+      body: { message: `Asset with type ${name} not found` },
+    };
+  }
+
+  // Check if user has enough coins
+  if (user.coinsEarned < asset.price) {
+    return {
+      status: 400,
+      body: { message: `Not enough coins to purchase asset` },
+    };
+  }
+
+  // Deduct the cost from user's coins and add the asset to user's assets
+  user.coinsEarned -= asset.price;
+  user.assets = user.assets || [];
+  user.assets.push({
+    type: asset.type,
+    name: asset.name,
+    price: asset.price,
+    levelRequirement: asset.levelRequirement,
+  });
+
+  // Use the existing update method
+  const updateUserDto = {
+    coinsEarned: user.coinsEarned,
+    assets: user.assets,
+  };
+
+  const result = await this.update(userId, updateUserDto);
+
+  // Ensure the result matches the expected type
+  if (result.status === 200) {
+    return {
+      status: 200,
+      body: result.body, // Ensure this matches the Users type
+    };
+  }
+
+  // Return the error if any
+  return result;
+}
+
 }

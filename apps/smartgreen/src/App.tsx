@@ -108,7 +108,7 @@ function AppContent({ userId, name, userData }: BoostProps) {
     <Routes>
       <Route index element={<UserId userId={userId} name={name} userData={userData} />}/>
       {/* <Route path="/referral" element={<ReferralPage userId={userId} name={name} />} /> */}
-      <Route path="/boost" element={<Boost userId={userId} name={name} />} />
+      <Route path="/boost" element={<Boost userId={userId} name={name} userData={userData}/>} />
       {/* <Route path="/tasks" element={<EarnPage userId={userId} name={name} />} />
       <Route path="/airdrop" element={<AirdropPage userId={userId} name={name} />} />
       <Route path="/powerUps" element={<PowerUps userId={userId} name={name} />} /> */}

@@ -19,6 +19,9 @@ import {
 // import Business from "../components/Business";
 import NavigationBar from "../components/NavigationBar";
 import { Users } from "api-contract";
+import apiClient from "../api-client";
+
+
 
 interface BoostProps {
   userId: number | undefined;
@@ -29,18 +32,23 @@ interface BoostProps {
 
 
 const Boost = ({ userId, name, userData }: BoostProps) => {
+  const {data, isLoading} = apiClient.asset.getAll.useQuery(['assets'])
+  const breakpoint = useBreakpointValue({ base: "100vw", md: "78vw", lg: "100vw" });
+  console.log(data)
 
 
-console.log(userId, name)
+ // Handle loading state
+  if (isLoading) return <div>Loading...</div>;
+
+  // Handle the case when data is not available
+  if (!data) return <div>No data available</div>;
+
+
   return (
     <Flex direction={"column"} bgColor={"black"}>
       <Flex
         direction={"column"}
-        w={useBreakpointValue({
-          base: "100vw",
-          md: "78vw",
-          lg: "100vw",
-        })}
+        w={breakpoint}
         borderTopRadius={"15px"}
         bgColor={"#FFCC23"}
         overflowX={"hidden"}

@@ -1,19 +1,19 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from 'mongoose';
 
-@Schema({ timestamps: true })
+@Schema()
 export class Asset {
-  @Prop()
-  type: string; // e.g., "Car", "CreditCard", "House", "Boat"
+  @Prop({ required: true })
+  name: string;
 
-  @Prop()
-  name: string; // e.g., "BMW 1 Series", "Gold Credit Card"
+  @Prop({ required: true })
+  type: 'Credit Card' | 'Car' | 'House' | 'Boat';
 
-  @Prop()
-  value: number; // Cost in the game
+  @Prop({ required: true })
+  levelRequirement: number;
 
-  @Prop()
-  status: string; // Status of the asset (e.g., "Owned", "Available")
+  @Prop({ required: true })
+  price: number;
 }
 
 @Schema({ timestamps: true })
