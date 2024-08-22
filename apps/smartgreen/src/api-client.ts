@@ -1,5 +1,5 @@
  import {initQueryClient} from '@ts-rest/react-query'
- import {contract} from 'api-contract'
+ import { contract } from 'api-contract'
 
 
  const apiClient = initQueryClient(contract, {

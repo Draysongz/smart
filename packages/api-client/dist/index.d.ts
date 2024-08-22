@@ -2,18 +2,18 @@ import { z } from "zod";
 export declare const AssetSchema: z.ZodObject<{
     type: z.ZodString;
     name: z.ZodString;
-    value: z.ZodNumber;
-    status: z.ZodString;
+    levelRequirement: z.ZodNumber;
+    price: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
     type: string;
     name: string;
-    value: number;
-    status: string;
+    levelRequirement: number;
+    price: number;
 }, {
     type: string;
     name: string;
-    value: number;
-    status: string;
+    levelRequirement: number;
+    price: number;
 }>;
 export declare const EnergySourceSchema: z.ZodObject<{
     type: z.ZodString;
@@ -86,18 +86,18 @@ export declare const UserSchema: z.ZodObject<{
     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
         type: z.ZodString;
         name: z.ZodString;
-        value: z.ZodNumber;
-        status: z.ZodString;
+        levelRequirement: z.ZodNumber;
+        price: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
         type: string;
         name: string;
-        value: number;
-        status: string;
+        levelRequirement: number;
+        price: number;
     }, {
         type: string;
         name: string;
-        value: number;
-        status: string;
+        levelRequirement: number;
+        price: number;
     }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     name: string;
@@ -129,8 +129,8 @@ export declare const UserSchema: z.ZodObject<{
     assets?: {
         type: string;
         name: string;
-        value: number;
-        status: string;
+        levelRequirement: number;
+        price: number;
     }[] | undefined;
 }, {
     name: string;
@@ -162,8 +162,8 @@ export declare const UserSchema: z.ZodObject<{
     assets?: {
         type: string;
         name: string;
-        value: number;
-        status: string;
+        levelRequirement: number;
+        price: number;
     }[] | undefined;
 }>;
 export type Users = z.infer<typeof UserSchema>;
@@ -219,18 +219,18 @@ export declare const contract: {
                 assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
                     name: z.ZodString;
-                    value: z.ZodNumber;
-                    status: z.ZodString;
+                    levelRequirement: z.ZodNumber;
+                    price: z.ZodNumber;
                 }, "strip", z.ZodTypeAny, {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }, {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
                 name: string;
@@ -262,8 +262,8 @@ export declare const contract: {
                 assets?: {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }[] | undefined;
             }, {
                 name: string;
@@ -295,8 +295,8 @@ export declare const contract: {
                 assets?: {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }[] | undefined;
             }>;
             path: "/api/users";
@@ -347,18 +347,18 @@ export declare const contract: {
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         name: z.ZodString;
-                        value: z.ZodNumber;
-                        status: z.ZodString;
+                        levelRequirement: z.ZodNumber;
+                        price: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -390,8 +390,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }, {
                     name: string;
@@ -423,8 +423,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }>;
             };
@@ -487,18 +487,18 @@ export declare const contract: {
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         name: z.ZodString;
-                        value: z.ZodNumber;
-                        status: z.ZodString;
+                        levelRequirement: z.ZodNumber;
+                        price: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -530,8 +530,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }, {
                     name: string;
@@ -563,8 +563,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }>, "many">;
             };
@@ -627,18 +627,18 @@ export declare const contract: {
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         name: z.ZodString;
-                        value: z.ZodNumber;
-                        status: z.ZodString;
+                        levelRequirement: z.ZodNumber;
+                        price: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -670,8 +670,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }, {
                     name: string;
@@ -703,8 +703,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }>;
                 404: z.ZodObject<{
@@ -771,18 +771,18 @@ export declare const contract: {
                 assets: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
                     name: z.ZodString;
-                    value: z.ZodNumber;
-                    status: z.ZodString;
+                    levelRequirement: z.ZodNumber;
+                    price: z.ZodNumber;
                 }, "strip", z.ZodTypeAny, {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }, {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }>, "many">>>;
             }, "strip", z.ZodTypeAny, {
                 name?: string | undefined;
@@ -813,8 +813,8 @@ export declare const contract: {
                 assets?: {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }[] | undefined;
             }, {
                 name?: string | undefined;
@@ -845,8 +845,8 @@ export declare const contract: {
                 assets?: {
                     type: string;
                     name: string;
-                    value: number;
-                    status: string;
+                    levelRequirement: number;
+                    price: number;
                 }[] | undefined;
             }>;
             path: "/api/users/:userId";
@@ -897,18 +897,18 @@ export declare const contract: {
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         name: z.ZodString;
-                        value: z.ZodNumber;
-                        status: z.ZodString;
+                        levelRequirement: z.ZodNumber;
+                        price: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -940,8 +940,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }, {
                     name: string;
@@ -973,8 +973,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }>;
                 404: z.ZodObject<{
@@ -996,7 +996,6 @@ export declare const contract: {
                 userId: number;
             }>;
             method: "DELETE";
-            body: z.ZodAny;
             path: "/api/users/:userId";
             responses: {
                 204: z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>;
@@ -1023,7 +1022,7 @@ export declare const contract: {
             }>;
             method: "POST";
             body: z.ZodAny;
-            path: "/api/users/purchase/:userId:/:energyType";
+            path: "/api/users/:userId/purchase-energy-source/:energyType";
             responses: {
                 200: z.ZodObject<{
                     username: z.ZodString;
@@ -1071,18 +1070,18 @@ export declare const contract: {
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
                         name: z.ZodString;
-                        value: z.ZodNumber;
-                        status: z.ZodString;
+                        levelRequirement: z.ZodNumber;
+                        price: z.ZodNumber;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }, {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -1114,8 +1113,8 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }, {
                     name: string;
@@ -1147,8 +1146,166 @@ export declare const contract: {
                     assets?: {
                         type: string;
                         name: string;
-                        value: number;
-                        status: string;
+                        levelRequirement: number;
+                        price: number;
+                    }[] | undefined;
+                }>;
+                400: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        purchaseAsset: {
+            pathParams: z.ZodObject<{
+                userId: z.ZodNumber;
+                name: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                userId: number;
+            }, {
+                name: string;
+                userId: number;
+            }>;
+            method: "POST";
+            body: z.ZodAny;
+            path: "/api/users/:userId/purchase-asset/:name";
+            responses: {
+                200: z.ZodObject<{
+                    username: z.ZodString;
+                    name: z.ZodString;
+                    coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
+                    referralLink: z.ZodOptional<z.ZodString>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    refillEnergy: z.ZodDefault<z.ZodNumber>;
+                    refillTime: z.ZodDefault<z.ZodNumber>;
+                    status: z.ZodOptional<z.ZodString>;
+                    userLevel: z.ZodOptional<z.ZodNumber>;
+                    tapEnergy: z.ZodDefault<z.ZodNumber>;
+                    tapPower: z.ZodDefault<z.ZodNumber>;
+                    userId: z.ZodNumber;
+                    energyLevel: z.ZodDefault<z.ZodNumber>;
+                    rechargeLevel: z.ZodDefault<z.ZodNumber>;
+                    coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
+                    energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        type: z.ZodString;
+                        productionRate: z.ZodNumber;
+                        purchaseCost: z.ZodNumber;
+                        operational: z.ZodBoolean;
+                        country: z.ZodString;
+                        licenseFee: z.ZodNumber;
+                        dailyOperatingHours: z.ZodNumber;
+                    }, "strip", z.ZodTypeAny, {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }, {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }>, "many">>;
+                    assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        type: z.ZodString;
+                        name: z.ZodString;
+                        levelRequirement: z.ZodNumber;
+                        price: z.ZodNumber;
+                    }, "strip", z.ZodTypeAny, {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
+                    }, {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
+                    }>, "many">>;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    username: string;
+                    coinsEarned: number;
+                    floatingTapEnergy: number;
+                    refillEnergy: number;
+                    refillTime: number;
+                    tapEnergy: number;
+                    tapPower: number;
+                    userId: number;
+                    energyLevel: number;
+                    rechargeLevel: number;
+                    coinsPerHour: number;
+                    status?: string | undefined;
+                    referralLink?: string | undefined;
+                    referrals?: number[] | undefined;
+                    userLevel?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
+                    energySources?: {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }[] | undefined;
+                    assets?: {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
+                    }[] | undefined;
+                }, {
+                    name: string;
+                    username: string;
+                    userId: number;
+                    status?: string | undefined;
+                    coinsEarned?: number | undefined;
+                    floatingTapEnergy?: number | undefined;
+                    referralLink?: string | undefined;
+                    referrals?: number[] | undefined;
+                    refillEnergy?: number | undefined;
+                    refillTime?: number | undefined;
+                    userLevel?: number | undefined;
+                    tapEnergy?: number | undefined;
+                    tapPower?: number | undefined;
+                    energyLevel?: number | undefined;
+                    rechargeLevel?: number | undefined;
+                    coinsPerHour?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
+                    energySources?: {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }[] | undefined;
+                    assets?: {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
                     }[] | undefined;
                 }>;
                 400: z.ZodObject<{
@@ -1442,8 +1599,222 @@ export declare const contract: {
                 energyId: number;
             }>;
             method: "DELETE";
-            body: z.ZodAny;
             path: "/api/energy/:energyId";
+            responses: {
+                204: z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+    };
+    asset: {
+        create: {
+            method: "POST";
+            body: z.ZodObject<{
+                type: z.ZodString;
+                name: z.ZodString;
+                levelRequirement: z.ZodNumber;
+                price: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                type: string;
+                name: string;
+                levelRequirement: number;
+                price: number;
+            }, {
+                type: string;
+                name: string;
+                levelRequirement: number;
+                price: number;
+            }>;
+            path: "/api/assets";
+            responses: {
+                201: z.ZodObject<{
+                    type: z.ZodString;
+                    name: z.ZodString;
+                    levelRequirement: z.ZodNumber;
+                    price: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        createBatch: {
+            method: "POST";
+            body: z.ZodArray<z.ZodObject<{
+                type: z.ZodString;
+                name: z.ZodString;
+                levelRequirement: z.ZodNumber;
+                price: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                type: string;
+                name: string;
+                levelRequirement: number;
+                price: number;
+            }, {
+                type: string;
+                name: string;
+                levelRequirement: number;
+                price: number;
+            }>, "many">;
+            path: "/api/assets/batch";
+            responses: {
+                201: z.ZodArray<z.ZodObject<{
+                    type: z.ZodString;
+                    name: z.ZodString;
+                    levelRequirement: z.ZodNumber;
+                    price: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }>, "many">;
+            };
+            strictStatusCodes: true;
+        };
+        getAll: {
+            method: "GET";
+            path: "/api/assets";
+            responses: {
+                200: z.ZodArray<z.ZodObject<{
+                    type: z.ZodString;
+                    name: z.ZodString;
+                    levelRequirement: z.ZodNumber;
+                    price: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }>, "many">;
+            };
+            strictStatusCodes: true;
+        };
+        getOne: {
+            pathParams: z.ZodObject<{
+                assetId: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                assetId: number;
+            }, {
+                assetId: number;
+            }>;
+            method: "GET";
+            path: "/api/assets/:assetId";
+            responses: {
+                200: z.ZodObject<{
+                    type: z.ZodString;
+                    name: z.ZodString;
+                    levelRequirement: z.ZodNumber;
+                    price: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        update: {
+            pathParams: z.ZodObject<{
+                assetId: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                assetId: number;
+            }, {
+                assetId: number;
+            }>;
+            method: "PUT";
+            body: z.ZodObject<{
+                type: z.ZodOptional<z.ZodString>;
+                name: z.ZodOptional<z.ZodString>;
+                levelRequirement: z.ZodOptional<z.ZodNumber>;
+                price: z.ZodOptional<z.ZodNumber>;
+            }, "strip", z.ZodTypeAny, {
+                type?: string | undefined;
+                name?: string | undefined;
+                levelRequirement?: number | undefined;
+                price?: number | undefined;
+            }, {
+                type?: string | undefined;
+                name?: string | undefined;
+                levelRequirement?: number | undefined;
+                price?: number | undefined;
+            }>;
+            path: "/api/assets/:assetId";
+            responses: {
+                200: z.ZodObject<{
+                    type: z.ZodString;
+                    name: z.ZodString;
+                    levelRequirement: z.ZodNumber;
+                    price: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }, {
+                    type: string;
+                    name: string;
+                    levelRequirement: number;
+                    price: number;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        remove: {
+            pathParams: z.ZodObject<{
+                assetId: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                assetId: number;
+            }, {
+                assetId: number;
+            }>;
+            method: "DELETE";
+            path: "/api/assets/:assetId";
             responses: {
                 204: z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>;
                 404: z.ZodObject<{

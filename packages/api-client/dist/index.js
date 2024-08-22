@@ -7,9 +7,9 @@ var c = (0, core_1.initContract)();
 // Define the Asset schema
 exports.AssetSchema = zod_1.z.object({
     type: zod_1.z.string(), // e.g., "Car", "CreditCard", "House", "Boat"
-    name: zod_1.z.string(), // e.g., "BMW 1 Series", "Gold Credit Card"
-    value: zod_1.z.number(), // Cost in the game
-    status: zod_1.z.string(), // Status of the asset (e.g., "Owned", "Available")
+    name: zod_1.z.string(),
+    levelRequirement: zod_1.z.number(),
+    price: zod_1.z.number(), // Cost in the game
 });
 // Define the EnergySource schema
 exports.EnergySourceSchema = zod_1.z.object({
@@ -19,7 +19,7 @@ exports.EnergySourceSchema = zod_1.z.object({
     operational: zod_1.z.boolean(), // Whether the energy source is currently operational
     country: zod_1.z.string(), // The country where the energy source is located
     licenseFee: zod_1.z.number(), // Cost for licensing in other countries
-    dailyOperatingHours: zod_1.z.number()
+    dailyOperatingHours: zod_1.z.number(),
 });
 // Define the User schema
 exports.UserSchema = zod_1.z.object({
@@ -96,7 +96,6 @@ exports.contract = c.router({
             pathParams: zod_1.z.object({
                 userId: zod_1.z.coerce.number(),
             }),
-            body: zod_1.z.any(),
             responses: {
                 204: zod_1.z.object({}),
                 404: zod_1.z.object({
@@ -106,10 +105,28 @@ exports.contract = c.router({
         },
         purchaseEnergySource: {
             method: "POST",
-            path: "/users/purchase/:userId:/:energyType",
+            path: "/users/:userId/purchase-energy-source/:energyType",
             pathParams: zod_1.z.object({
                 userId: zod_1.z.coerce.number(),
                 energyType: zod_1.z.string(),
+            }),
+            body: zod_1.z.any(),
+            responses: {
+                200: exports.UserSchema,
+                400: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+        purchaseAsset: {
+            method: "POST",
+            path: "/users/:userId/purchase-asset/:name",
+            pathParams: zod_1.z.object({
+                userId: zod_1.z.coerce.number(),
+                name: zod_1.z.string(),
             }),
             body: zod_1.z.any(),
             responses: {
@@ -180,7 +197,71 @@ exports.contract = c.router({
             pathParams: zod_1.z.object({
                 energyId: zod_1.z.coerce.number(),
             }),
-            body: zod_1.z.any(),
+            responses: {
+                204: zod_1.z.object({}),
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+    },
+    asset: {
+        create: {
+            method: "POST",
+            path: "/assets",
+            body: exports.AssetSchema,
+            responses: {
+                201: exports.AssetSchema,
+            },
+        },
+        createBatch: {
+            method: "POST",
+            path: "/assets/batch",
+            body: zod_1.z.array(exports.AssetSchema), // Array of assets to be created
+            responses: {
+                201: zod_1.z.array(exports.AssetSchema),
+            },
+        },
+        getAll: {
+            method: "GET",
+            path: "/assets",
+            responses: {
+                200: exports.AssetSchema.array(),
+            },
+        },
+        getOne: {
+            method: "GET",
+            path: "/assets/:assetId",
+            pathParams: zod_1.z.object({
+                assetId: zod_1.z.coerce.number(),
+            }),
+            responses: {
+                200: exports.AssetSchema,
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+        update: {
+            method: "PUT",
+            path: "/assets/:assetId",
+            pathParams: zod_1.z.object({
+                assetId: zod_1.z.coerce.number(),
+            }),
+            body: exports.AssetSchema.partial(),
+            responses: {
+                200: exports.AssetSchema,
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+        remove: {
+            method: "DELETE",
+            path: "/assets/:assetId",
+            pathParams: zod_1.z.object({
+                assetId: zod_1.z.coerce.number(),
+            }),
             responses: {
                 204: zod_1.z.object({}),
                 404: zod_1.z.object({

@@ -1,14 +1,14 @@
 import { initContract } from "@ts-rest/core";
-import {  any, z } from "zod";
+import { z } from "zod";
 
 const c = initContract();
 
 // Define the Asset schema
 export const AssetSchema = z.object({
   type: z.string(), // e.g., "Car", "CreditCard", "House", "Boat"
-  name: z.string(), // e.g., "BMW 1 Series", "Gold Credit Card"
-  value: z.number(), // Cost in the game
-  status: z.string(), // Status of the asset (e.g., "Owned", "Available")
+  name: z.string(),
+  levelRequirement: z.number(),
+  price: z.number(), // Cost in the game
 });
 
 // Define the EnergySource schema
@@ -19,7 +19,7 @@ export const EnergySourceSchema = z.object({
   operational: z.boolean(), // Whether the energy source is currently operational
   country: z.string(), // The country where the energy source is located
   licenseFee: z.number(), // Cost for licensing in other countries
-  dailyOperatingHours: z.number()
+  dailyOperatingHours: z.number(),
 });
 
 // Define the User schema
@@ -107,7 +107,6 @@ export const contract = c.router(
         pathParams: z.object({
           userId: z.coerce.number(),
         }),
-        body: z.any(),
         responses: {
           204: z.object({}),
           404: z.object({
@@ -116,9 +115,9 @@ export const contract = c.router(
         },
       },
 
-      purchaseEnergySource: { // New endpoint for purchasing energy sources
+      purchaseEnergySource: {
         method: "POST",
-        path: "/users/purchase/:userId:/:energyType",
+        path: "/users/:userId/purchase-energy-source/:energyType",
         pathParams: z.object({
           userId: z.coerce.number(),
           energyType: z.string(),
@@ -134,8 +133,26 @@ export const contract = c.router(
           }),
         },
       },
-    },
 
+      purchaseAsset: { 
+        method: "POST",
+        path: "/users/:userId/purchase-asset/:name",
+        pathParams: z.object({
+          userId: z.coerce.number(),
+          name: z.string(),
+        }),
+        body: z.any(),
+        responses: {
+          200: UserSchema,
+          400: z.object({
+            message: z.string(),
+          }),
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
 
     energy: {
       create: {
@@ -147,7 +164,7 @@ export const contract = c.router(
         },
       },
 
-       createBatch: { // New endpoint for batch creation
+      createBatch: {
         method: "POST",
         path: "/energy/batch",
         body: z.array(EnergySourceSchema), // Expecting an array of EnergySourceSchema
@@ -199,7 +216,6 @@ export const contract = c.router(
         pathParams: z.object({
           energyId: z.coerce.number(),
         }),
-        body: z.any(),
         responses: {
           204: z.object({}),
           404: z.object({
@@ -208,6 +224,78 @@ export const contract = c.router(
         },
       },
     },
+
+    asset: {
+      create: {
+        method: "POST",
+        path: "/assets",
+        body: AssetSchema,
+        responses: {
+          201: AssetSchema,
+        },
+      },
+
+      createBatch: {
+        method: "POST",
+        path: "/assets/batch",
+        body: z.array(AssetSchema), // Array of assets to be created
+        responses: {
+          201: z.array(AssetSchema),
+        },
+      },
+
+      getAll: {
+        method: "GET",
+        path: "/assets",
+        responses: {
+          200: AssetSchema.array(),
+        },
+      },
+
+      getOne: {
+        method: "GET",
+        path: "/assets/:assetId",
+        pathParams: z.object({
+          assetId: z.coerce.number(),
+        }),
+        responses: {
+          200: AssetSchema,
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+
+      update: {
+        method: "PUT",
+        path: "/assets/:assetId",
+        pathParams: z.object({
+          assetId: z.coerce.number(),
+        }),
+        body: AssetSchema.partial(),
+        responses: {
+          200: AssetSchema,
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+
+      remove: {
+        method: "DELETE",
+        path: "/assets/:assetId",
+        pathParams: z.object({
+          assetId: z.coerce.number(),
+        }),
+        responses: {
+          204: z.object({}),
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+
   },
   { pathPrefix: "/api", strictStatusCodes: true }
 );

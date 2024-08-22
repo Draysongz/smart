@@ -4,6 +4,7 @@ import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schemas/User.schema';
 import { EnergyModule } from 'src/energy/energy.module';
+import { AssetsModule } from 'src/assets/assets.module';
 
 @Module({
   controllers: [UsersController],
@@ -13,7 +14,8 @@ import { EnergyModule } from 'src/energy/energy.module';
        name: User.name,
        schema: UserSchema
     }]),
-    EnergyModule 
+    EnergyModule ,
+    AssetsModule
   ]
 })
 export class UsersModule {}
