@@ -5,24 +5,36 @@ import ticket from '../../assets/ticket.png';
 import contact from '../../assets/contact.png';
 import NavigationBar from '../NavigationBar';
 import bg from '../../assets/bg.png'
-import { Box } from '@chakra-ui/react';
-import {Icon} from '@chakra-ui/react';
+import { Box, Flex, useDisclosure } from '@chakra-ui/react';
+import {Icon, Text} from '@chakra-ui/react';
 import { BsTwitterX } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa6";
 import { FaTiktok } from "react-icons/fa6";
 import { FaTelegram } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
+import { Users } from 'api-contract';
+import { FaCalendarAlt } from 'react-icons/fa';
+import {
+    Button,
+    Drawer,
+    DrawerBody,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
+  } from '@chakra-ui/react'
 
-
+type boostpops ={
+        userId: number | undefined
+        userData: Users | null   
+}
 
 const EarnPage= ({
   userId,
-  name,
-}: {
-  userId: number | undefined
-  name: string | null
-}) => {
-    console.log(userId, name);
+  userData
+}:boostpops ) => {
+    console.log(userId, userData);
+
+    const {isOpen, onClose, onOpen} = useDisclosure()
     return (
         <section className='w-screen flex justify-center h-[100%] bg-black'>
 
@@ -32,7 +44,7 @@ const EarnPage= ({
         <img src={coin} alt="" className='w-[33%]'/>
         <h2 className='text-white text-3xl font-bold'>Earn More Coins</h2>
         <div className='w-full flex flex-col gap-6  mt-[100px] items-center'>
-        <div className='w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8'>
+        <div className='w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8'  onClick={onOpen}>
         <img src={gift} alt="" />
         <span className='flex flex-col'>
             <p className='text-white'>Daily Reward</p>
@@ -105,13 +117,111 @@ const EarnPage= ({
         </div>
         </a>
         </div>
-        <Box className='bg-custom-greenbg w-screen' backgroundImage={bg}>
-
-            
-        </Box>
         <NavigationBar />
         </Box>
         </div>
+
+        <Drawer 
+        isOpen={isOpen}
+        placement='bottom'
+        onClose={onClose}
+       
+      >
+        <DrawerOverlay />
+        <DrawerContent
+            bg= '#132E25'
+            bgImage= {`url(${bg})`}
+            bgSize= 'cover'
+            bgPosition= 'center'
+            bgBlendMode="overlay"
+            borderTopRadius="25px"
+        >
+
+          <DrawerCloseButton color="white" />
+          {/* <DrawerHeader>Create your account</DrawerHeader> */}
+
+          <DrawerBody>
+            {/* <Input placeholder='Type here...' /> */}
+            <Box className=' flex flex-col items-center justify-center py-3 text-white gap-3'>
+            <Icon as={FaCalendarAlt} boxSize={20} color={'#FCA61B'}/>
+            <Flex className='flex-col text-center gap-3 w-[100%]'>
+            <Text className=' text-[1.5em] font-semibold'>Daily reward</Text>
+            <Text className='opacity-70'>Don't miss collecting rewards daily, or progress will be reset</Text>
+            </Flex>
+
+            <Flex className='w-[100%] flex-col gap-2'>
+                <Flex className='w-[100%] justify-center gap-2'>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 border-custom-yellow border-custom-sm text-center'>
+                        <Text>Day 1</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>5K</Text>
+                    </Flex>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 text-center'>
+                        <Text>Day 2</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>10K</Text>
+                    </Flex>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 text-center'>
+                        <Text>Day 3</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>50K</Text>
+                    </Flex>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 text-center'>
+                        <Text>Day 4</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>100K</Text>
+                    </Flex>
+                </Flex>
+                <Flex className='w-[100%] justify-center gap-2'>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 text-center'>
+                        <Text>Day 5</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>250K</Text>
+                    </Flex>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 text-center'>
+                        <Text>Day 6</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>500K</Text>
+                    </Flex>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 text-center'>
+                        <Text>Day 7</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>750K</Text>
+                    </Flex>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[25%] rounded-lg py-2 text-center'>
+                        <Text>Day 8</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>1M</Text>
+                    </Flex>
+                </Flex>
+                <Flex className='w-[100%] gap-2'>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[23%] rounded-lg py-2 text-center'>
+                        <Text>Day 9</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>2M</Text>
+                    </Flex>
+                    <Flex className='flex-col justify-center items-center bg-custom-greentxt  gap-1 w-[23%] rounded-lg py-2 text-center'>
+                        <Text>Day 10</Text>
+                        <img src={coin} alt="" className='w-[40px]' />
+                        <Text>5M</Text>
+                    </Flex>
+                </Flex>
+            </Flex>
+            <Button className='w-[100%] text-black font-bold' onClick={onClose}>
+                CLAIM
+            </Button>
+            </Box>
+
+          </DrawerBody>
+
+          {/* <DrawerFooter>
+            <Button variant='outline' mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme='blue'>Save</Button>
+          </DrawerFooter> */}
+        </DrawerContent>
+      </Drawer>
         </section>
     )
 };

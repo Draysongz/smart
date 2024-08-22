@@ -5,6 +5,7 @@ import WebApp from "@twa-dev/sdk"
 import Boost from "./Pages/Boost"
 import MainContent from "./components/WelcomePage/MainContent"
 import UserId from "./components/HomePage/UserId"
+import EarnPage from "./components/EarnPage/EarnPage"
 import { useUserApi } from "./hooks/useUserData"
 import { Users } from "api-contract"
 
@@ -90,6 +91,7 @@ function AppContent({ userId, name, userData }: BoostProps) {
     <Routes>
       <Route index element={<UserId userId={userId} name={name} userData={userData} />} />
       <Route path="/boost" element={<Boost userId={userId} userData={userData} />} />
+      <Route path="/tasks" element={<EarnPage userId={userId} userData={userData} />} />
     </Routes>
   )
 }

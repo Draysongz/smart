@@ -32,6 +32,7 @@ export default {
       },
       borderWidth: {
         'custom-top': '6px', // Example custom size
+        'custom-sm': '2px', // Example custom size
         'custom-large-top': '20px', // Another example
       },
       borderColor: {
