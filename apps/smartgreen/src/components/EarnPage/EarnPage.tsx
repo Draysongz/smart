@@ -12,7 +12,6 @@ import { FaInstagram } from "react-icons/fa6";
 import { FaTiktok } from "react-icons/fa6";
 import { FaTelegram } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
-import { IoIosClose } from "react-icons/io";
 
 
 
