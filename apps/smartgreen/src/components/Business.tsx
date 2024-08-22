@@ -67,6 +67,7 @@ type PropType = {
 
 function BusinessCard({ name, type, price, levelRequirement, purchaseAsset, userId, userLevel }: PropType) {
   const [isLoading, setIsLoading] = useState(false)
+  console.log(type)
 
   const handlePurchase = async () => {
     if (userId === undefined) {
