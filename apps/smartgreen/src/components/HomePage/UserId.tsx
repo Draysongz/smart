@@ -11,7 +11,7 @@ import fanSpinning from "../../assets/set-fan.gif"
 import NavigationBar from "../NavigationBar";
 import ProgressBar from "../ProgressBar"
 import bg from "../../assets/bg.png";
-import windIcon from "../../assets/Icons/_0007_Wind.png"
+// import windIcon from "../../assets/Icons/_0007_Wind.png"
 import spaceship from '../../assets/spaceship.svg';
 import { Link } from "react-router-dom";
 import { Users } from "api-contract";
