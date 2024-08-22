@@ -1,6 +1,6 @@
 // import { useState } from "react";
 // import Lifestyle from "../components/Lifestyle";
-// import Technology from "../components/Technology";
+import Technology from "../components/Technology";
 import { Flex, useBreakpointValue, Image, Text, Box } from "@chakra-ui/react";
 import fanBlade from "../assets/FAN blade 1.png"
 import fanStand from "../assets/Fan Stand.png";
@@ -180,6 +180,9 @@ const Boost = ({ userId, userData }: BoostProps) => {
               <TabPanel>
                <Lifestyle userId={userId} name={name} userData={userData}/>
               </TabPanel> */}
+               <TabPanel>
+                <Technology userId={userId}  />
+              </TabPanel>
                <TabPanel>
                 <Business userId={userId} userData={userData} />
               </TabPanel>

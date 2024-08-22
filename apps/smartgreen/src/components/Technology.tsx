@@ -1,154 +1,142 @@
-// import { useState } from "react"
-// import { useCards } from "../hooks/useCards"
-// import { ClipLoader } from "react-spinners"
-// import { usesPerHour } from "../hooks/usesPerHour"
-// import { Image } from "@chakra-ui/react"
-// import smcoin from "../assets/smcoin.png";
-// import { Users } from "api-contract"
+import { useState, useEffect } from "react"
+import { ClipLoader } from "react-spinners"
+import { Image } from "@chakra-ui/react"
+import smcoin from "../assets/smcoin.png"
+import apiClient from "../api-client"
+import { EnergySource } from "api-contract"
+import { useUserApi } from "../hooks/useUserData"
 
-// interface TechProps {
-//   userId: number | undefined
-//   name: string | null
-//   userData: Users | null
-// }
+interface TechProps {
+  userId: number | undefined
+}
 
-// export default function Technology({ userId, name, userData }: TechProps) {
-//   const { isLoading, cards, setCards } = useCards("technology", userId)
-//   const { sPerHour } = usesPerHour()
+export default function Technology({ userId }: TechProps) {
+  const { data, isLoading } = apiClient.energy.getAll.useQuery(['energy'])
+  const [sortedCards, setSortedCards] = useState<EnergySource[]>([])
 
-//   if (isLoading) {
-//     return (
-//       <div className="flex justify-center">
-//         <ClipLoader color="#fff" />
-//       </div>
-//     )
-//   }
+  const { purchaseEnergy } = useUserApi()
 
-//   // Define the desired order
-//   const order = ["Solar", "Wind", "3D Wind"]
+  useEffect(() => {
+    if (data) {
+      const sorted = [...data.body].sort((a, b) => a.purchaseCost - b.purchaseCost)
+      setSortedCards(sorted)
+    }
+  }, [data])
 
-//   // Sort the cards based on the defined order
-//   const sortedCards = cards.sort((a, b) => {
-//     const indexA = order.indexOf(a.name)
-//     const indexB = order.indexOf(b.name)
+  const checkIfEnabled = (index: number) => {
+    if (index === 0) return true
+    return sortedCards[index - 1]?.operational && sortedCards[index - 1]?.productionRate >= 5
+  }
 
-//     // If both cards are in the order array, compare their indices
-//     if (indexA !== -1 && indexB !== -1) {
-//       return indexA - indexB
-//     }
-//     // If only one card is in the order array, it comes first
-//     if (indexA !== -1) return -1
-//     if (indexB !== -1) return 1
+  if (isLoading) {
+    return (
+      <div className="flex justify-center">
+        <ClipLoader color="#fff" />
+      </div>
+    )
+  }
 
-//     // If neither card is in the order array, maintain original order
-//     return a.name.localeCompare(b.name)
-//   })
+  return (
+    <div className="grid grid-cols-3 justify-between gap-2 pb-32 mt-4">
+      {sortedCards.map((card, index) => (
+        <TechnologyCard
+        userId={userId}
+          key={card.type}
+          name={card.type}
+          perHr={card.productionRate}
+          price={card.purchaseCost}
+          
+          image={smcoin}
+          isEnabled={checkIfEnabled(index)}
+          unlockingCondition={`Unlock by leveling ${sortedCards[index - 1]?.type} to level 5`}
+          purchaseEnergy={purchaseEnergy} // Ensure userId is passed as a number
+        />
+      ))}
+    </div>
+  )
+}
 
-//   // Define conditions for enabling cards
-//   const checkIfEnabled = (index: number) => {
-//     if (index === 0) return true // Solar card is always enabled
-//     return sortedCards[index - 1]?.level >= 5 // Previous card level >= 5 enables the next card
-//   }
+type TechnologyCardProps = {
+    userId:number | undefined
+  name: string
+  perHr: number
+  price: number
+  image: string
+  isEnabled: boolean
+  unlockingCondition: string
+  purchaseEnergy: (userId: number, energyTyope: string)=> void
+}
 
-//   return (
-//     <div className="grid grid-cols-3 justify-between gap-2 pb-32 mt-4">
-//       {sortedCards.map((card, index) => (
-//         <TechnologyCard
-//           key={card.name}
-//           name={card.name}
-//           perHr={card.coinsPerHr}
-//           price={card.price}
-//           level={card.level}
-//           image={card.imageUrl}
-//           isEnabled={checkIfEnabled(index)}
-//           unlockingCondition={`Unlock by le veling ${order[index - 1]} to level 5`}
-//           onClick={async () =>
-//             await sPerHour(
-//               userId,
-//               card.price,
-//               card.coinsPerHr,
-//               index,
-//               sortedCards,
-//               userData,
-//               setCards
-//             )
-//           }
-//         />
-//       ))}
-//     </div>
-//   )
-// }
+function TechnologyCard({
+    userId,
+  name,
+  perHr,
+  price,
+  image,
+  isEnabled,
+  unlockingCondition,
+  purchaseEnergy,
+}: TechnologyCardProps) {
+    const [isLoading, setIsLoading] = useState(false)
+ 
+console.log(unlockingCondition, isEnabled)
+  const handlePurchase = async () => {
+    if (userId === undefined) {
+      alert("User ID is required to purchase an asset.")
+      return
+    }
 
-// type TechnologyCardProps = {
-//   name: string
-//   perHr: number
-//   price: number
-//   level: number
-//   image: string
-//   isEnabled: boolean
-//   unlockingCondition: string
-//   onClick: () => Promise<void>
-// }
 
-// function TechnologyCard({
-//   name,
-//   perHr,
-//   price,
-//   level,
-//   image,
-//   isEnabled,
-//   unlockingCondition,
-//   onClick,
-// }: TechnologyCardProps) {
-//   const [isLoading, setIsLoading] = useState(false)
+    setIsLoading(true)
+    try {
+      await purchaseEnergy(userId, name)
+      alert("Asset purchased successfully!")
+    } catch (error) {
+      alert("Failed to purchase asset. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
-//   return (
-//     <div className={`relative ${!isEnabled ? "opacity-50" : ""}`}>
-//       <div
-//         className={`bg-[#132E25] w-auto rounded-xl text-[#E7ECEA] ${
-//           !isEnabled ? "pointer-events-none" : ""
-//         }`}
-//       >
-//         <div className="px-2 py-1 flex flex-col justify-center items-center">
-//           <p className="font-bold text-sm text-center pb-2 border-b-[1px] w-full ">
-//             {name}
-//           </p>
-//           <p className="w-full mt-2 font-semibold text-sm text-right">
-//             {level} lvl
-//           </p>
-//           <Image src={image} alt={name} w="70px" h="70px" objectFit="cover" />
-//           <p className="font-semibold text-[12px] mt-3">Kw per hour</p>
-//           <div className="flex items-center gap-1 mt-1">
-//             <Image src={smcoin} alt="coin" />
-//             <p className="text-#E3E4E4 font-bold text-sm">+{perHr}</p>
-//           </div>
-//         </div>
-//         <div
-//           className="bg-[#7EB43C] rounded-xl h-14 flex justify-center items-center gap-2"
-//           onClick={async () => {
-//             setIsLoading(true)
-//             await onClick()
-//             setIsLoading(false)
-//           }}
-//         >
-//           {isLoading ? (
-//             <ClipLoader color="#fff" />
-//           ) : (
-//             <>
-//               <Image src={smcoin} alt="coin" />
-//               <button className="text-#E3E4E4 font-bold text-sm">
-//                 {price}
-//               </button>
-//             </>
-//           )}
-//         </div>
-//       </div>
+  return (
+    <div className="relative cursor-pointer">
+      <div
+        className="bg-[#132E25] w-full h-full rounded-xl text-[#E7ECEA] flex flex-col justify-between"
+      >
+        <div className="px-2 py-1 flex flex-col justify-center items-center relative">
+          <p className="text-sm text-center pb-2 border-b-[1px] w-full ">
+            {name}
+          </p>
+          <Image src={image} alt={name} w={'40%'} />
+          <p className="font-semibold text-[12px] mt-3">Kw per hour</p>
+          <div className="flex items-center gap-1 mt-1">
+            <Image src={smcoin} alt="coin" />
+            <p className="text-#E3E4E4 font-bold text-sm">+{perHr}</p>
+          </div>
+            
+        </div>
 
-//       {!isEnabled && (
-//         <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xs font-semibold">
-//           {unlockingCondition}
-//         </div>
-//       )}
-//     </div>
-//   )
-// }
+        <div
+          className="bg-[#7EB43C] rounded-xl h-14 flex justify-center items-center"
+          onClick={handlePurchase}
+        >
+          {isLoading ? (
+            <ClipLoader color="#fff" />
+          ) : (
+            <>
+              <Image src={smcoin} alt="coin" w={'25%'} />
+              <button
+                className={`text-#E3E4E4 text-sm px-1 `}
+                onClick={handlePurchase}
+              >
+                {new Intl.NumberFormat().format(price)}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
+      
+    </div>
+  )
+}

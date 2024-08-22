@@ -3,6 +3,7 @@ import apiClient from "../api-client";
 import { Users } from "api-contract";
 
 export function useUserApi() {
+  
   const createUser = async (userId: number, name: string, username: string) => {
     try {
       const response = await apiClient.users.create.mutation({ body: { userId, name, username } });
@@ -138,10 +139,26 @@ const purchaseAsset = async (name: string, userId: number)=>{
 }
 
 
+const purchaseEnergy = async (userId: number, energyType: string)=>{
+  try {
+    const response = await apiClient.users.purchaseEnergySource.mutation({params: {
+      userId: userId,
+      energyType: energyType
+    }, body: {}},)
+    console.log("Asset purchased", response);
+    return response;
+  } catch (error) {
+    console.log("Error purchasing asset:", error);
+      throw error; // Throw error to handle it in the calling function
+  }
+}
+
+
   return {
     getUserData,
     getOne,
     updateUserData,
-    purchaseAsset
+    purchaseAsset,
+    purchaseEnergy
   };
 }
