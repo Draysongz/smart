@@ -12,6 +12,7 @@ import { FaInstagram } from "react-icons/fa6";
 import { FaTiktok } from "react-icons/fa6";
 import { FaTelegram } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 
 
 
@@ -105,6 +106,10 @@ const EarnPage= ({
         </div>
         </a>
         </div>
+        <Box className='bg-custom-greenbg w-screen' backgroundImage={bg}>
+
+            
+        </Box>
         <NavigationBar />
         </Box>
         </div>

@@ -6,7 +6,7 @@ import WebApp from "@twa-dev/sdk"
 import Boost from "./Pages/Boost"
  import MainContent from "./components/WelcomePage/MainContent"
 import UserId from "./components/HomePage/UserId"
-// import EarnPage from "./components/EarnPage/EarnPage"
+import EarnPage from "./components/EarnPage/EarnPage"
 // import ReferralPage from "./components/referralPage/referralPage"
 // import AirdropPage from "./components/Airdrop/AirdropPage"
 // import PowerUps from "./components/powerUps/powerUps"
@@ -109,8 +109,8 @@ function AppContent({ userId, name, userData }: BoostProps) {
       <Route index element={<UserId userId={userId} name={name} userData={userData} />}/>
       {/* <Route path="/referral" element={<ReferralPage userId={userId} name={name} />} /> */}
       <Route path="/boost" element={<Boost userId={userId} name={name} userData={userData}/>} />
-      {/* <Route path="/tasks" element={<EarnPage userId={userId} name={name} />} />
-      <Route path="/airdrop" element={<AirdropPage userId={userId} name={name} />} />
+      <Route path="/tasks" element={<EarnPage userId={userId} name={name} />} />
+      {/* <Route path="/airdrop" element={<AirdropPage userId={userId} name={name} />} />
       <Route path="/powerUps" element={<PowerUps userId={userId} name={name} />} /> */}
     </Routes>
   )
