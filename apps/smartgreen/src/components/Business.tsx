@@ -94,7 +94,7 @@ function BusinessCard({ name, type, price, levelRequirement, purchaseAsset, user
 
   return (
     <div className="relative cursor-pointer">
-      <div className="bg-[#132E25] w-auto rounded-xl text-[#E7ECEA]">
+      <div className="bg-[#132E25] w-full h-full rounded-xl text-[#E7ECEA] flex flex-col justify-between">
         <div className="px-2 py-1 flex flex-col justify-center items-center relative">
           <p className="text-sm text-center pb-2 border-b-[1px] w-full">
             {name}
@@ -120,7 +120,7 @@ function BusinessCard({ name, type, price, levelRequirement, purchaseAsset, user
             <>
               <Image src={smcoin} alt="coin" w={'25%'} />
               <button
-                className={`text-#E3E4E4 text-sm px-2 ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`text-#E3E4E4 text-sm px-1 ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={handlePurchase}
                 disabled={isDisabled}
               >
