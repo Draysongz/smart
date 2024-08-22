@@ -6,7 +6,6 @@ async function bootstrap() {
     {cors: {
     origin: 'https://smartgreen.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-
   }}
   );
   await app.listen(3000);
