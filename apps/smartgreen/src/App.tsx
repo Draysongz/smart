@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import { useEffect } from "react"
 import WebApp from "@twa-dev/sdk"
-// import Boost from "./Pages/Boost"
+import Boost from "./Pages/Boost"
  import MainContent from "./components/WelcomePage/MainContent"
 import UserId from "./components/HomePage/UserId"
 // import EarnPage from "./components/EarnPage/EarnPage"
@@ -107,9 +107,9 @@ function AppContent({ userId, name, userData }: BoostProps) {
   return (
     <Routes>
       <Route index element={<UserId userId={userId} name={name} userData={userData} />}/>
-      {/* <Route path="/referral" element={<ReferralPage userId={userId} name={name} />} />
+      {/* <Route path="/referral" element={<ReferralPage userId={userId} name={name} />} /> */}
       <Route path="/boost" element={<Boost userId={userId} name={name} />} />
-      <Route path="/tasks" element={<EarnPage userId={userId} name={name} />} />
+      {/* <Route path="/tasks" element={<EarnPage userId={userId} name={name} />} />
       <Route path="/airdrop" element={<AirdropPage userId={userId} name={name} />} />
       <Route path="/powerUps" element={<PowerUps userId={userId} name={name} />} /> */}
     </Routes>

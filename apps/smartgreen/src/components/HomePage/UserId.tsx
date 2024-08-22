@@ -220,12 +220,12 @@ const calculateLostTime = (): number => {
               </div>
               <div className="w-custom-sm h-24 bg-dark-green flex flex-col justify-center items-center gap-4 rounded-2xl">
                 <p className="bg-custom-greentxt py-2 rounded-xl w-[95%] text-sm">
-                  Energy Source
+                  Generated Energy
                 </p>
                 <span className="flex gap-2 text-white items-center">
-                  <img src={windIcon} alt="" className="w-[20px]" />
+                  <img src={bolt} alt="" className="w-[12px]" />
                   <p>
-                    Wind
+                    0
                   </p>
                 </span>
               </div>

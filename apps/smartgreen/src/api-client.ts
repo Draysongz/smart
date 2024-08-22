@@ -4,7 +4,7 @@
 
  const apiClient = initQueryClient(contract, {
     baseHeaders: {},
-    baseUrl: process.env.PRODUCTION_API_URL || 'https://smart-1-hl3w.onrender.com'
+    baseUrl: ''
  })
 
  export default apiClient

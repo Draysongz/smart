@@ -1,9 +1,13 @@
 // import { useState } from "react";
 // import Lifestyle from "../components/Lifestyle";
 // import Technology from "../components/Technology";
-import { Flex, useBreakpointValue, Image, Text } from "@chakra-ui/react";
+import { Flex, useBreakpointValue, Image, Text, Box } from "@chakra-ui/react";
+import fanBlade from "../assets/FAN blade 1.png"
+import fanStand from "../assets/Fan Stand.png";
+import fanSpinning from "../assets/set-fan.gif"
 import cardBg from "../assets/cardBg.png";
-import coin from "../assets/coin.png";
+// import coin from "../assets/coin.png";
+import windIcon from "../assets/Icons/_0007_Wind.png"
 import smcoin from "../assets/smcoin.png";
 import { 
   Tabs, 
@@ -44,9 +48,78 @@ console.log(userId, name)
         mt={3}
         boxShadow="5px 10px 15px 20px  rgba(255, 204, 35, 0.4)" // Increased opacity and spread
       >
+        <Box className="w-full justify-center items-center z-0 fixed">
+              <div
+                className="flex flex-col rounded-full justify-center border-custom-yellow items-center bg-custom-radial border-custom-top w-[220px] h-[220px] relative"
+              >
+                <img
+                  src={fanBlade}
+                  alt="Fan Blade"
+                  className={`w-[80%] mt-[10px] ml-[33px] max-h-700:w-[60%] max-h-700:h-[180px] max-h-700:mb-[-5px] max-h-700:ml-[22px] hidden`}
+                  
+                />
+                <img src={fanSpinning} alt="" className={`max-h-700:w-[100%] max-h-700:h-[200px] max-h-700:mb-[-5px]`} />
+                <img
+                  src={fanStand}
+                  alt=""
+                  className="w-[80%] mt-[-250px] mb-[-13px] h-[260px] max-h-700:w-[70%] max-h-700:h-[230px] max-h-700:mt-[-210px]"
+                />
+              </div>
+              <div className=" absolute top-[5%] right-5 flex flex-col gap-1">
+              <Flex justifyContent={"center"} bgColor={'#132E25'} flexDirection={'column'} width={'120px'} p={'5px'}
+              rounded={'10px'}>
+              <Text color={"white"}>
+                Balance
+              </Text>
+              <Flex alignItems={"center"} className="gap-1">
+              <Image src={smcoin} alt="coin" w={'30%'} />
+              <Text color={"white"}>
+                {userData ? new Intl.NumberFormat().format(Number(userData?.coinsEarned.toFixed(0))) : 0}
+              </Text>
+              </Flex>
+          </Flex>
+
+          <Flex
+            bgColor={"#132E25"}
+            justifyContent={"center"}
+            flexDirection={'column'}
+            width={'120px'} 
+            p={'5px'}
+            rounded={'10px'}
+          >
+            <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
+              Kw Per Hour
+            </Text>
+            <Flex alignItems={"center"} className="gap-1">
+              <Image src={smcoin} alt="coin" w={'30%'} />
+              <Text color={"#DADADA"}>
+                {userData ? userData?.coinsPerHour : 0}
+              </Text>
+            </Flex>
+          </Flex>
+          <Flex
+            bgColor={"#132E25"}
+            justifyContent={"center"}
+            flexDirection={'column'}
+            width={'120px'} p={'5px'}
+            rounded={'10px'}
+          >
+            <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
+              Energy Source
+            </Text>
+            <Flex alignItems={"center"} className="gap-1">
+              <Image src={windIcon} alt="coin" w={'30px'} />
+              <Text color={"#DADADA"}>
+                Wind
+              </Text>
+            </Flex>
+          </Flex>
+              </div>
+
+            </Box>
         <Flex
           mt={"1%"}
-          borderTopRadius={"4%"}
+          borderTopRadius={"20px"}
           direction={"column"}
           bgSize={"cover"}
           bgRepeat={"no-repeat"}
@@ -57,35 +130,13 @@ console.log(userId, name)
           overflow={'scroll'}
           boxShadow="5px 10px 15px 20px  rgba(255, 204, 35, 0.4)"
           align={"center"}
+          paddingTop={"15px"}
           gap={5}
+          position={'relative'}
+          top={"220px"}
         >
-          <Flex justifyContent={"center"} alignItems={"center"}>
-            <Image src={coin} alt="coin" />
-            <Text fontSize={"40px"} color={"white"}>
-              {userData ? new Intl.NumberFormat().format(Number(userData?.coinsEarned.toFixed(0))) : 0}
-            </Text>
-          </Flex>
 
-          <Flex
-            bgColor={"#132E25"}
-            justifyContent={"center"}
-            borderRadius={"12px"}
-            alignItems={"center"}
-            gap={3}
-            px={"10%"}
-          >
-            <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
-              Kw Per Hour
-            </Text>
-            <Flex alignItems={"center"}>
-              <Image src={smcoin} alt="coin" />
-              <Text color={"#DADADA"}>
-                {userData ? userData?.coinsPerHour : 0}
-              </Text>
-            </Flex>
-          </Flex>
-
-          <Tabs variant="unstyled" px={3} align="center"  >
+          <Tabs variant="unstyled" px={3} align="center">
             <TabList bgColor={"#132E25"} p={1} borderRadius={"12px"} >
               <Tab
                 color={"#E7ECEA"}
