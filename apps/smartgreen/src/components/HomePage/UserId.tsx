@@ -213,10 +213,10 @@ const calculateLostTime = (): number => {
   useEffect(() => {
     if (!userData) return;
     const timeLost = calculateLostTime();
-    setCoinsEarned(() => userData?.coinsEarned);
-    setTappingEnergy(() => userData?.tapEnergy);
-    setCoinsPerHour(() => userData?.coinsPerHour);
-    const energyPerSec = userData?.refillEnergy / userData?.refillTime;
+    setCoinsEarned(() => userData.coinsEarned);
+    setTappingEnergy(() => userData.tapEnergy);
+    setCoinsPerHour(() => userData.coinsPerHour);
+    const energyPerSec = userData.refillEnergy / userData.refillTime;
     const energyLost: number =
       userData.floatingTapEnergy + energyPerSec * timeLost;
     if (timeLost >= 3) {
