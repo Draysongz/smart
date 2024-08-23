@@ -3,14 +3,16 @@ import { ClipLoader } from "react-spinners"
 import { Image } from "@chakra-ui/react"
 import smcoin from "../assets/smcoin.png"
 import apiClient from "../api-client"
-import { EnergySource } from "api-contract"
+import { EnergySource, Users } from "api-contract"
 import { useUserApi } from "../hooks/useUserData"
+import { toast } from "react-toastify"
 
 interface TechProps {
   userId: number | undefined
+  userData: Users | null
 }
 
-export default function Technology({ userId }: TechProps) {
+export default function Technology({ userId, userData}: TechProps) {
   const { data, isLoading } = apiClient.energy.getAll.useQuery(['energy'])
   const [sortedCards, setSortedCards] = useState<EnergySource[]>([])
 
@@ -24,9 +26,12 @@ export default function Technology({ userId }: TechProps) {
   }, [data])
 
   const checkIfEnabled = (index: number) => {
-    if (index === 0) return true
-    return sortedCards[index - 1]?.operational && sortedCards[index - 1]?.productionRate >= 5
-  }
+    if (index === 0) return true;
+    const previousCard = sortedCards[index - 1];
+    const isPreviousCardOperational = previousCard?.operational && previousCard?.productionRate >= 5;
+    const isAlreadyPurchased = userData?.energySources?.some(source => source.type === sortedCards[index].type);
+    return isPreviousCardOperational && isAlreadyPurchased;
+  };
 
   if (isLoading) {
     return (
@@ -38,8 +43,8 @@ export default function Technology({ userId }: TechProps) {
 
   return (
     <div className="grid grid-cols-3 justify-between gap-2 pb-32 mt-4">
-      {sortedCards.map((card, index) => (
-        <TechnologyCard
+      {sortedCards.map((card, index) => {
+       return( <TechnologyCard
         userId={userId}
           key={card.type}
           name={card.type}
@@ -50,8 +55,8 @@ export default function Technology({ userId }: TechProps) {
           isEnabled={checkIfEnabled(index)}
           unlockingCondition={`Unlock by leveling ${sortedCards[index - 1]?.type} to level 5`}
           purchaseEnergy={purchaseEnergy} // Ensure userId is passed as a number
-        />
-      ))}
+        />)
+})}
     </div>
   )
 }
@@ -62,41 +67,44 @@ type TechnologyCardProps = {
   perHr: number
   price: number
   image: string
-  isEnabled: boolean
+  isEnabled: boolean | undefined
+  userData?: Users | null
   unlockingCondition: string
   purchaseEnergy: (userId: number, energyTyope: string)=> void
 }
-
 function TechnologyCard({
-    userId,
+  userId,
   name,
   perHr,
   price,
   image,
   isEnabled,
-  unlockingCondition,
   purchaseEnergy,
 }: TechnologyCardProps) {
-    const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
  
-console.log(unlockingCondition, isEnabled)
+
   const handlePurchase = async () => {
     if (userId === undefined) {
-      alert("User ID is required to purchase an asset.")
-      return
+      toast.error("User ID is required to purchase an asset.");
+      return;
     }
 
+    if (isEnabled) {
+      toast.error("This energy source has already been purchased.");
+      return;
+    }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await purchaseEnergy(userId, name)
-      alert("Asset purchased successfully!")
+      await purchaseEnergy(userId, name);
+      toast.success("Asset purchased successfully!"); // Mark as purchased after successful purchase
     } catch (error) {
-      alert("Failed to purchase asset. Please try again.")
+      toast.error("Failed to purchase asset. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="relative cursor-pointer">
@@ -113,12 +121,15 @@ console.log(unlockingCondition, isEnabled)
             <Image src={smcoin} alt="coin" />
             <p className="text-#E3E4E4 font-bold text-sm">+{perHr}</p>
           </div>
-            
+           {isEnabled && (
+            <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white font-bold text-sm rounded-xl">
+              Purchased
+            </div>
+          )}
         </div>
 
         <div
           className="bg-[#7EB43C] rounded-xl h-14 flex justify-center items-center"
-          onClick={handlePurchase}
         >
           {isLoading ? (
             <ClipLoader color="#fff" />
@@ -128,6 +139,8 @@ console.log(unlockingCondition, isEnabled)
               <button
                 className={`text-#E3E4E4 text-sm px-1 `}
                 onClick={handlePurchase}
+                disabled={!isEnabled}
+                
               >
                 {new Intl.NumberFormat().format(price)}
               </button>
@@ -135,8 +148,6 @@ console.log(unlockingCondition, isEnabled)
           )}
         </div>
       </div>
-
-      
     </div>
-  )
+  );
 }

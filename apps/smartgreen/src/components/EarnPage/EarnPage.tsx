@@ -14,6 +14,7 @@ import { FaTelegram } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
 import { Users } from 'api-contract';
 import { FaCalendarAlt } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 import {
     Button,
     Drawer,
@@ -22,17 +23,128 @@ import {
     DrawerContent,
     DrawerCloseButton,
   } from '@chakra-ui/react'
+import { useUserApi } from '../../hooks/useUserData';
+import {toast} from 'react-toastify'
 
 type boostpops ={
         userId: number | undefined
         userData: Users | null   
 }
 
+const dailyRewards = [5000, 10000, 50000, 100000, 250000, 500000, 750000, 1000000, 2000000, 5000000]; 
+
 const EarnPage= ({
   userId,
   userData
 }:boostpops ) => {
+    const [isClaiming, setIsClaiming] = useState(false);
+    const [canClaimToday, setCanClaimToday] = useState(false);
     console.log(userId, userData);
+    const {updateUserData} = useUserApi()
+
+
+ useEffect(() => {
+  if (userData) {
+    const now = new Date();
+    const lastClaimDate = new Date(userData?.lastClaimDate || 0);
+
+    // Normalize current date to midnight
+    const nowDate = new Date(now.setHours(0, 0, 0, 0));
+    const lastClaimDateNormalized = new Date(lastClaimDate.setHours(0, 0, 0, 0));
+    let dayDifference = nowDate.getTime() - lastClaimDateNormalized.getTime()
+    let currentDay = userData.streakLevel || 1;
+
+    if (dayDifference > 1) {
+      // If missed a day, reset to Day 1
+      currentDay = 1;
+        // Set the current streak day
+    setCanClaimToday(true);
+    } else if (dayDifference === 0) {
+      // Already claimed today
+      setCanClaimToday(false);
+      return;
+    } else {
+      // Move to the next day
+      currentDay = (currentDay % 10) + 1;
+    // Set the current streak day
+    setCanClaimToday(true);
+    }
+
+  
+  }
+}, [userData]);
+
+
+
+
+const handleClaim = async () => {
+  if (userId === undefined) {
+    toast.error("User is required to claim rewards.");
+    return;
+  }
+
+  setIsClaiming(true);
+  try {
+    const now = new Date();
+    const lastClaimDateStr = userData?.lastClaimDate || "1970-01-01T00:00:00.000Z"; // Default to an old date if not set
+    const lastClaimDate = new Date(lastClaimDateStr);
+
+    // Extract date components (year, month, day) for comparison
+    const nowYear = now.getUTCFullYear();
+    const nowMonth = now.getUTCMonth();
+    const nowDay = now.getUTCDay();
+
+
+    const lastClaimYear = lastClaimDate.getUTCFullYear();
+    const lastClaimMonth = lastClaimDate.getUTCMonth();
+    const lastClaimDay = lastClaimDate.getUTCDay();
+
+    console.log(lastClaimDay, )
+
+    if (nowYear === lastClaimYear && nowMonth === lastClaimMonth && nowDay === lastClaimDay) {
+      // Already claimed today
+      toast.info("You have already claimed your reward today.");
+      return;
+    }
+
+    let currentDay = userData?.streakLevel || 1;
+
+    const dayDifference = Math.floor((now.getTime() - lastClaimDate.getTime()) / (1000 * 3600 * 24));
+
+    if (dayDifference > 1) {
+      // If missed a day, reset to Day 1
+      currentDay = 1;
+    } else {
+      // Move to the next day
+      currentDay = (currentDay % 10) + 1;
+    }
+
+    // Calculate reward based on the current day
+    const reward = dailyRewards[currentDay - 1];
+
+    // Update user data
+    await updateUserData(userId, {
+      lastClaimDate: now.toISOString(), // Store the date in ISO format
+      streakLevel: currentDay,
+      coinsEarned: (userData?.coinsEarned || 0) + reward, // Add to existing coins
+    });
+
+    toast.success(`Reward claimed successfully! You earned ${reward.toLocaleString()} coins.`);
+  } catch (error) {
+    toast.error("Failed to claim reward. Please try again.");
+  } finally {
+    setIsClaiming(false);
+  }
+};
+
+
+
+
+
+
+
+
+
 
     const {isOpen, onClose, onOpen} = useDisclosure()
     return (
@@ -207,7 +319,10 @@ const EarnPage= ({
                     </Flex>
                 </Flex>
             </Flex>
-            <Button className='w-[100%] text-black font-bold' onClick={onClose}>
+            <Button className='w-[100%] text-black font-bold' onClick={async ()=>{
+                handleClaim()
+                onClose()
+            }} disabled={!canClaimToday || isClaiming}>
                 CLAIM
             </Button>
             </Box>

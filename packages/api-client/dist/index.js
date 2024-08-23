@@ -44,8 +44,11 @@ exports.UserSchema = zod_1.z.object({
     rechargeLevel: zod_1.z.number().default(1),
     coinsPerHour: zod_1.z.number().default(0),
     lastUpdatedTime: zod_1.z.number().optional(),
-    energySources: zod_1.z.array(exports.EnergySourceSchema).optional(), // Array of energy sources owned by the user
-    assets: zod_1.z.array(exports.AssetSchema).optional(), // Array of assets owned by the user
+    energySources: zod_1.z.array(exports.EnergySourceSchema).optional(),
+    lastClaimDate: zod_1.z.string().optional(),
+    streakLevel: zod_1.z.number().optional(), // Array of energy sources owned by the user
+    assets: zod_1.z.array(exports.AssetSchema).optional(),
+    country: zod_1.z.array(exports.CountrySchema).optional() // Array of assets owned by the user
 });
 exports.contract = c.router({
     users: {

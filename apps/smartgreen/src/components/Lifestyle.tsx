@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { Image, Box, Text } from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
 import smcoin from "../assets/smcoin.png";
 import { useUserApi } from "../hooks/useUserData";
 import apiClient from "../api-client";
@@ -19,11 +19,16 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
 
   let totalLicenseFee = 0;
 
+
   if (userData?.energySources && userData.energySources.length > 0) {
+    console.log(userData.energySources)
     for (const energySource of userData.energySources) {
+        console.log(energySource.licenseFee)
       totalLicenseFee += energySource.licenseFee;
     }
   }
+
+  const userCountries = userData?.country || [];
 
   if (isLoading) {
     return (
@@ -35,17 +40,23 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
 
   return (
     <div className="grid grid-cols-3 justify-between gap-2 mt-4 pb-32">
-      {cards.map((card, index) => (
-        <LifestyleCard
-          key={index}
-          name={card.name}
-          status={card.status}
-          purchaseLicense={purchaseLicense}
-          cost={totalLicenseFee}
-          userId={userId}
-          image={smcoin}
-        />
-      ))}
+       {cards.map((card, index) => {
+        // Find the status of the current country in the user's data
+        const userCountry = userCountries.find(c => c.name === card.name);
+        const status = userCountry?.status || 'unlicensed';
+
+        return (
+          <LifestyleCard
+            key={index}
+            name={card.name}
+            status={status}
+            purchaseLicense={purchaseLicense}
+            cost={totalLicenseFee}  // Use the total license fee for the cost
+            userId={userId}
+            image={smcoin}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -76,18 +87,23 @@ function LifestyleCard({
   };
 
   return (
-    <div className={`cursor-pointer relative ${status === "licensed" ? "opacity-50" : ""}`}>
-      <div className="bg-[#132E25] w-auto rounded-xl text-[#E7ECEA]">
-        <div className="px-2 py-1 flex flex-col justify-center items-center">
-          <p className="font-bold text-sm text-center pb-2 border-b-[1px] w-full">
+    <div className={"relative cursor-pointer"}>
+      <div className="bg-[#132E25] w-full h-full rounded-xl text-[#E7ECEA] flex flex-col justify-between">
+        <div className="px-2 py-1 flex flex-col justify-center items-center relative">
+          <p className="text-sm text-center pb-2 border-b-[1px] w-full">
             {name}
           </p>
           <Image src={image} alt="coin" w={"35%"} />
-          <p className="font-semibold text-[12px] mt-3">Kw per hour</p>
+          <p className="font-semibold text-[12px] mt-3">License</p>
           <div className="flex items-center gap-1 mt-1">
             <Image src={smcoin} alt="coin" />
-            <p className="text-#E3E4E4 font-bold text-sm">+{cost}</p>
           </div>
+
+          {status === "licensed" && (
+            <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white font-bold text-sm rounded-xl">
+              License acquired
+            </div>
+          )}
         </div>
 
         <div
@@ -104,32 +120,18 @@ function LifestyleCard({
             <ClipLoader color="#fff" />
           ) : (
             <>
-              <Image src={smcoin} alt="coin" />
+              <Image src={smcoin} alt="coin" w={'25%'} />
               <button
-                className="text-#E3E4E4 font-bold text-sm"
+                className="text-#E3E4E4 text-sm"
                 disabled={status === "licensed"}
               >
-                {status === "licensed" ? "Licensed" : `${cost} Coins`}
+                {status === "licensed" ? "Licensed" : `${cost} `}
               </button>
             </>
           )}
         </div>
       </div>
-      {status === "licensed" && (
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-          background="rgba(0, 0, 0, 0.5)"
-          padding="4px 8px"
-          borderRadius="4px"
-        >
-          <Text color="white" fontSize="sm" fontWeight="bold">
-            Licensed
-          </Text>
-        </Box>
-      )}
+   
     </div>
   );
 }

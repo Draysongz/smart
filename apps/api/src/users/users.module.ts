@@ -6,6 +6,8 @@ import { User, UserSchema } from 'src/schemas/User.schema';
 import { EnergyModule } from 'src/energy/energy.module';
 import { AssetsModule } from 'src/assets/assets.module';
 import { CountryModule } from 'src/country/country.module';
+import { GatewayModule } from 'src/gateway/gateway.module';
+
 
 @Module({
   controllers: [UsersController],
@@ -17,7 +19,9 @@ import { CountryModule } from 'src/country/country.module';
     }]),
     EnergyModule ,
     AssetsModule,
-    CountryModule
+    CountryModule,
+    GatewayModule
+
   ]
 })
 export class UsersModule {}

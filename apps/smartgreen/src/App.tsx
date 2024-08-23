@@ -8,6 +8,7 @@ import UserId from "./components/HomePage/UserId"
 import EarnPage from "./components/EarnPage/EarnPage"
 import { useUserApi } from "./hooks/useUserData"
 import { Users } from "api-contract"
+  import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {

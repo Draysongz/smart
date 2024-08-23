@@ -74,7 +74,7 @@ const Boost = ({ userId, userData }: BoostProps) => {
               <Flex alignItems={"center"} className="gap-1">
               <Image src={smcoin} alt="coin" w={'30%'} />
               <Text color={"white"}>
-                {userData ? new Intl.NumberFormat().format(Number(userData?.coinsEarned.toFixed(0))) : 0}
+                {userData ? new Intl.NumberFormat().format(Number(userData.coinsEarned.toFixed(0))) : 0}
               </Text>
               </Flex>
           </Flex>
@@ -175,7 +175,7 @@ const Boost = ({ userId, userData }: BoostProps) => {
             </TabList>
             <TabPanels>
                <TabPanel>
-                <Technology userId={userId}  />
+                <Technology userId={userId}  userData={userData} />
               </TabPanel>
               <TabPanel>
                <Lifestyle userId={userId} userData={userData}/>

@@ -3,11 +3,11 @@ import { CountryService } from './country.service';
 import { contract } from 'api-contract';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 
-@Controller('country')
+@Controller()
 export class CountryController {
   constructor(private readonly countryService: CountryService) {}
 
-   @TsRestHandler(contract.energy)
+   @TsRestHandler(contract.country)
   async handler() {
     return tsRestHandler(contract.country, {
       getAll: async () => {

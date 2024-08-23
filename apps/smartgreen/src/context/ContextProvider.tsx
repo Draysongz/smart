@@ -1,76 +1,63 @@
-// import { ReactNode, createContext, useContext, useState } from "react"
-// import { useStaticUserData } from "../hooks/useUserData"
-// import { updateUserData } from "../helper-functions/getUser"
+// // src/context/UserContext.tsx
+// import React, { createContext, useContext, useState, useEffect } from 'react';
+// import { Users } from 'api-contract';
+// import useuser
+// import io from 'socket.io-client';
 
-// const Context = createContext({})
+// const socket = io('http://localhost:3000'); // Replace with your backend URL
 
-// function ContextProvdider({
-//   userId,
-//   firstName,
-//   referralId,
-//   children,
-// }: {
-//   userId: number | undefined
-//   firstName: string | null
-//   referralId: number
-//   children: ReactNode
-// }) {
-//   const [floatingEnergy, setFloatingEnergy] = useState(0)
-//   const [coinsEarned, setCoinsEarned] = useState(0)
-//   const [tappingEnergy, setTappingEnergy] = useState(0)
-//   const [tappingPower, setTappingPower] = useState(0)
+// interface UserContextType {
+//   userData: Users | null;
+//   setUserData: React.Dispatch<React.SetStateAction<Users | null>>;
+// }
 
-//   const [screenAxis, setScreenAxis] = useState<
-//     { x: number; y: number; id: number }[]
-//   >([])
-//   const { isLoading, userData, name } = useStaticUserData(
-//     userId,
-//     firstName,
-//     referralId
-//   )
+// interface UserProviderProps {
+//   children: React.ReactNode;
+//   userId: number;
+// }
 
-//   const handleTap = async (clientX: number, clientY: number) => {
-//     if (!userId) return
-//     if (floatingEnergy - tappingPower <= 0) return
-//     setFloatingEnergy((curr) => curr - tappingPower)
-//     setCoinsEarned((coins) => coins + tappingPower)
-//     setScreenAxis((prv) => [...prv, { x: clientX, y: clientY, id: Date.now() }])
+// const UserContext = createContext<UserContextType | undefined>(undefined);
 
-//     // update coins in db
-//     // const userId = userData.userId
-//     await updateUserData(userId, {
-//       coinsEarned: coinsEarned + 5,
-//       floatingTapEnergy: floatingEnergy - 5,
-//     })
-//   }
+// export const UserProvider: React.FC<UserProviderProps> = ({ children, userId }) => {
+//   const [userData, setUserData] = useState<Users | null>(null);
+//   const { getUserData } = useUserApi();
+
+//   const fetchUserData = async () => {
+//     const result = await getUserData(userId, '', '');
+//     if (result?.data) {
+//       setUserData(result.data);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (userId) {
+//       fetchUserData();
+//     }
+//   }, [userId]);
+
+//   useEffect(() => {
+//     socket.on('userUpdated', (updatedUser: Users) => {
+//       if (updatedUser.userId === userId) {
+//         setUserData(updatedUser);
+//       }
+//     });
+
+//     return () => {
+//       socket.off('userUpdated');
+//     };
+//   }, [userId]);
 
 //   return (
-//     <Context.Provider
-//       value={{
-//         isLoading,
-//         floatingEnergy,
-//         coinsEarned,
-//         tappingEnergy,
-//         tappingPower,
-//         userId,
-//         screenAxis,
-//         name,
-//         handleTap,
-//         userData,
-//         setTappingEnergy,
-//         setTappingPower,
-//         setScreenAxis,
-//       }}
-//     >
+//     <UserContext.Provider value={{ userData, setUserData }}>
 //       {children}
-//     </Context.Provider>
-//   )
-// }
+//     </UserContext.Provider>
+//   );
+// };
 
-// function useProvider() {
-//   const context = useContext(Context)
-
-//   return context
-// }
-
-// export { ContextProvdider, useProvider }
+// export const useUserContext = (): UserContextType => {
+//   const context = useContext(UserContext);
+//   if (!context) {
+//     throw new Error('useUserContext must be used within a UserProvider');
+//   }
+//   return context;
+// };

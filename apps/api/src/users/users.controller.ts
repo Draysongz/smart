@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { contract } from 'api-contract';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
+import { UserGateway } from 'src/gateway/user.gateway';
 
 @Controller()
 export class UsersController {

@@ -46,8 +46,11 @@ export const UserSchema = z.object({
   rechargeLevel: z.number().default(1),
   coinsPerHour: z.number().default(0),
   lastUpdatedTime: z.number().optional(),
-  energySources: z.array(EnergySourceSchema).optional(), // Array of energy sources owned by the user
-  assets: z.array(AssetSchema).optional(), // Array of assets owned by the user
+  energySources: z.array(EnergySourceSchema).optional(),
+  lastClaimDate: z.string().optional(),
+  streakLevel: z.number().optional(), // Array of energy sources owned by the user
+  assets: z.array(AssetSchema).optional(),
+  country: z.array(CountrySchema).optional() // Array of assets owned by the user
 });
 
 export type Users = z.infer<typeof UserSchema>;

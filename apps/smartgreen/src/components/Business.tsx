@@ -40,7 +40,6 @@ export default function Business({ userId, userData }: BusinessProps) {
               <BusinessCard
                 key={card.name}
                 name={card.name}
-                type={card.type}
                 price={card.price}
                 levelRequirement={card.levelRequirement}
                 purchaseAsset={purchaseAsset}
@@ -57,7 +56,6 @@ export default function Business({ userId, userData }: BusinessProps) {
 
 type PropType = {
   name: string
-  type: string
   price: number
   levelRequirement: number
   purchaseAsset: (name: string, userId: number) => void
@@ -65,9 +63,9 @@ type PropType = {
   userLevel: number
 }
 
-function BusinessCard({ name, type, price, levelRequirement, purchaseAsset, userId, userLevel }: PropType) {
+function BusinessCard({ name,  price, levelRequirement, purchaseAsset, userId, userLevel }: PropType) {
   const [isLoading, setIsLoading] = useState(false)
-  console.log(type)
+
 
   const handlePurchase = async () => {
     if (userId === undefined) {

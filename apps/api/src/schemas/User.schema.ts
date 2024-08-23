@@ -104,6 +104,12 @@ export class User extends Document {
    @Prop({default: Date.now()})
   lastupdatedTime?: number;
 
+  @Prop()
+  lastClaimDate?: string
+
+  @Prop({default: 0})
+  streakLevel?:number 
+
   @Prop({ type: [EnergySource] })
   energySources?: EnergySource[]; // Array of energy sources owned by the user
 

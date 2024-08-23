@@ -52,6 +52,7 @@ const newUser = new this.userModel(createUserDto);
          lastUpdatedTime: userObject.lastupdatedTime,
         energySources: userObject.energySources,
         assets: userObject.assets,
+        country: userObject.country
       },
     };
   }
@@ -128,6 +129,7 @@ const newUser = new this.userModel(createUserDto);
          lastUpdatedTime: userObject.lastupdatedTime,
         energySources: userObject.energySources,
         assets: userObject.assets,
+        country: userObject.country
       },
     };
   }
@@ -166,7 +168,8 @@ const newUser = new this.userModel(createUserDto);
         coinsPerHour: userObject.coinsPerHour,
         energySources: userObject.energySources,
         assets: userObject.assets,
-        lastUpdatedTime: userObject.lastupdatedTime
+        lastUpdatedTime: userObject.lastupdatedTime,
+        country: userObject.country
       },
     };
   }
