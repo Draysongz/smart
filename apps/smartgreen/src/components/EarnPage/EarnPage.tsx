@@ -22,9 +22,13 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  DrawerFooter,
+  DrawerHeader,
+  Input
 } from "@chakra-ui/react";
 import { useUserApi } from "../../hooks/useUserData";
 import { toast } from "react-toastify";
+
 
 type boostpops = {
   userId: number | undefined;
@@ -39,6 +43,7 @@ const EarnPage = ({ userId }: boostpops) => {
   const [isClaiming, setIsClaiming] = useState(false);
   const [canClaimToday, setCanClaimToday] = useState(false);
   const [userData, setUserData] = useState<Users | null>(null)
+  const {isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClosed} = useDisclosure()
   const { updateUserData, getOne } = useUserApi();
 
   useEffect(() => {
@@ -178,7 +183,7 @@ const EarnPage = ({ userId }: boostpops) => {
               </span>
             </div>
             <div className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
-              <img src={ticket} alt="" />
+              <img src={ticket} alt="" onClick={onSecondOpen}/>
               <span className="flex flex-col">
                 <p className="text-white whitespace-nowrap">
                   Activate Promo Code.{" "}
@@ -356,12 +361,37 @@ const EarnPage = ({ userId }: boostpops) => {
             </Box>
           </DrawerBody>
 
-          {/* <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
+          <DrawerFooter>
+          <Button className='w-[100%] text-black font-bold' onClick={onClose}>
+                CLAIM
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+
+        {/* Activate Promo Code */}
+        <Drawer
+        isOpen={isSecondOpen}
+        placement='bottom'
+        onClose={onSecondClosed}
+      >
+        <DrawerOverlay />
+        <DrawerContent             
+        bg= '#132E25'
+        textColor='white'>
+          <DrawerCloseButton />
+          <DrawerHeader>Redeem your Code</DrawerHeader>
+
+          <DrawerBody>
+            <Input placeholder='Input your promo code' />
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button variant='outline' textColor='white' mr={3} onClick={onSecondClosed}>
               Cancel
             </Button>
-            <Button colorScheme='blue'>Save</Button>
-          </DrawerFooter> */}
+            <Button colorScheme='blue'>Redeem</Button>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </section>

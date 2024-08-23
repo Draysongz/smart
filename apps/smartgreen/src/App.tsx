@@ -6,6 +6,8 @@ import Boost from "./Pages/Boost"
 import MainContent from "./components/WelcomePage/MainContent"
 import UserId from "./components/HomePage/UserId"
 import EarnPage from "./components/EarnPage/EarnPage"
+import AirdropPage from "./components/Airdrop/AirdropPage"
+import PowerUps from "./components/powerUps/powerUps"
 import { useUserApi } from "./hooks/useUserData"
 import { Users } from "api-contract"
   import 'react-toastify/dist/ReactToastify.css';
@@ -95,6 +97,8 @@ function AppContent({ userId, name, userData }: BoostProps) {
       <Route path="/boost" element={<Boost userId={userId} userData={userData} />} />
       <Route path="/tasks" element={<EarnPage userId={userId}  />} />
       <Route path='/referral' element={<ReferralPage userId={userId} userData={userData} />} />
+      <Route path='/airdrop' element={<AirdropPage userId={userId}  />} />
+      <Route path='/powerups' element={<PowerUps userId={userId} name={name} />} />
     </Routes>
   )
 }
