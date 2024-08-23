@@ -97,7 +97,7 @@ const Boost = ({ userId, userData }: BoostProps) => {
               <Flex alignItems={"center"} className="gap-1">
               <Image src={smcoin} alt="coin" w={'30%'} />
               <Text color={"white"}>
-                {userDeets && new Intl.NumberFormat().format(Number(userDeets.coinsEarned.toFixed(0)))!}
+                {userDeets ? new Intl.NumberFormat().format(Number(userDeets.coinsEarned.toFixed(0)))! : 0}
               </Text>
               </Flex>
           </Flex>
