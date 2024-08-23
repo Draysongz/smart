@@ -14,7 +14,7 @@ import bg from "../../assets/bg.png";
 // import windIcon from "../../assets/Icons/_0007_Wind.png"
 import spaceship from '../../assets/spaceship.svg';
 import { Link } from "react-router-dom";
-import { Users } from "api-contract";
+import { EnergySource, Users } from "api-contract";
 import { useUserApi } from "../../hooks/useUserData";
 
 const floatUpAndFadeOut = keyframes`
@@ -52,6 +52,8 @@ const rotateCoinRight = keyframes`
   }
 `;
 
+const LEVEL_THRESHOLDS = [5000000, 15000000, 250000000, 50000000, 100000000, 200000000];
+
 const UserId = ({ userId, name, userData  }: { userId: number ; name: string | null; userData: Users | null }) => {
   const [floatingEnergy, setFloatingEnergy] = useState(0);
   const [coinsEarned, setCoinsEarned] = useState(0);
@@ -60,7 +62,81 @@ const UserId = ({ userId, name, userData  }: { userId: number ; name: string | n
   const [rotateAnim, setRotateAnim] = useState("");
   const [coinsPerHour, setCoinsPerHour] = useState(0);
   const [fanBladeAnim, setFanBladeAnim] = useState(""); // State for fan blade animation
+  const [accumulatedEnergy, setAccumulatedEnergy] = useState(0);
+  const [lastUpdateTime, setLastUpdateTime] = useState(Date.now());
+  const [totalEnergyProductionRate, setTotalEnergyProductionRate] = useState(0);
+  const [userLevel, setUserLevel] = useState<number | 1>();
 
+  useEffect(() => {
+    if (!userData || !userId) return;
+
+    // Calculate the user level based on coinsEarned
+    const calculateUserLevel = (coins: number): number => {
+      for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
+        if (coins >= LEVEL_THRESHOLDS[i]) {
+          return i + 1; // Level is 1-based
+        }
+      }
+      return 1; // Default to level 1
+    };
+
+  
+    setUserLevel(calculateUserLevel(userData.coinsEarned));
+
+    // Update user data if the level changes
+    if (userData.coinsEarned !== coinsEarned || userData.userLevel !== userLevel) {
+      updateUserData(userId, {
+        userLevel: userLevel,
+      });
+    }
+
+  }, [userData, userId, ]);
+
+
+
+  useEffect(() => {
+    if (userData) {
+      setAccumulatedEnergy(userData.energyGenerated!);
+      setLastUpdateTime(userData.energyTimestamp || Date.now());
+    }
+  }, [userData]);
+
+  useEffect(() => {
+  if (userData && userData.energySources) {
+    const productionRate = calculateProductionRate(userData.energySources);
+    setTotalEnergyProductionRate(productionRate);
+  }
+}, [userData]);
+
+  const calculateProductionRate = (energySources: EnergySource[]) => {
+  if (energySources.length === 0) return 0;
+
+  if (energySources.length === 1) {
+    return energySources[0].productionRate; // Return the rate of the single energy source
+  }
+
+  // Sum the production rates of all energy sources
+  return energySources.reduce((total, source) => total + source.productionRate, 0);
+};
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const timeElapsed = (now - lastUpdateTime) / 3600000; // Convert milliseconds to hours
+
+      if (timeElapsed > 0) {
+        const newEnergy = accumulatedEnergy + (timeElapsed * totalEnergyProductionRate);
+        setAccumulatedEnergy(newEnergy);
+        setLastUpdateTime(now);
+        updateUserData(userId, {
+          energyGenerated: newEnergy,
+          energyTimestamp: lastUpdateTime
+        })
+      }
+    }, 1000); // Update every second
+
+    return () => clearInterval(interval);
+  }, [totalEnergyProductionRate, accumulatedEnergy, lastUpdateTime]);
 
 
 
@@ -104,6 +180,11 @@ const calculateLostTime = (): number => {
 };
 
 
+
+
+
+
+
   useEffect(() => {
     if (!userData) return;
     const timeLost = calculateLostTime();
@@ -126,17 +207,24 @@ const calculateLostTime = (): number => {
     return () => {};
   }, [userData]);
 
-  useEffect(() => {
-    if (!userData) return;
-    setInterval(() => {
-      setFloatingEnergy(curr => {
-        if (curr + userData.refillEnergy >= userData.tapEnergy)
-          return userData.tapEnergy;
-        return curr + userData.refillEnergy;
-      });
-    }, 3000);
-    return () => {};
-  }, [userData]);
+  useEffect(()=>{
+    console.log(coinsEarned)
+  }, [coinsEarned])
+
+useEffect(() => {
+  if (!userData) return;
+  const intervalId = setInterval(() => {
+    setFloatingEnergy(curr => {
+      if (curr + userData.refillEnergy >= userData.tapEnergy)
+        return userData.tapEnergy;
+      return curr + userData.refillEnergy;
+    });
+  }, 3000);
+
+  return () => clearInterval(intervalId); // Cleanup interval
+}, [userData]);
+ 
+
 
   useEffect(() => {
     if (!userId) return;
@@ -148,32 +236,6 @@ const calculateLostTime = (): number => {
     })();
     return () => {};
   }, [floatingEnergy, userId]);
-
-  useEffect(() => {
-    if (!userData) return;
-
-    const lostTime = calculateLostTime();
-    const pointsPerSecond = userData.coinsPerHour / 3600;
-    const additionalCoins = lostTime * pointsPerSecond;
-
-    setCoinsEarned(userData.coinsEarned + additionalCoins);
-
-    const interval = setInterval(async () => {
-      if (!userId) return;
-      setCoinsEarned(prevPoints => {
-        const newBalance = prevPoints + pointsPerSecond;
-
-        updateUserData(userId, {
-          coinsEarned: newBalance,
-          lastUpdatedTime: Date.now() / 1000,
-        });
-
-        return newBalance;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [userData, userId]);
 
   return !userData ? (
     <Flex
@@ -193,7 +255,7 @@ const calculateLostTime = (): number => {
           <img src={contactIcon} alt="" />
           <p className="text-white">Welcome {name}</p>
         </div>
-        <ProgressBar />
+        <ProgressBar userLevel={userLevel} userData={userData} thresh={LEVEL_THRESHOLDS} />
         <div className="border-t-custom-large-top rounded-t-3xl border-t-custom-yellow w-full items-center bg-custom-goldyellow max-h-700:border-t-custom-top h-[100%]">
           <Box
             className="w-full border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center py-9 flex flex-col gap-5 flex-grow max-h-700:p-3 h-[80vh]"
@@ -220,12 +282,12 @@ const calculateLostTime = (): number => {
               </div>
               <div className="w-custom-sm h-24 bg-dark-green flex flex-col justify-center items-center gap-4 rounded-2xl">
                 <p className="bg-custom-greentxt py-2 rounded-xl w-[95%] text-sm">
-                  Generated Energy
+                  Energy
                 </p>
                 <span className="flex gap-2 text-white items-center">
                   <img src={bolt} alt="" className="w-[12px]" />
                   <p>
-                    0
+                    {new Intl.NumberFormat().format(Number(accumulatedEnergy.toFixed(2)))}
                   </p>
                 </span>
               </div>

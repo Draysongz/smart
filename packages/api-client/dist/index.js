@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.contract = exports.UserSchema = exports.EnergySourceSchema = exports.CountrySchema = exports.AssetSchema = void 0;
+exports.contract = exports.UserSchema = exports.EnergySourceSchema = exports.CountrySchema = exports.ReferralUserSchema = exports.AssetSchema = void 0;
 var core_1 = require("@ts-rest/core");
 var zod_1 = require("zod");
 var c = (0, core_1.initContract)();
@@ -10,6 +10,12 @@ exports.AssetSchema = zod_1.z.object({
     name: zod_1.z.string(),
     levelRequirement: zod_1.z.number(),
     price: zod_1.z.number(), // Cost in the game
+});
+exports.ReferralUserSchema = zod_1.z.object({
+    userId: zod_1.z.number(),
+    name: zod_1.z.string(),
+    coinsEarned: zod_1.z.number().default(0),
+    // Add any other fields you want to display
 });
 exports.CountrySchema = zod_1.z.object({
     name: zod_1.z.string(),
@@ -32,7 +38,7 @@ exports.UserSchema = zod_1.z.object({
     coinsEarned: zod_1.z.number().default(1000000),
     floatingTapEnergy: zod_1.z.number().default(1000),
     referralLink: zod_1.z.string().optional(),
-    referrals: zod_1.z.array(zod_1.z.number()).optional(),
+    referrals: zod_1.z.array(exports.ReferralUserSchema).optional(),
     refillEnergy: zod_1.z.number().default(5),
     refillTime: zod_1.z.number().default(3),
     status: zod_1.z.string().optional(),
@@ -46,6 +52,8 @@ exports.UserSchema = zod_1.z.object({
     lastUpdatedTime: zod_1.z.number().optional(),
     energySources: zod_1.z.array(exports.EnergySourceSchema).optional(),
     lastClaimDate: zod_1.z.string().optional(),
+    energyGenerated: zod_1.z.number().optional(),
+    energyTimestamp: zod_1.z.number().optional(),
     streakLevel: zod_1.z.number().optional(), // Array of energy sources owned by the user
     assets: zod_1.z.array(exports.AssetSchema).optional(),
     country: zod_1.z.array(exports.CountrySchema).optional() // Array of assets owned by the user

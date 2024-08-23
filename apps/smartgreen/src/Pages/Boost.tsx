@@ -97,23 +97,26 @@ const Boost = ({ userId, userData }: BoostProps) => {
               </Text>
             </Flex>
           </Flex>
-          <Flex
-            bgColor={"#132E25"}
-            justifyContent={"center"}
-            flexDirection={'column'}
-            width={'120px'} p={'5px'}
-            rounded={'10px'}
-          >
-            <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
-              Energy Source
-            </Text>
-            <Flex alignItems={"center"} className="gap-1">
-              <Image src={windIcon} alt="coin" w={'30px'} />
-              <Text color={"#DADADA"}>
-                Wind
-              </Text>
-            </Flex>
-          </Flex>
+     <Flex bgColor={"#132E25"} justifyContent={"center"} flexDirection={'column'} width={'120px'} p={'5px'} rounded={'10px'}>
+  <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
+    Energy Source
+  </Text>
+      {userData?.energySources && userData.energySources.length > 0 &&  (
+  <Flex alignItems={"center"} className="gap-1">
+
+      <Image
+        src={windIcon} // Display the latest energy source
+        alt={userData.energySources[userData.energySources.length - 1].type}
+        width="30px"
+        height="30px"
+      />
+      <Text className="text-white">{userData.energySources[userData.energySources.length - 1].type}</Text>
+ 
+  </Flex>
+     )}
+</Flex>
+
+
               </div>
 
             </Box>

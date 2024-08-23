@@ -15,6 +15,19 @@ export declare const AssetSchema: z.ZodObject<{
     levelRequirement: number;
     price: number;
 }>;
+export declare const ReferralUserSchema: z.ZodObject<{
+    userId: z.ZodNumber;
+    name: z.ZodString;
+    coinsEarned: z.ZodDefault<z.ZodNumber>;
+}, "strip", z.ZodTypeAny, {
+    name: string;
+    userId: number;
+    coinsEarned: number;
+}, {
+    name: string;
+    userId: number;
+    coinsEarned?: number | undefined;
+}>;
 export declare const CountrySchema: z.ZodObject<{
     name: z.ZodString;
     status: z.ZodString;
@@ -56,7 +69,19 @@ export declare const UserSchema: z.ZodObject<{
     coinsEarned: z.ZodDefault<z.ZodNumber>;
     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
     referralLink: z.ZodOptional<z.ZodString>;
-    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        userId: z.ZodNumber;
+        name: z.ZodString;
+        coinsEarned: z.ZodDefault<z.ZodNumber>;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        userId: number;
+        coinsEarned: number;
+    }, {
+        name: string;
+        userId: number;
+        coinsEarned?: number | undefined;
+    }>, "many">>;
     refillEnergy: z.ZodDefault<z.ZodNumber>;
     refillTime: z.ZodDefault<z.ZodNumber>;
     status: z.ZodOptional<z.ZodString>;
@@ -94,6 +119,8 @@ export declare const UserSchema: z.ZodObject<{
         dailyOperatingHours: number;
     }>, "many">>;
     lastClaimDate: z.ZodOptional<z.ZodString>;
+    energyGenerated: z.ZodOptional<z.ZodNumber>;
+    energyTimestamp: z.ZodOptional<z.ZodNumber>;
     streakLevel: z.ZodOptional<z.ZodNumber>;
     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
         type: z.ZodString;
@@ -123,14 +150,14 @@ export declare const UserSchema: z.ZodObject<{
     }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     name: string;
-    username: string;
+    userId: number;
     coinsEarned: number;
+    username: string;
     floatingTapEnergy: number;
     refillEnergy: number;
     refillTime: number;
     tapEnergy: number;
     tapPower: number;
-    userId: number;
     energyLevel: number;
     rechargeLevel: number;
     coinsPerHour: number;
@@ -140,7 +167,11 @@ export declare const UserSchema: z.ZodObject<{
         status: string;
     }[] | undefined;
     referralLink?: string | undefined;
-    referrals?: number[] | undefined;
+    referrals?: {
+        name: string;
+        userId: number;
+        coinsEarned: number;
+    }[] | undefined;
     userLevel?: number | undefined;
     lastUpdatedTime?: number | undefined;
     energySources?: {
@@ -153,6 +184,8 @@ export declare const UserSchema: z.ZodObject<{
         dailyOperatingHours: number;
     }[] | undefined;
     lastClaimDate?: string | undefined;
+    energyGenerated?: number | undefined;
+    energyTimestamp?: number | undefined;
     streakLevel?: number | undefined;
     assets?: {
         type: string;
@@ -162,17 +195,21 @@ export declare const UserSchema: z.ZodObject<{
     }[] | undefined;
 }, {
     name: string;
-    username: string;
     userId: number;
+    username: string;
     status?: string | undefined;
+    coinsEarned?: number | undefined;
     country?: {
         name: string;
         status: string;
     }[] | undefined;
-    coinsEarned?: number | undefined;
     floatingTapEnergy?: number | undefined;
     referralLink?: string | undefined;
-    referrals?: number[] | undefined;
+    referrals?: {
+        name: string;
+        userId: number;
+        coinsEarned?: number | undefined;
+    }[] | undefined;
     refillEnergy?: number | undefined;
     refillTime?: number | undefined;
     userLevel?: number | undefined;
@@ -192,6 +229,8 @@ export declare const UserSchema: z.ZodObject<{
         dailyOperatingHours: number;
     }[] | undefined;
     lastClaimDate?: string | undefined;
+    energyGenerated?: number | undefined;
+    energyTimestamp?: number | undefined;
     streakLevel?: number | undefined;
     assets?: {
         type: string;
@@ -214,7 +253,19 @@ export declare const contract: {
                 coinsEarned: z.ZodDefault<z.ZodNumber>;
                 floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                 referralLink: z.ZodOptional<z.ZodString>;
-                referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    userId: z.ZodNumber;
+                    name: z.ZodString;
+                    coinsEarned: z.ZodDefault<z.ZodNumber>;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    userId: number;
+                    coinsEarned: number;
+                }, {
+                    name: string;
+                    userId: number;
+                    coinsEarned?: number | undefined;
+                }>, "many">>;
                 refillEnergy: z.ZodDefault<z.ZodNumber>;
                 refillTime: z.ZodDefault<z.ZodNumber>;
                 status: z.ZodOptional<z.ZodString>;
@@ -252,6 +303,8 @@ export declare const contract: {
                     dailyOperatingHours: number;
                 }>, "many">>;
                 lastClaimDate: z.ZodOptional<z.ZodString>;
+                energyGenerated: z.ZodOptional<z.ZodNumber>;
+                energyTimestamp: z.ZodOptional<z.ZodNumber>;
                 streakLevel: z.ZodOptional<z.ZodNumber>;
                 assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
@@ -281,14 +334,14 @@ export declare const contract: {
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
                 name: string;
-                username: string;
+                userId: number;
                 coinsEarned: number;
+                username: string;
                 floatingTapEnergy: number;
                 refillEnergy: number;
                 refillTime: number;
                 tapEnergy: number;
                 tapPower: number;
-                userId: number;
                 energyLevel: number;
                 rechargeLevel: number;
                 coinsPerHour: number;
@@ -298,7 +351,11 @@ export declare const contract: {
                     status: string;
                 }[] | undefined;
                 referralLink?: string | undefined;
-                referrals?: number[] | undefined;
+                referrals?: {
+                    name: string;
+                    userId: number;
+                    coinsEarned: number;
+                }[] | undefined;
                 userLevel?: number | undefined;
                 lastUpdatedTime?: number | undefined;
                 energySources?: {
@@ -311,6 +368,8 @@ export declare const contract: {
                     dailyOperatingHours: number;
                 }[] | undefined;
                 lastClaimDate?: string | undefined;
+                energyGenerated?: number | undefined;
+                energyTimestamp?: number | undefined;
                 streakLevel?: number | undefined;
                 assets?: {
                     type: string;
@@ -320,17 +379,21 @@ export declare const contract: {
                 }[] | undefined;
             }, {
                 name: string;
-                username: string;
                 userId: number;
+                username: string;
                 status?: string | undefined;
+                coinsEarned?: number | undefined;
                 country?: {
                     name: string;
                     status: string;
                 }[] | undefined;
-                coinsEarned?: number | undefined;
                 floatingTapEnergy?: number | undefined;
                 referralLink?: string | undefined;
-                referrals?: number[] | undefined;
+                referrals?: {
+                    name: string;
+                    userId: number;
+                    coinsEarned?: number | undefined;
+                }[] | undefined;
                 refillEnergy?: number | undefined;
                 refillTime?: number | undefined;
                 userLevel?: number | undefined;
@@ -350,6 +413,8 @@ export declare const contract: {
                     dailyOperatingHours: number;
                 }[] | undefined;
                 lastClaimDate?: string | undefined;
+                energyGenerated?: number | undefined;
+                energyTimestamp?: number | undefined;
                 streakLevel?: number | undefined;
                 assets?: {
                     type: string;
@@ -366,7 +431,19 @@ export declare const contract: {
                     coinsEarned: z.ZodDefault<z.ZodNumber>;
                     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                     referralLink: z.ZodOptional<z.ZodString>;
-                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        userId: z.ZodNumber;
+                        name: z.ZodString;
+                        coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    }, "strip", z.ZodTypeAny, {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }, {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }>, "many">>;
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
@@ -404,6 +481,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }>, "many">>;
                     lastClaimDate: z.ZodOptional<z.ZodString>;
+                    energyGenerated: z.ZodOptional<z.ZodNumber>;
+                    energyTimestamp: z.ZodOptional<z.ZodNumber>;
                     streakLevel: z.ZodOptional<z.ZodNumber>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -433,14 +512,14 @@ export declare const contract: {
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
-                    username: string;
+                    userId: number;
                     coinsEarned: number;
+                    username: string;
                     floatingTapEnergy: number;
                     refillEnergy: number;
                     refillTime: number;
                     tapEnergy: number;
                     tapPower: number;
-                    userId: number;
                     energyLevel: number;
                     rechargeLevel: number;
                     coinsPerHour: number;
@@ -450,7 +529,11 @@ export declare const contract: {
                         status: string;
                     }[] | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }[] | undefined;
                     userLevel?: number | undefined;
                     lastUpdatedTime?: number | undefined;
                     energySources?: {
@@ -463,6 +546,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -472,17 +557,21 @@ export declare const contract: {
                     }[] | undefined;
                 }, {
                     name: string;
-                    username: string;
                     userId: number;
+                    username: string;
                     status?: string | undefined;
+                    coinsEarned?: number | undefined;
                     country?: {
                         name: string;
                         status: string;
                     }[] | undefined;
-                    coinsEarned?: number | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
                     userLevel?: number | undefined;
@@ -502,6 +591,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -530,7 +621,19 @@ export declare const contract: {
                     coinsEarned: z.ZodDefault<z.ZodNumber>;
                     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                     referralLink: z.ZodOptional<z.ZodString>;
-                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        userId: z.ZodNumber;
+                        name: z.ZodString;
+                        coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    }, "strip", z.ZodTypeAny, {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }, {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }>, "many">>;
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
@@ -568,6 +671,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }>, "many">>;
                     lastClaimDate: z.ZodOptional<z.ZodString>;
+                    energyGenerated: z.ZodOptional<z.ZodNumber>;
+                    energyTimestamp: z.ZodOptional<z.ZodNumber>;
                     streakLevel: z.ZodOptional<z.ZodNumber>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -597,14 +702,14 @@ export declare const contract: {
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
-                    username: string;
+                    userId: number;
                     coinsEarned: number;
+                    username: string;
                     floatingTapEnergy: number;
                     refillEnergy: number;
                     refillTime: number;
                     tapEnergy: number;
                     tapPower: number;
-                    userId: number;
                     energyLevel: number;
                     rechargeLevel: number;
                     coinsPerHour: number;
@@ -614,7 +719,11 @@ export declare const contract: {
                         status: string;
                     }[] | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }[] | undefined;
                     userLevel?: number | undefined;
                     lastUpdatedTime?: number | undefined;
                     energySources?: {
@@ -627,6 +736,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -636,17 +747,21 @@ export declare const contract: {
                     }[] | undefined;
                 }, {
                     name: string;
-                    username: string;
                     userId: number;
+                    username: string;
                     status?: string | undefined;
+                    coinsEarned?: number | undefined;
                     country?: {
                         name: string;
                         status: string;
                     }[] | undefined;
-                    coinsEarned?: number | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
                     userLevel?: number | undefined;
@@ -666,6 +781,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -694,7 +811,19 @@ export declare const contract: {
                     coinsEarned: z.ZodDefault<z.ZodNumber>;
                     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                     referralLink: z.ZodOptional<z.ZodString>;
-                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        userId: z.ZodNumber;
+                        name: z.ZodString;
+                        coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    }, "strip", z.ZodTypeAny, {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }, {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }>, "many">>;
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
@@ -732,6 +861,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }>, "many">>;
                     lastClaimDate: z.ZodOptional<z.ZodString>;
+                    energyGenerated: z.ZodOptional<z.ZodNumber>;
+                    energyTimestamp: z.ZodOptional<z.ZodNumber>;
                     streakLevel: z.ZodOptional<z.ZodNumber>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -761,14 +892,14 @@ export declare const contract: {
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
-                    username: string;
+                    userId: number;
                     coinsEarned: number;
+                    username: string;
                     floatingTapEnergy: number;
                     refillEnergy: number;
                     refillTime: number;
                     tapEnergy: number;
                     tapPower: number;
-                    userId: number;
                     energyLevel: number;
                     rechargeLevel: number;
                     coinsPerHour: number;
@@ -778,7 +909,11 @@ export declare const contract: {
                         status: string;
                     }[] | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }[] | undefined;
                     userLevel?: number | undefined;
                     lastUpdatedTime?: number | undefined;
                     energySources?: {
@@ -791,6 +926,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -800,17 +937,21 @@ export declare const contract: {
                     }[] | undefined;
                 }, {
                     name: string;
-                    username: string;
                     userId: number;
+                    username: string;
                     status?: string | undefined;
+                    coinsEarned?: number | undefined;
                     country?: {
                         name: string;
                         status: string;
                     }[] | undefined;
-                    coinsEarned?: number | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
                     userLevel?: number | undefined;
@@ -830,6 +971,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -860,6 +1003,7 @@ export declare const contract: {
             body: z.ZodObject<{
                 name: z.ZodOptional<z.ZodString>;
                 status: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+                coinsEarned: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 country: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
@@ -871,10 +1015,21 @@ export declare const contract: {
                     status: string;
                 }>, "many">>>;
                 username: z.ZodOptional<z.ZodString>;
-                coinsEarned: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 floatingTapEnergy: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 referralLink: z.ZodOptional<z.ZodOptional<z.ZodString>>;
-                referrals: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>>;
+                referrals: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    userId: z.ZodNumber;
+                    name: z.ZodString;
+                    coinsEarned: z.ZodDefault<z.ZodNumber>;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    userId: number;
+                    coinsEarned: number;
+                }, {
+                    name: string;
+                    userId: number;
+                    coinsEarned?: number | undefined;
+                }>, "many">>>;
                 refillEnergy: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 refillTime: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
                 userLevel: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
@@ -910,6 +1065,8 @@ export declare const contract: {
                     dailyOperatingHours: number;
                 }>, "many">>>;
                 lastClaimDate: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+                energyGenerated: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
+                energyTimestamp: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
                 streakLevel: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
                 assets: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodObject<{
                     type: z.ZodString;
@@ -930,15 +1087,19 @@ export declare const contract: {
             }, "strip", z.ZodTypeAny, {
                 name?: string | undefined;
                 status?: string | undefined;
+                coinsEarned?: number | undefined;
                 country?: {
                     name: string;
                     status: string;
                 }[] | undefined;
                 username?: string | undefined;
-                coinsEarned?: number | undefined;
                 floatingTapEnergy?: number | undefined;
                 referralLink?: string | undefined;
-                referrals?: number[] | undefined;
+                referrals?: {
+                    name: string;
+                    userId: number;
+                    coinsEarned: number;
+                }[] | undefined;
                 refillEnergy?: number | undefined;
                 refillTime?: number | undefined;
                 userLevel?: number | undefined;
@@ -958,6 +1119,8 @@ export declare const contract: {
                     dailyOperatingHours: number;
                 }[] | undefined;
                 lastClaimDate?: string | undefined;
+                energyGenerated?: number | undefined;
+                energyTimestamp?: number | undefined;
                 streakLevel?: number | undefined;
                 assets?: {
                     type: string;
@@ -968,15 +1131,19 @@ export declare const contract: {
             }, {
                 name?: string | undefined;
                 status?: string | undefined;
+                coinsEarned?: number | undefined;
                 country?: {
                     name: string;
                     status: string;
                 }[] | undefined;
                 username?: string | undefined;
-                coinsEarned?: number | undefined;
                 floatingTapEnergy?: number | undefined;
                 referralLink?: string | undefined;
-                referrals?: number[] | undefined;
+                referrals?: {
+                    name: string;
+                    userId: number;
+                    coinsEarned?: number | undefined;
+                }[] | undefined;
                 refillEnergy?: number | undefined;
                 refillTime?: number | undefined;
                 userLevel?: number | undefined;
@@ -996,6 +1163,8 @@ export declare const contract: {
                     dailyOperatingHours: number;
                 }[] | undefined;
                 lastClaimDate?: string | undefined;
+                energyGenerated?: number | undefined;
+                energyTimestamp?: number | undefined;
                 streakLevel?: number | undefined;
                 assets?: {
                     type: string;
@@ -1012,7 +1181,19 @@ export declare const contract: {
                     coinsEarned: z.ZodDefault<z.ZodNumber>;
                     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                     referralLink: z.ZodOptional<z.ZodString>;
-                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        userId: z.ZodNumber;
+                        name: z.ZodString;
+                        coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    }, "strip", z.ZodTypeAny, {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }, {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }>, "many">>;
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
@@ -1050,6 +1231,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }>, "many">>;
                     lastClaimDate: z.ZodOptional<z.ZodString>;
+                    energyGenerated: z.ZodOptional<z.ZodNumber>;
+                    energyTimestamp: z.ZodOptional<z.ZodNumber>;
                     streakLevel: z.ZodOptional<z.ZodNumber>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -1079,14 +1262,14 @@ export declare const contract: {
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
-                    username: string;
+                    userId: number;
                     coinsEarned: number;
+                    username: string;
                     floatingTapEnergy: number;
                     refillEnergy: number;
                     refillTime: number;
                     tapEnergy: number;
                     tapPower: number;
-                    userId: number;
                     energyLevel: number;
                     rechargeLevel: number;
                     coinsPerHour: number;
@@ -1096,7 +1279,11 @@ export declare const contract: {
                         status: string;
                     }[] | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }[] | undefined;
                     userLevel?: number | undefined;
                     lastUpdatedTime?: number | undefined;
                     energySources?: {
@@ -1109,6 +1296,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -1118,17 +1307,21 @@ export declare const contract: {
                     }[] | undefined;
                 }, {
                     name: string;
-                    username: string;
                     userId: number;
+                    username: string;
                     status?: string | undefined;
+                    coinsEarned?: number | undefined;
                     country?: {
                         name: string;
                         status: string;
                     }[] | undefined;
-                    coinsEarned?: number | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
                     userLevel?: number | undefined;
@@ -1148,6 +1341,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -1209,7 +1404,19 @@ export declare const contract: {
                     coinsEarned: z.ZodDefault<z.ZodNumber>;
                     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                     referralLink: z.ZodOptional<z.ZodString>;
-                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        userId: z.ZodNumber;
+                        name: z.ZodString;
+                        coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    }, "strip", z.ZodTypeAny, {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }, {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }>, "many">>;
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
@@ -1247,6 +1454,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }>, "many">>;
                     lastClaimDate: z.ZodOptional<z.ZodString>;
+                    energyGenerated: z.ZodOptional<z.ZodNumber>;
+                    energyTimestamp: z.ZodOptional<z.ZodNumber>;
                     streakLevel: z.ZodOptional<z.ZodNumber>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -1276,14 +1485,14 @@ export declare const contract: {
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
-                    username: string;
+                    userId: number;
                     coinsEarned: number;
+                    username: string;
                     floatingTapEnergy: number;
                     refillEnergy: number;
                     refillTime: number;
                     tapEnergy: number;
                     tapPower: number;
-                    userId: number;
                     energyLevel: number;
                     rechargeLevel: number;
                     coinsPerHour: number;
@@ -1293,7 +1502,11 @@ export declare const contract: {
                         status: string;
                     }[] | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }[] | undefined;
                     userLevel?: number | undefined;
                     lastUpdatedTime?: number | undefined;
                     energySources?: {
@@ -1306,6 +1519,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -1315,17 +1530,21 @@ export declare const contract: {
                     }[] | undefined;
                 }, {
                     name: string;
-                    username: string;
                     userId: number;
+                    username: string;
                     status?: string | undefined;
+                    coinsEarned?: number | undefined;
                     country?: {
                         name: string;
                         status: string;
                     }[] | undefined;
-                    coinsEarned?: number | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
                     userLevel?: number | undefined;
@@ -1345,6 +1564,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -1391,7 +1612,19 @@ export declare const contract: {
                     coinsEarned: z.ZodDefault<z.ZodNumber>;
                     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                     referralLink: z.ZodOptional<z.ZodString>;
-                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        userId: z.ZodNumber;
+                        name: z.ZodString;
+                        coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    }, "strip", z.ZodTypeAny, {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }, {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }>, "many">>;
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
@@ -1429,6 +1662,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }>, "many">>;
                     lastClaimDate: z.ZodOptional<z.ZodString>;
+                    energyGenerated: z.ZodOptional<z.ZodNumber>;
+                    energyTimestamp: z.ZodOptional<z.ZodNumber>;
                     streakLevel: z.ZodOptional<z.ZodNumber>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -1458,14 +1693,14 @@ export declare const contract: {
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
-                    username: string;
+                    userId: number;
                     coinsEarned: number;
+                    username: string;
                     floatingTapEnergy: number;
                     refillEnergy: number;
                     refillTime: number;
                     tapEnergy: number;
                     tapPower: number;
-                    userId: number;
                     energyLevel: number;
                     rechargeLevel: number;
                     coinsPerHour: number;
@@ -1475,7 +1710,11 @@ export declare const contract: {
                         status: string;
                     }[] | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }[] | undefined;
                     userLevel?: number | undefined;
                     lastUpdatedTime?: number | undefined;
                     energySources?: {
@@ -1488,6 +1727,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -1497,17 +1738,21 @@ export declare const contract: {
                     }[] | undefined;
                 }, {
                     name: string;
-                    username: string;
                     userId: number;
+                    username: string;
                     status?: string | undefined;
+                    coinsEarned?: number | undefined;
                     country?: {
                         name: string;
                         status: string;
                     }[] | undefined;
-                    coinsEarned?: number | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
                     userLevel?: number | undefined;
@@ -1527,6 +1772,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -1573,7 +1820,19 @@ export declare const contract: {
                     coinsEarned: z.ZodDefault<z.ZodNumber>;
                     floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
                     referralLink: z.ZodOptional<z.ZodString>;
-                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        userId: z.ZodNumber;
+                        name: z.ZodString;
+                        coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    }, "strip", z.ZodTypeAny, {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }, {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }>, "many">>;
                     refillEnergy: z.ZodDefault<z.ZodNumber>;
                     refillTime: z.ZodDefault<z.ZodNumber>;
                     status: z.ZodOptional<z.ZodString>;
@@ -1611,6 +1870,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }>, "many">>;
                     lastClaimDate: z.ZodOptional<z.ZodString>;
+                    energyGenerated: z.ZodOptional<z.ZodNumber>;
+                    energyTimestamp: z.ZodOptional<z.ZodNumber>;
                     streakLevel: z.ZodOptional<z.ZodNumber>;
                     assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         type: z.ZodString;
@@ -1640,14 +1901,14 @@ export declare const contract: {
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
-                    username: string;
+                    userId: number;
                     coinsEarned: number;
+                    username: string;
                     floatingTapEnergy: number;
                     refillEnergy: number;
                     refillTime: number;
                     tapEnergy: number;
                     tapPower: number;
-                    userId: number;
                     energyLevel: number;
                     rechargeLevel: number;
                     coinsPerHour: number;
@@ -1657,7 +1918,11 @@ export declare const contract: {
                         status: string;
                     }[] | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned: number;
+                    }[] | undefined;
                     userLevel?: number | undefined;
                     lastUpdatedTime?: number | undefined;
                     energySources?: {
@@ -1670,6 +1935,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;
@@ -1679,17 +1946,21 @@ export declare const contract: {
                     }[] | undefined;
                 }, {
                     name: string;
-                    username: string;
                     userId: number;
+                    username: string;
                     status?: string | undefined;
+                    coinsEarned?: number | undefined;
                     country?: {
                         name: string;
                         status: string;
                     }[] | undefined;
-                    coinsEarned?: number | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
-                    referrals?: number[] | undefined;
+                    referrals?: {
+                        name: string;
+                        userId: number;
+                        coinsEarned?: number | undefined;
+                    }[] | undefined;
                     refillEnergy?: number | undefined;
                     refillTime?: number | undefined;
                     userLevel?: number | undefined;
@@ -1709,6 +1980,8 @@ export declare const contract: {
                         dailyOperatingHours: number;
                     }[] | undefined;
                     lastClaimDate?: string | undefined;
+                    energyGenerated?: number | undefined;
+                    energyTimestamp?: number | undefined;
                     streakLevel?: number | undefined;
                     assets?: {
                         type: string;

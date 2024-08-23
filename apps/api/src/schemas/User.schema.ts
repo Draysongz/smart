@@ -49,6 +49,18 @@ export class Country{
   status: 'licensed' | 'unlicensed'
 }
 
+@Schema({ timestamps: true })
+export class ReferralUserSchema{
+ @Prop()
+  name: string;
+
+  @Prop()
+  userId: number
+
+  @Prop()
+  coinsEarned: number
+}
+
 
 
 @Schema({ timestamps: true })
@@ -69,7 +81,7 @@ export class User extends Document {
   referralLink?: string;
 
   @Prop()
-  referrals?: number[];
+  referrals?:  [];
 
   @Prop({default: 5})
   refillEnergy?: number;
@@ -109,6 +121,12 @@ export class User extends Document {
 
   @Prop({default: 0})
   streakLevel?:number 
+
+  @Prop({default: 0})
+  energyGenerated?: number
+
+  @Prop()
+  energyTimestamp?: number
 
   @Prop({ type: [EnergySource] })
   energySources?: EnergySource[]; // Array of energy sources owned by the user

@@ -38,40 +38,49 @@ export function useUserApi() {
   };
 
   const updateReferralData = async (userId: number, referralId: number) => {
-    try {
-      const referralQuery = await getOne(referralId);
-      if (referralQuery.status !== 200 || !referralQuery.body) {
-        console.log("No referrer found with that ID.");
-        return;
-      }
-
-      const userQuery = await getOne(userId);
-      if (userQuery.status !== 200 || !userQuery.body) {
-        console.log("No user found with that ID.");
-        return;
-      }
-
-      if (referralQuery.body.referrals?.includes(userId)) {
-        console.log("User has already been referred.");
-        return;
-      }
-
-      const updatedReferralData = {
-        coinsEarned: (referralQuery.body.coinsEarned || 0) + 45000,
-        referrals: [...(referralQuery.body.referrals || []), userId],
-      };
-
-      await updateUserData(referralId, updatedReferralData);
-
-      const updatedUserData = {
-        coinsEarned: (userQuery.body.coinsEarned || 0) + 45000,
-      };
-
-      await updateUserData(userId, updatedUserData);
-    } catch (err) {
-      console.log("Error updating referral data:", err);
+  try {
+    // Fetch the referrer and user data
+    const referralQuery = await getOne(referralId);
+    if (referralQuery.status !== 200 || !referralQuery.body) {
+      console.log("No referrer found with that ID.");
+      return;
     }
-  };
+
+    const userQuery = await getOne(userId);
+    if (userQuery.status !== 200 || !userQuery.body) {
+      console.log("No user found with that ID.");
+      return;
+    }
+
+    // Check if the user is already referred
+    const hasBeenReferred = referralQuery.body.referrals?.some(referral => referral.userId === userId);
+    if (hasBeenReferred) {
+      console.log("User has already been referred.");
+      return;
+    }
+
+    // Update the referrer's data
+     const updatedReferralData = {
+      coinsEarned: (referralQuery.body.coinsEarned || 0) + 45000,
+      referrals: [
+        ...(referralQuery.body.referrals || []),
+        { name: userQuery.body.name, userId, coinsEarned: 45000 }
+      ],
+    };
+
+    await updateUserData(referralId, updatedReferralData);
+
+    // Update the referred user's data
+    const updatedUserData = {
+      coinsEarned: (userQuery.body.coinsEarned || 0) + 45000,
+    };
+
+    await updateUserData(userId, updatedUserData);
+  } catch (err) {
+    console.log("Error updating referral data:", err);
+  }
+};
+
 
    let userCreationInProgress = false;
 

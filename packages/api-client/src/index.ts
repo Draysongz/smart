@@ -11,6 +11,13 @@ export const AssetSchema = z.object({
   price: z.number(), // Cost in the game
 });
 
+export const ReferralUserSchema = z.object({
+  userId: z.number(),
+  name: z.string(),
+  coinsEarned: z.number().default(0),
+  // Add any other fields you want to display
+});
+
 export const CountrySchema =z.object({
    name: z.string(),
    status: z.string()
@@ -34,7 +41,7 @@ export const UserSchema = z.object({
   coinsEarned: z.number().default(1000000),
   floatingTapEnergy: z.number().default(1000),
   referralLink: z.string().optional(),
-  referrals: z.array(z.number()).optional(),
+  referrals: z.array(ReferralUserSchema).optional(),
   refillEnergy: z.number().default(5),
   refillTime: z.number().default(3),
   status: z.string().optional(),
@@ -48,6 +55,8 @@ export const UserSchema = z.object({
   lastUpdatedTime: z.number().optional(),
   energySources: z.array(EnergySourceSchema).optional(),
   lastClaimDate: z.string().optional(),
+  energyGenerated: z.number().optional(),
+  energyTimestamp: z.number().optional(),
   streakLevel: z.number().optional(), // Array of energy sources owned by the user
   assets: z.array(AssetSchema).optional(),
   country: z.array(CountrySchema).optional() // Array of assets owned by the user

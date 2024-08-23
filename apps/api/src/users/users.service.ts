@@ -49,10 +49,13 @@ const newUser = new this.userModel(createUserDto);
         energyLevel: userObject.energyLevel,
         rechargeLevel: userObject.rechargeLevel,
         coinsPerHour: userObject.coinsPerHour,
-         lastUpdatedTime: userObject.lastupdatedTime,
+        lastUpdatedTime: userObject.lastupdatedTime,
         energySources: userObject.energySources,
+        lastClaimDate: userObject.lastClaimDate,
         assets: userObject.assets,
-        country: userObject.country
+        country: userObject.country,
+        energyGenerated: userObject.energyGenerated,
+        energyTimestamp: userObject.energyTimestamp
       },
     };
   }
@@ -95,6 +98,9 @@ const newUser = new this.userModel(createUserDto);
          lastUpdatedTime: user.lastupdatedTime,
         energySources: user.energySources,
         assets: user.assets,
+        lastClaimDate: user.lastClaimDate,
+        energyGenerated: user.energyGenerated,
+        energyTimestamp: user.energyTimestamp
       })),
     };
   }
@@ -129,7 +135,10 @@ const newUser = new this.userModel(createUserDto);
          lastUpdatedTime: userObject.lastupdatedTime,
         energySources: userObject.energySources,
         assets: userObject.assets,
-        country: userObject.country
+        country: userObject.country,
+        lastClaimDate: userObject.lastClaimDate,
+        energyGenerated: userObject.energyGenerated,
+        energyTimestamp: userObject.energyTimestamp
       },
     };
   }
@@ -169,7 +178,10 @@ const newUser = new this.userModel(createUserDto);
         energySources: userObject.energySources,
         assets: userObject.assets,
         lastUpdatedTime: userObject.lastupdatedTime,
-        country: userObject.country
+        country: userObject.country,
+        lastClaimDate: userObject.lastClaimDate,
+        energyGenerated: userObject.energyGenerated,
+        energyTimestamp: userObject.energyTimestamp
       },
     };
   }
@@ -218,6 +230,7 @@ const newUser = new this.userModel(createUserDto);
 
     // Deduct the cost from user's coins and add the energy source to user's energy sources
     user.coinsEarned -= energySource.purchaseCost;
+    user.coinsPerHour += energySource.productionRate
     user.energySources = user.energySources || [];
     user.energySources.push({
       type: energySource.type,
@@ -232,6 +245,7 @@ const newUser = new this.userModel(createUserDto);
     // Use the existing update method
     const updateUserDto = {
       coinsEarned: user.coinsEarned,
+      coinsPerHour: user.coinsPerHour,
       energySources: user.energySources,
     };
 
@@ -278,6 +292,7 @@ const newUser = new this.userModel(createUserDto);
 
   // Deduct the cost from user's coins and add the asset to user's assets
   user.coinsEarned -= asset.price;
+
   user.assets = user.assets || [];
   user.assets.push({
     type: asset.type,
@@ -289,6 +304,7 @@ const newUser = new this.userModel(createUserDto);
   // Use the existing update method
   const updateUserDto = {
     coinsEarned: user.coinsEarned,
+
     assets: user.assets,
   };
 

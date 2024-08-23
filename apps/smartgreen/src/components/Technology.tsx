@@ -26,11 +26,9 @@ export default function Technology({ userId, userData}: TechProps) {
   }, [data])
 
   const checkIfEnabled = (index: number) => {
-    if (index === 0) return true;
-    const previousCard = sortedCards[index - 1];
-    const isPreviousCardOperational = previousCard?.operational && previousCard?.productionRate >= 5;
-    const isAlreadyPurchased = userData?.energySources?.some(source => source.type === sortedCards[index].type);
-    return isPreviousCardOperational && isAlreadyPurchased;
+    // const previousCard = sortedCards[index - 1];
+    const isAlreadyPurchased = userData?.energySources!!.some(source => source.type === sortedCards[index].type);
+    return isAlreadyPurchased;
   };
 
   if (isLoading) {
@@ -139,7 +137,7 @@ function TechnologyCard({
               <button
                 className={`text-#E3E4E4 text-sm px-1 `}
                 onClick={handlePurchase}
-                disabled={!isEnabled}
+                disabled={isEnabled}
                 
               >
                 {new Intl.NumberFormat().format(price)}

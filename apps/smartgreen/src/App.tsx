@@ -9,6 +9,7 @@ import EarnPage from "./components/EarnPage/EarnPage"
 import { useUserApi } from "./hooks/useUserData"
 import { Users } from "api-contract"
   import 'react-toastify/dist/ReactToastify.css';
+import ReferralPage from "./components/referralPage/referralPage"
 
 
 function App() {
@@ -92,7 +93,8 @@ function AppContent({ userId, name, userData }: BoostProps) {
     <Routes>
       <Route index element={<UserId userId={userId} name={name} userData={userData} />} />
       <Route path="/boost" element={<Boost userId={userId} userData={userData} />} />
-      <Route path="/tasks" element={<EarnPage userId={userId} userData={userData} />} />
+      <Route path="/tasks" element={<EarnPage userId={userId}  />} />
+      <Route path='/referral' element={<ReferralPage userId={userId} userData={userData} />} />
     </Routes>
   )
 }
