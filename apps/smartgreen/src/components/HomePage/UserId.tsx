@@ -88,7 +88,7 @@ const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | n
 
    useEffect(()=>{
     socket.on("userUpdated", (updatedUser)=>{
-      setUserData(updatedUser)
+      setCoinsEarned(updatedUser?.coinsEarned)
     })
   }, [])
 
