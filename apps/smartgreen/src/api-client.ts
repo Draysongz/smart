@@ -4,7 +4,7 @@ import { contract } from 'api-contract'
 
  const apiClient = initQueryClient(contract, {
     baseHeaders: {},
-    baseUrl: ''
+    baseUrl: 'https://smart-1-hl3w.onrender.com'
 
     //https://smart-1-hl3w.onrender.com
  })
