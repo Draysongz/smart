@@ -154,11 +154,27 @@ const purchaseEnergy = async (userId: number, energyType: string)=>{
 }
 
 
+const purchaseLicense = async (userId: number, countryname: string)=>{
+  try {
+    const response = await apiClient.users.purchaseLicense.mutation({params: {
+      userId: userId,
+      name: countryname
+    }, body: {}},)
+    console.log("license purchased", response);
+    return response;
+  } catch (error) {
+    console.log("Error purchasing asset:", error);
+      throw error; // Throw error to handle it in the calling function
+  }
+}
+
+
   return {
     getUserData,
     getOne,
     updateUserData,
     purchaseAsset,
-    purchaseEnergy
+    purchaseEnergy,
+    purchaseLicense
   };
 }

@@ -6,6 +6,8 @@ import { ConfigModule} from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EnergyModule } from './energy/energy.module';
 import { AssetsModule } from './assets/assets.module';
+import { CountryModule } from './country/country.module';
+
 
 
 
@@ -15,7 +17,8 @@ import { AssetsModule } from './assets/assets.module';
     ConfigModule.forRoot(),
     MongooseModule.forRoot(`mongodb+srv://${process.env.MONGOOSE_USER}:${process.env.MONGOOSE_PASS}@smart.2bodi.mongodb.net/smart?retryWrites=true&w=majority&appName=smart`),
     EnergyModule,
-    AssetsModule
+    AssetsModule,
+    CountryModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -41,6 +41,17 @@ export class EnergySource {
 }
 
 @Schema({ timestamps: true })
+export class Country{
+ @Prop({ required: true })
+  name: string;
+
+  @Prop({default :'unlicensed'})
+  status: 'licensed' | 'unlicensed'
+}
+
+
+
+@Schema({ timestamps: true })
 export class User extends Document {
   @Prop({unique: true })
   username: string;
@@ -98,6 +109,9 @@ export class User extends Document {
 
   @Prop({ type: [Asset] })
   assets?: Asset[]; // Array of assets owned by the user
+
+  @Prop({ type: [Country] })
+  country?: Country[]; 
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

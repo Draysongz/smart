@@ -5,6 +5,7 @@ import { Users } from 'api-contract';
 import { User } from 'src/schemas/User.schema';
 import { Energy } from 'src/schemas/Energy.schema';
 import { Asset as AssetSchema } from 'src/schemas/Assets.schema';
+import { Country } from 'src/schemas/Country.schema';
 
 
 @Injectable()
@@ -12,7 +13,8 @@ export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Energy.name) private energyModel: Model<Energy>,
-    @InjectModel(AssetSchema.name) private assetModel: Model<AssetSchema>
+    @InjectModel(AssetSchema.name) private assetModel: Model<AssetSchema>,
+    @InjectModel(Country.name) private countryModel: Model<Country>
   ) {}
 
   async create(createUserDto: Users): Promise<{ status: 201; body: Users }> {
@@ -300,5 +302,97 @@ const newUser = new this.userModel(createUserDto);
   // Return the error if any
   return result;
 }
+
+async purchaseLicense(
+  userId: number,
+  countryName: string
+): Promise<
+  { status: 200; body: Users } | { status: 404; body: { message: string } } | { status: 400; body: { message: string } }
+> {
+  // Step 1: Retrieve the user
+  const user = await this.userModel.findOne({ userId }).exec();
+  if (!user) {
+    return {
+      status: 404,
+      body: { message: `User with ID ${userId} not found` },
+    };
+  }
+
+  // Step 2: Retrieve the country
+  const country = await this.countryModel.findOne({ name: countryName }).exec();
+  if (!country) {
+    return {
+      status: 404,
+      body: { message: `Country with name ${countryName} not found` },
+    };
+  }
+
+  // Step 3: Calculate the total licensing fee for all energy sources
+  let totalLicenseFee = 0;
+
+  if (user.energySources && user.energySources.length > 0) {
+    for (const energySource of user.energySources) {
+      // Retrieve the energy source from the database
+      const energySourceFromDB = await this.energyModel.findOne({ type: energySource.type }).exec();
+      if (!energySourceFromDB) {
+        return {
+          status: 404,
+          body: { message: `Energy source of type ${energySource.type} not found` },
+        };
+      }
+
+      // Add the license fee of the energy source to the total
+      totalLicenseFee += energySourceFromDB.licenseFee;
+    }
+  } else {
+    return {
+      status: 404,
+      body: { message: `No energy sources found for the user` },
+    };
+  }
+
+  // Step 4: Check if user has enough coins to cover the total license fee
+  if (user.coinsEarned < totalLicenseFee) {
+    return {
+      status: 400,
+      body: { message: `Not enough coins to purchase the license` },
+    };
+  }
+
+  // Step 5: Deduct the total license fee from the user's balance
+  user.coinsEarned -= totalLicenseFee;
+
+  // Step 6: Update the user's licensed countries
+  user.country = user.country || [];
+
+  // Check if the country is already licensed
+  const isCountryLicensed = user.country.some((c) => c.name === country.name);
+  if (!isCountryLicensed) {
+    user.country.push({
+      name: country.name,
+      status: 'licensed'
+    });
+  }
+
+  // Step 7: Update the user document in the database
+  const updateUserDto = {
+    coinsEarned: user.coinsEarned,
+    country: user.country,
+  };
+
+  const result = await this.update(userId, updateUserDto);
+
+  // Ensure the result matches the expected type
+  if (result.status === 200) {
+    return {
+      status: 200,
+      body: result.body,
+    };
+  }
+
+  // Return the error if any
+  return result;
+}
+
 
 }

@@ -11,6 +11,11 @@ export const AssetSchema = z.object({
   price: z.number(), // Cost in the game
 });
 
+export const CountrySchema =z.object({
+   name: z.string(),
+   status: z.string()
+})
+
 // Define the EnergySource schema
 export const EnergySourceSchema = z.object({
   type: z.string(), // e.g., "Solar", "Wind", "Gas", "Coal", "Nuclear", "3D Wind"
@@ -48,6 +53,7 @@ export const UserSchema = z.object({
 export type Users = z.infer<typeof UserSchema>;
 export type Asset = z.infer<typeof AssetSchema>;
 export type EnergySource = z.infer<typeof EnergySourceSchema>;
+export type County = z.infer<typeof CountrySchema>
 
 export const contract = c.router(
   {
@@ -137,6 +143,25 @@ export const contract = c.router(
       purchaseAsset: { 
         method: "POST",
         path: "/users/:userId/purchase-asset/:name",
+        pathParams: z.object({
+          userId: z.coerce.number(),
+          name: z.string(),
+        }),
+        body: z.any(),
+        responses: {
+          200: UserSchema,
+          400: z.object({
+            message: z.string(),
+          }),
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+
+       purchaseLicense: { 
+        method: "POST",
+        path: "/users/:userId/purchase-license/:name",
         pathParams: z.object({
           userId: z.coerce.number(),
           name: z.string(),
@@ -295,6 +320,63 @@ export const contract = c.router(
         },
       },
     },
+
+    country: {
+
+      create: {
+        method: "POST",
+        path: "/country",
+        body: CountrySchema,
+        responses: {
+          201: CountrySchema,
+        },
+      },
+
+      createBatch: {
+        method: "POST",
+        path: "/country/batch",
+        body: z.array(CountrySchema), // Array of assets to be created
+        responses: {
+          201: z.array(CountrySchema),
+        },
+      },
+      getAll: {
+        method: "GET",
+        path: "/country",
+        responses: {
+          200: CountrySchema.array(),
+        },
+      },
+
+      getOne: {
+        method: "GET",
+        path: "/country/:name",
+        pathParams: z.object({
+          name: z.coerce.string(),
+        }),
+        responses: {
+          200: CountrySchema,
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+
+      update: {
+        method: "PUT",
+        path: "/country/:name",
+        pathParams: z.object({
+          name: z.coerce.string(),
+        }),
+        body: CountrySchema.partial(),
+        responses: {
+          200: CountrySchema,
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    }
 
   },
   { pathPrefix: "/api", strictStatusCodes: true }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.contract = exports.UserSchema = exports.EnergySourceSchema = exports.AssetSchema = void 0;
+exports.contract = exports.UserSchema = exports.EnergySourceSchema = exports.CountrySchema = exports.AssetSchema = void 0;
 var core_1 = require("@ts-rest/core");
 var zod_1 = require("zod");
 var c = (0, core_1.initContract)();
@@ -10,6 +10,10 @@ exports.AssetSchema = zod_1.z.object({
     name: zod_1.z.string(),
     levelRequirement: zod_1.z.number(),
     price: zod_1.z.number(), // Cost in the game
+});
+exports.CountrySchema = zod_1.z.object({
+    name: zod_1.z.string(),
+    status: zod_1.z.string()
 });
 // Define the EnergySource schema
 exports.EnergySourceSchema = zod_1.z.object({
@@ -124,6 +128,24 @@ exports.contract = c.router({
         purchaseAsset: {
             method: "POST",
             path: "/users/:userId/purchase-asset/:name",
+            pathParams: zod_1.z.object({
+                userId: zod_1.z.coerce.number(),
+                name: zod_1.z.string(),
+            }),
+            body: zod_1.z.any(),
+            responses: {
+                200: exports.UserSchema,
+                400: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+        purchaseLicense: {
+            method: "POST",
+            path: "/users/:userId/purchase-license/:name",
             pathParams: zod_1.z.object({
                 userId: zod_1.z.coerce.number(),
                 name: zod_1.z.string(),
@@ -270,4 +292,56 @@ exports.contract = c.router({
             },
         },
     },
+    country: {
+        create: {
+            method: "POST",
+            path: "/country",
+            body: exports.CountrySchema,
+            responses: {
+                201: exports.CountrySchema,
+            },
+        },
+        createBatch: {
+            method: "POST",
+            path: "/country/batch",
+            body: zod_1.z.array(exports.CountrySchema), // Array of assets to be created
+            responses: {
+                201: zod_1.z.array(exports.CountrySchema),
+            },
+        },
+        getAll: {
+            method: "GET",
+            path: "/country",
+            responses: {
+                200: exports.CountrySchema.array(),
+            },
+        },
+        getOne: {
+            method: "GET",
+            path: "/country/:name",
+            pathParams: zod_1.z.object({
+                name: zod_1.z.coerce.string(),
+            }),
+            responses: {
+                200: exports.CountrySchema,
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+        update: {
+            method: "PUT",
+            path: "/country/:name",
+            pathParams: zod_1.z.object({
+                name: zod_1.z.coerce.string(),
+            }),
+            body: exports.CountrySchema.partial(),
+            responses: {
+                200: exports.CountrySchema,
+                404: zod_1.z.object({
+                    message: zod_1.z.string(),
+                }),
+            },
+        },
+    }
 }, { pathPrefix: "/api", strictStatusCodes: true });

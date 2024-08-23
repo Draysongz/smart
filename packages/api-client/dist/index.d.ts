@@ -15,6 +15,16 @@ export declare const AssetSchema: z.ZodObject<{
     levelRequirement: number;
     price: number;
 }>;
+export declare const CountrySchema: z.ZodObject<{
+    name: z.ZodString;
+    status: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    name: string;
+    status: string;
+}, {
+    name: string;
+    status: string;
+}>;
 export declare const EnergySourceSchema: z.ZodObject<{
     type: z.ZodString;
     productionRate: z.ZodNumber;
@@ -169,6 +179,7 @@ export declare const UserSchema: z.ZodObject<{
 export type Users = z.infer<typeof UserSchema>;
 export type Asset = z.infer<typeof AssetSchema>;
 export type EnergySource = z.infer<typeof EnergySourceSchema>;
+export type County = z.infer<typeof CountrySchema>;
 export declare const contract: {
     users: {
         create: {
@@ -1325,6 +1336,164 @@ export declare const contract: {
             };
             strictStatusCodes: true;
         };
+        purchaseLicense: {
+            pathParams: z.ZodObject<{
+                userId: z.ZodNumber;
+                name: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                userId: number;
+            }, {
+                name: string;
+                userId: number;
+            }>;
+            method: "POST";
+            body: z.ZodAny;
+            path: "/api/users/:userId/purchase-license/:name";
+            responses: {
+                200: z.ZodObject<{
+                    username: z.ZodString;
+                    name: z.ZodString;
+                    coinsEarned: z.ZodDefault<z.ZodNumber>;
+                    floatingTapEnergy: z.ZodDefault<z.ZodNumber>;
+                    referralLink: z.ZodOptional<z.ZodString>;
+                    referrals: z.ZodOptional<z.ZodArray<z.ZodNumber, "many">>;
+                    refillEnergy: z.ZodDefault<z.ZodNumber>;
+                    refillTime: z.ZodDefault<z.ZodNumber>;
+                    status: z.ZodOptional<z.ZodString>;
+                    userLevel: z.ZodOptional<z.ZodNumber>;
+                    tapEnergy: z.ZodDefault<z.ZodNumber>;
+                    tapPower: z.ZodDefault<z.ZodNumber>;
+                    userId: z.ZodNumber;
+                    energyLevel: z.ZodDefault<z.ZodNumber>;
+                    rechargeLevel: z.ZodDefault<z.ZodNumber>;
+                    coinsPerHour: z.ZodDefault<z.ZodNumber>;
+                    lastUpdatedTime: z.ZodOptional<z.ZodNumber>;
+                    energySources: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        type: z.ZodString;
+                        productionRate: z.ZodNumber;
+                        purchaseCost: z.ZodNumber;
+                        operational: z.ZodBoolean;
+                        country: z.ZodString;
+                        licenseFee: z.ZodNumber;
+                        dailyOperatingHours: z.ZodNumber;
+                    }, "strip", z.ZodTypeAny, {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }, {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }>, "many">>;
+                    assets: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                        type: z.ZodString;
+                        name: z.ZodString;
+                        levelRequirement: z.ZodNumber;
+                        price: z.ZodNumber;
+                    }, "strip", z.ZodTypeAny, {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
+                    }, {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
+                    }>, "many">>;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    username: string;
+                    coinsEarned: number;
+                    floatingTapEnergy: number;
+                    refillEnergy: number;
+                    refillTime: number;
+                    tapEnergy: number;
+                    tapPower: number;
+                    userId: number;
+                    energyLevel: number;
+                    rechargeLevel: number;
+                    coinsPerHour: number;
+                    status?: string | undefined;
+                    referralLink?: string | undefined;
+                    referrals?: number[] | undefined;
+                    userLevel?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
+                    energySources?: {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }[] | undefined;
+                    assets?: {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
+                    }[] | undefined;
+                }, {
+                    name: string;
+                    username: string;
+                    userId: number;
+                    status?: string | undefined;
+                    coinsEarned?: number | undefined;
+                    floatingTapEnergy?: number | undefined;
+                    referralLink?: string | undefined;
+                    referrals?: number[] | undefined;
+                    refillEnergy?: number | undefined;
+                    refillTime?: number | undefined;
+                    userLevel?: number | undefined;
+                    tapEnergy?: number | undefined;
+                    tapPower?: number | undefined;
+                    energyLevel?: number | undefined;
+                    rechargeLevel?: number | undefined;
+                    coinsPerHour?: number | undefined;
+                    lastUpdatedTime?: number | undefined;
+                    energySources?: {
+                        type: string;
+                        productionRate: number;
+                        purchaseCost: number;
+                        operational: boolean;
+                        country: string;
+                        licenseFee: number;
+                        dailyOperatingHours: number;
+                    }[] | undefined;
+                    assets?: {
+                        type: string;
+                        name: string;
+                        levelRequirement: number;
+                        price: number;
+                    }[] | undefined;
+                }>;
+                400: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
     };
     energy: {
         create: {
@@ -1817,6 +1986,151 @@ export declare const contract: {
             path: "/api/assets/:assetId";
             responses: {
                 204: z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+    };
+    country: {
+        create: {
+            method: "POST";
+            body: z.ZodObject<{
+                name: z.ZodString;
+                status: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                status: string;
+            }, {
+                name: string;
+                status: string;
+            }>;
+            path: "/api/country";
+            responses: {
+                201: z.ZodObject<{
+                    name: z.ZodString;
+                    status: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    status: string;
+                }, {
+                    name: string;
+                    status: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        createBatch: {
+            method: "POST";
+            body: z.ZodArray<z.ZodObject<{
+                name: z.ZodString;
+                status: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                status: string;
+            }, {
+                name: string;
+                status: string;
+            }>, "many">;
+            path: "/api/country/batch";
+            responses: {
+                201: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    status: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    status: string;
+                }, {
+                    name: string;
+                    status: string;
+                }>, "many">;
+            };
+            strictStatusCodes: true;
+        };
+        getAll: {
+            method: "GET";
+            path: "/api/country";
+            responses: {
+                200: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    status: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    status: string;
+                }, {
+                    name: string;
+                    status: string;
+                }>, "many">;
+            };
+            strictStatusCodes: true;
+        };
+        getOne: {
+            pathParams: z.ZodObject<{
+                name: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+            }, {
+                name: string;
+            }>;
+            method: "GET";
+            path: "/api/country/:name";
+            responses: {
+                200: z.ZodObject<{
+                    name: z.ZodString;
+                    status: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    status: string;
+                }, {
+                    name: string;
+                    status: string;
+                }>;
+                404: z.ZodObject<{
+                    message: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    message: string;
+                }, {
+                    message: string;
+                }>;
+            };
+            strictStatusCodes: true;
+        };
+        update: {
+            pathParams: z.ZodObject<{
+                name: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+            }, {
+                name: string;
+            }>;
+            method: "PUT";
+            body: z.ZodObject<{
+                name: z.ZodOptional<z.ZodString>;
+                status: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                name?: string | undefined;
+                status?: string | undefined;
+            }, {
+                name?: string | undefined;
+                status?: string | undefined;
+            }>;
+            path: "/api/country/:name";
+            responses: {
+                200: z.ZodObject<{
+                    name: z.ZodString;
+                    status: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    status: string;
+                }, {
+                    name: string;
+                    status: string;
+                }>;
                 404: z.ZodObject<{
                     message: z.ZodString;
                 }, "strip", z.ZodTypeAny, {

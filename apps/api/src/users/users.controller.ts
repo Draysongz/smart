@@ -104,6 +104,25 @@ export class UsersController {
           status: 200,
           body: result.body,
         };
+      },
+
+      purchaseLicense: async({params: {userId, name}})=>{
+         const result = await this.usersService.purchaseLicense(userId, name);
+        if (result.status === 404) {
+          return {
+            status: 404,
+            body: result.body,
+          };
+        }else if(result.status === 400){
+           return {
+            status: 400,
+            body: result.body,
+          };
+        }
+        return {
+          status: 200,
+          body: result.body,
+        };
       }
     });
   }
