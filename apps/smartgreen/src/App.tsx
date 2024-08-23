@@ -14,21 +14,38 @@ import { Users } from "api-contract"
 import ReferralPage from "./components/referralPage/referralPage"
 
 
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState<Users | null>(null)
+   const [userId, setUserId] = useState<number>()
+  const [firstName, setFirstName] = useState<string | null>(null)
+  const [username, setUserName] = useState<string | null>(null)
+  const params = new URLSearchParams(location.search)
+  const referralId = Number(params.get("referralId"))
 
-  const userId = 2146305061
-  const username = "habibilord"
-  const firstName = "crypto dray"
-  const referralId = 2146305061
+  // const userId = 2146305061
+  // const username = "habibilord"
+  // const firstName = "crypto dray"
+  // const referralId = 2146305061
+
+   useEffect(() => {
+    WebApp.expand()
+    const id = WebApp.initDataUnsafe.user?.id
+    const username = WebApp.initDataUnsafe.user?.username
+    const name = WebApp.initDataUnsafe.user?.first_name || null
+    if (!id && !name) return
+    setUserId(id)
+    setFirstName(name)
+    setUserName(username!)
+  }, [])
 
   const { getUserData } = useUserApi()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getUserData(userId, firstName, username, referralId)
+        const response = await getUserData(userId!, firstName!, username!, referralId)
         if (response) {
           setUserData(response.data)
         } else {
@@ -59,7 +76,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <AppContent userId={userId} name={firstName} userData={userData} />
+        <AppContent userId={userId!} name={firstName} userData={userData} />
       </BrowserRouter>
       <ToastContainer />
     </>

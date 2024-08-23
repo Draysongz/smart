@@ -2140,3 +2140,81 @@
 2024-08-23T19:14:22.979037Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/Pages/Boost.tsx")}
 2024-08-23T19:14:22.979054Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
 2024-08-23T19:14:22.980245Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:17:13.813150Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:17:13.813280Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:17:16.112250Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:17:16.112265Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:17:23.612429Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:17:23.612445Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:17:23.713552Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:17:23.713629Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:17:23.713779Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:17:28.014134Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:17:28.014150Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:17:28.115553Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:17:28.115569Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:17:28.115657Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:17:46.416829Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:17:46.416847Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:02.614320Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:02.614335Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:02.720626Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:02.720804Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:02.737233Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:18:05.514084Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:05.514105Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:10.013344Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:10.013364Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:12.012881Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:12.012897Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:12.114707Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:12.114726Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:12.114837Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:18:14.017839Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:14.017879Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:17.315239Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:17.315284Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:18.416263Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:18.416278Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:18.513925Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:18.513937Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:18.514016Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:18:22.314216Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:22.314233Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:22.430885Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:22.430970Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:22.431054Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:18:29.642566Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:29.642587Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:29.754941Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:29.754951Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:29.755069Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:18:34.714301Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:34.714321Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:45.319635Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:45.319655Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:45.434424Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:45.434438Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:45.436375Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-08-23T19:18:48.814971Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:48.815054Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:50.915306Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:50.915323Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:18:59.515525Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:18:59.515551Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:19:05.917669Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:19:05.917691Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:19:44.418863Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:19:44.418878Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:19:46.316859Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:19:46.316879Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:19:50.016564Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:19:50.016612Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:19:58.217502Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:19:58.217514Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:20:01.618175Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:20:01.618193Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:20:06.917352Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:20:06.917372Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
+2024-08-23T19:20:12.818480Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/smartgreen/src/App.tsx")}
+2024-08-23T19:20:12.818496Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("smartgreen"), path: AnchoredSystemPathBuf("apps/smartgreen") }}))
