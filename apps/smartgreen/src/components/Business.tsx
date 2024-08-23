@@ -1,34 +1,35 @@
-import { useState } from "react"
-import { ClipLoader } from "react-spinners"
-import { Image } from "@chakra-ui/react"
-import smcoin from "../assets/smcoin.png"
-import apiClient from "../api-client"
-import { useUserApi } from "../hooks/useUserData"
-import { Users } from "api-contract"
+import { useState } from "react";
+import { ClipLoader } from "react-spinners";
+import { Image } from "@chakra-ui/react";
+import smcoin from "../assets/smcoin.png";
+import apiClient from "../api-client";
+import { useUserApi } from "../hooks/useUserData";
+import { Users } from "api-contract";
+import { toast } from "react-toastify";
 
 interface BusinessProps {
-  userId: number | undefined
-  userData: Users | null
+  userId: number | undefined;
+  userData: Users | null;
 }
 
 export default function Business({ userId, userData }: BusinessProps) {
-  const { data, isLoading } = apiClient.asset.getAll.useQuery(['assets'])
-  const { purchaseAsset } = useUserApi()
-  const cards = data?.body || []
+  const { data, isLoading } = apiClient.asset.getAll.useQuery(['assets']);
+  const { purchaseAsset } = useUserApi();
+  const cards = data?.body || [];
 
   if (isLoading) {
     return (
       <div className="flex justify-center">
         <ClipLoader color="#fff" />
       </div>
-    )
+    );
   }
 
   // Group assets by type
   const assetsByType = cards.reduce((acc, card) => {
-    (acc[card.type] = acc[card.type] || []).push(card)
-    return acc
-  }, {} as Record<string, typeof cards>)
+    (acc[card.type] = acc[card.type] || []).push(card);
+    return acc;
+  }, {} as Record<string, typeof cards>);
 
   return (
     <div className="mt-4 pb-32">
@@ -45,51 +46,52 @@ export default function Business({ userId, userData }: BusinessProps) {
                 purchaseAsset={purchaseAsset}
                 userId={userId}
                 userLevel={userData?.userLevel || 0} // Assuming userData has a level property
+                isAlreadyPurchased={userData?.assets?.some(asset => asset.name === card.name) || false}
               />
             ))}
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 type PropType = {
-  name: string
-  price: number
-  levelRequirement: number
-  purchaseAsset: (name: string, userId: number) => void
-  userId: number | undefined
-  userLevel: number
-}
+  name: string;
+  price: number;
+  levelRequirement: number;
+  purchaseAsset: (name: string, userId: number) => void;
+  userId: number | undefined;
+  userLevel: number;
+  isAlreadyPurchased: boolean;
+};
 
-function BusinessCard({ name,  price, levelRequirement, purchaseAsset, userId, userLevel }: PropType) {
-  const [isLoading, setIsLoading] = useState(false)
-
+function BusinessCard({ name, price, levelRequirement, purchaseAsset, userId, userLevel, isAlreadyPurchased }: PropType) {
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePurchase = async () => {
     if (userId === undefined) {
-      alert("User ID is required to purchase an asset.")
-      return
+      alert("User ID is required to purchase an asset.");
+      return;
     }
 
     if (userLevel < levelRequirement) {
-      alert("You do not meet the level requirement to purchase this asset.")
-      return
+      alert("You do not meet the level requirement to purchase this asset.");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await purchaseAsset(name, userId)
-      alert("Asset purchased successfully!")
+      await purchaseAsset(name, userId);
+      toast.success("Asset purchased successfully!");
     } catch (error) {
-      alert("Failed to purchase asset. Please try again.")
+      toast.success("Failed to purchase asset. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
-  const isDisabled = userLevel < levelRequirement
+  const isDisabled = userLevel < levelRequirement || isAlreadyPurchased;
 
   return (
     <div className="relative cursor-pointer">
@@ -107,7 +109,7 @@ function BusinessCard({ name,  price, levelRequirement, purchaseAsset, userId, u
 
           {isDisabled && (
             <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white font-bold text-sm rounded-xl">
-              Level {levelRequirement} required
+              {isAlreadyPurchased ? "Already Purchased" : `Level ${levelRequirement} required`}
             </div>
           )}
         </div>
@@ -130,5 +132,6 @@ function BusinessCard({ name,  price, levelRequirement, purchaseAsset, userId, u
         </div>
       </div>
     </div>
-  )
+  );
 }
+

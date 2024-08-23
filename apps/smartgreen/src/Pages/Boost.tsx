@@ -19,7 +19,9 @@ import {
 import Business from "../components/Business";
 import NavigationBar from "../components/NavigationBar";
 import { Users } from "api-contract";
-
+import { useEffect, useState } from "react";
+import  {io} from 'socket.io-client'
+import { useUserApi } from "../hooks/useUserData";
 
 
 
@@ -28,12 +30,33 @@ interface BoostProps {
   userData: Users | null
 }
 
-
+const socket = io('https://smart-1-hl3w.onrender.com');
 
 const Boost = ({ userId, userData }: BoostProps) => {
- 
+  const [userDeets, setUserDeets] = useState<Users | null>()
+ console.log(userData)
   const breakpoint = useBreakpointValue({ base: "100vw", md: "78vw", lg: "100vw" });
 
+  const {getOne} = useUserApi()
+
+    useEffect(() => {
+    const getUser = async (userId : number) => {
+      try {
+        const userResponse = await getOne(userId);
+       if(userResponse.status === 200){
+        setUserDeets(userResponse.body)
+       }
+      } catch (error) {}
+    };
+
+    getUser(userId!)
+  }, []);
+
+  useEffect(()=>{
+    socket.on("userUpdated", (updatedUser)=>{
+      setUserDeets(updatedUser)
+    })
+  }, [])
 
 
   return (
@@ -74,7 +97,7 @@ const Boost = ({ userId, userData }: BoostProps) => {
               <Flex alignItems={"center"} className="gap-1">
               <Image src={smcoin} alt="coin" w={'30%'} />
               <Text color={"white"}>
-                {userData ? new Intl.NumberFormat().format(Number(userData.coinsEarned.toFixed(0))) : 0}
+                {userDeets ? new Intl.NumberFormat().format(Number(userDeets.coinsEarned.toFixed(0))) : 0}
               </Text>
               </Flex>
           </Flex>
@@ -93,7 +116,7 @@ const Boost = ({ userId, userData }: BoostProps) => {
             <Flex alignItems={"center"} className="gap-1">
               <Image src={smcoin} alt="coin" w={'30%'} />
               <Text color={"#DADADA"}>
-                {userData ? userData?.coinsPerHour : 0}
+                {userDeets ? userDeets?.coinsPerHour : 0}
               </Text>
             </Flex>
           </Flex>
@@ -101,16 +124,16 @@ const Boost = ({ userId, userData }: BoostProps) => {
   <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
     Energy Source
   </Text>
-      {userData?.energySources && userData.energySources.length > 0 &&  (
+      {userDeets?.energySources && userDeets.energySources.length > 0 &&  (
   <Flex alignItems={"center"} className="gap-1">
 
       <Image
         src={windIcon} // Display the latest energy source
-        alt={userData.energySources[userData.energySources.length - 1].type}
+        alt={userDeets.energySources[userDeets.energySources.length - 1].type}
         width="30px"
         height="30px"
       />
-      <Text className="text-white">{userData.energySources[userData.energySources.length - 1].type}</Text>
+      <Text className="text-white">{userDeets.energySources[userDeets.energySources.length - 1].type}</Text>
  
   </Flex>
      )}
@@ -178,13 +201,13 @@ const Boost = ({ userId, userData }: BoostProps) => {
             </TabList>
             <TabPanels>
                <TabPanel>
-                <Technology userId={userId}  userData={userData} />
+                <Technology userId={userId}  userData={userDeets!} />
               </TabPanel>
               <TabPanel>
-               <Lifestyle userId={userId} userData={userData}/>
+               <Lifestyle userId={userId} userData={userDeets!}/>
               </TabPanel>
                <TabPanel>
-                <Business userId={userId} userData={userData} />
+                <Business userId={userId} userData={userDeets!} />
               </TabPanel>
             </TabPanels>
           </Tabs>

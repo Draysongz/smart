@@ -98,7 +98,7 @@ function AppContent({ userId, name, userData }: BoostProps) {
       <Route path="/tasks" element={<EarnPage userId={userId}  />} />
       <Route path='/referral' element={<ReferralPage userId={userId} userData={userData} />} />
       <Route path='/airdrop' element={<AirdropPage userId={userId}  />} />
-      <Route path='/powerups' element={<PowerUps userId={userId} name={name} />} />
+      <Route path='/powerups' element={<PowerUps userId={userId} name={name} userData={userData} />} />
     </Routes>
   )
 }

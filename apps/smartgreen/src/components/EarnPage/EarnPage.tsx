@@ -22,13 +22,15 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  DrawerFooter,
   DrawerHeader,
-  Input
+  Input,
+  DrawerFooter
 } from "@chakra-ui/react";
 import { useUserApi } from "../../hooks/useUserData";
 import { toast } from "react-toastify";
+import {io} from 'socket.io-client'
 
+const socket = io('https://smart-1-hl3w.onrender.com');
 
 type boostpops = {
   userId: number | undefined;
@@ -58,6 +60,12 @@ const EarnPage = ({ userId }: boostpops) => {
 
     getUser(userId!)
   }, []);
+
+ useEffect(()=>{
+    socket.on("userUpdated", (updatedUser)=>{
+      setUserData(updatedUser)
+    })
+  }, [])
 
   useEffect(() => {
     if (userData) {
@@ -182,8 +190,8 @@ const EarnPage = ({ userId }: boostpops) => {
                 <p className="text-custom-gold">+45,000</p>
               </span>
             </div>
-            <div className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
-              <img src={ticket} alt="" onClick={onSecondOpen}/>
+            <div onClick={onSecondOpen} className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
+              <img src={ticket} alt="" />
               <span className="flex flex-col">
                 <p className="text-white whitespace-nowrap">
                   Activate Promo Code.{" "}
@@ -361,11 +369,7 @@ const EarnPage = ({ userId }: boostpops) => {
             </Box>
           </DrawerBody>
 
-          <DrawerFooter>
-          <Button className='w-[100%] text-black font-bold' onClick={onClose}>
-                CLAIM
-            </Button>
-          </DrawerFooter>
+         
         </DrawerContent>
       </Drawer>
 

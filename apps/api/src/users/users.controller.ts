@@ -6,7 +6,9 @@ import { UserGateway } from 'src/gateway/user.gateway';
 
 @Controller()
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService,
+    private readonly userGateway: UserGateway
+  ) {}
 
   @TsRestHandler(contract.users)
   async handler() {
@@ -44,11 +46,13 @@ export class UsersController {
       update: async ({ params: { userId }, body }) => {
         const result = await this.usersService.update(userId, body);
         if (result.status === 404) {
+          
           return {
             status: 404,
             body: result.body,
           };
         }
+        this.userGateway.emitUserUpdated(result.body)
         return {
           status: 200,
           body: result.body,
@@ -72,6 +76,7 @@ export class UsersController {
       purchaseEnergySource: async ({params : {userId, energyType}}) =>{
         const result = await this.usersService.purchaseEnergySource(userId, energyType);
         if (result.status === 404) {
+          
           return {
             status: 404,
             body: result.body,
@@ -82,6 +87,7 @@ export class UsersController {
             body: result.body,
           };
         }
+        this.userGateway.emitUserUpdated(result.body)
         return {
           status: 200,
           body: result.body,
@@ -89,7 +95,7 @@ export class UsersController {
       },
 
        purchaseAsset: async ({params : {userId, name}}) =>{
-        const result = await this.usersService.purchaseEnergySource(userId, name);
+        const result = await this.usersService.purchaseAsset(userId, name);
         if (result.status === 404) {
           return {
             status: 404,
@@ -101,6 +107,7 @@ export class UsersController {
             body: result.body,
           };
         }
+        this.userGateway.emitUserUpdated(result.body)
         return {
           status: 200,
           body: result.body,
@@ -120,6 +127,7 @@ export class UsersController {
             body: result.body,
           };
         }
+        this.userGateway.emitUserUpdated(result.body)
         return {
           status: 200,
           body: result.body,
