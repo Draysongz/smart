@@ -88,12 +88,7 @@ const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | n
 
    useEffect(()=>{
     socket.on("userUpdated", (updatedUser)=>{
-      setCoinsEarned(prevstate =>{
-        if(prevstate !== updatedUser){
-          return updatedUser
-        }
-        return prevstate
-      })
+      setInterval(()=>setCoinsEarned(updatedUser?.coinsEarned!), 10000)
     })
   }, [])
 
