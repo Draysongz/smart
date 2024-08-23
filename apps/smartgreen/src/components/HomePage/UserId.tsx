@@ -287,7 +287,7 @@ useEffect(() => {
                 <span className="flex gap-2 text-white items-center">
                   <img src={bolt} alt="" className="w-[12px]" />
                   <p>
-                    {new Intl.NumberFormat().format(Number(accumulatedEnergy.toFixed(2)))}
+                    {accumulatedEnergy && new Intl.NumberFormat().format(Number(accumulatedEnergy.toFixed(2)))}
                   </p>
                 </span>
               </div>
@@ -295,7 +295,7 @@ useEffect(() => {
             <div className="text-white flex gap-4 items-center justify-center font-bold text-5xl py-6 max-h-700:h-10">
               <img src={coin} alt="" className="w-16" />
               <p className="max-h-700:text-3xl">
-                {new Intl.NumberFormat().format(Number(coinsEarned.toFixed(0)))}
+                {coinsEarned && new Intl.NumberFormat().format(Number(coinsEarned.toFixed(0)))}
               </p>
             </div>
             <div className="w-full flex justify-center">

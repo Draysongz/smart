@@ -114,7 +114,7 @@ const PowerUps= ({
           <div className='text-white font-bold flex bg-transparent items-center justify-center w-11/12 rounded-xl px-2 mb-10'>
           <img src={coin} alt="" className='w-[15%]'/>
           <p className='text-3xl'>
-        { userDeets ? new Intl.NumberFormat().format(Number(userDeets?.coinsEarned.toFixed(0))) : 0}
+        { userDeets && new Intl.NumberFormat().format(Number(userDeets?.coinsEarned.toFixed(0)))!}
         </p>
         </div>
         <div className='w-[100%] flex flex-col gap-6'>
