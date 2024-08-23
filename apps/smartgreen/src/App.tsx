@@ -31,9 +31,9 @@ function App() {
 
    useEffect(() => {
     WebApp.expand()
-    const id = WebApp.initDataUnsafe.user?.id
-    const username = WebApp.initDataUnsafe.user?.username
-    const name = WebApp.initDataUnsafe.user?.first_name || null
+    const id = WebApp.initDataUnsafe.user?.id!
+    const username = WebApp.initDataUnsafe.user?.username!
+    const name = WebApp.initDataUnsafe.user?.first_name!
     if (!id && !name) return
     setUserId(id)
     setFirstName(name)
