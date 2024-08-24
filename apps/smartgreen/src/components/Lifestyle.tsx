@@ -5,10 +5,24 @@ import smcoin from "../assets/smcoin.png";
 import { useUserApi } from "../hooks/useUserData";
 import apiClient from "../api-client";
 import { County, Users } from "api-contract";
+import germany from '../assets/Icons/_0002_germany.png'
+import cyprus from "../Icons/Cyprus.png"
+import morocco from '../assets/Icons/_0003_morocco.png'
+import brazil from '../assets/Icons/_0000_brazil.png'
 
 interface LifestyleProps {
   userId: number | undefined;
   userData: Users | null;
+}
+const assetImages: { [key: string]: string } = {
+
+  "Germany": germany,
+    "Cyprus": cyprus, 
+    "Morocco": morocco,
+    "Brazil": brazil,
+    "USA": "",
+    "Japan": ""
+
 }
 
 export default function Lifestyle({ userId, userData }: LifestyleProps) {
@@ -28,6 +42,8 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
     "Japan": 8900
   
   };
+
+
 
 
   if (userData?.energySources && userData.energySources.length > 0) {
@@ -100,8 +116,7 @@ function LifestyleCard({
   status,
   purchaseLicense,
   cost,
-  userId,
-  image,
+  userId
 }: PropType) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -110,6 +125,7 @@ function LifestyleCard({
       await purchaseLicense(userId, name);
     }
   };
+  const assetImage = assetImages[name] || smcoin
 
   return (
     <div className={"relative cursor-pointer"}>
@@ -118,10 +134,10 @@ function LifestyleCard({
           <p className="text-sm text-center pb-2 border-b-[1px] w-full">
             {name}
           </p>
-          <Image src={image} alt="coin" w={"35%"} />
+          <Image src={assetImage} alt="coin"  />
           <p className="font-semibold text-[12px] mt-3">License</p>
           <div className="flex items-center gap-1 mt-1">
-            <Image src={smcoin} alt="coin" />
+            {/* <Image src={assetImage} alt="coin" /> */}
           </div>
 
           {status === "licensed" && (
