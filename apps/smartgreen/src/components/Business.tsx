@@ -109,7 +109,7 @@ function BusinessCard({ name, price, levelRequirement, purchaseAsset, userId, us
 
           {isDisabled && (
             <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white font-bold text-sm rounded-xl">
-              {isAlreadyPurchased ? "Already Purchased" : `Level ${levelRequirement} required`}
+              {isAlreadyPurchased ? "Already Purchased" : userLevel < levelRequirement?  `Level ${levelRequirement} required`: ""}
             </div>
           )}
         </div>

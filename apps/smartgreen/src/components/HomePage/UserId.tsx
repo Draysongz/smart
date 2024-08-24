@@ -243,7 +243,7 @@ const calculateLostTime = (): number => {
 
 useEffect(() => {
   if (!userData) return;
-  const intervalId = setInterval(() => {
+  setInterval(() => {
     setFloatingEnergy(curr => {
       if (curr + userData.refillEnergy >= userData.tapEnergy)
         return userData.tapEnergy;
@@ -251,7 +251,7 @@ useEffect(() => {
     });
   }, 3000);
 
-  return () => clearInterval(intervalId); // Cleanup interval
+
 }, [userData]);
  
 
@@ -264,10 +264,9 @@ useEffect(() => {
         lastUpdatedTime: Date.now() / 1000,
       });
     })();
-    return () => {};
   }, [floatingEnergy, userId]);
 
-  return userData === null ? (
+  return userDeets === null  ? (
     <Flex
       height="100vh"
       justify="center"

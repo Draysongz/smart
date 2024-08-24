@@ -108,6 +108,7 @@ function AppContent({ userId, name, userData }: BoostProps) {
 
   WebApp.BackButton.onClick(goBack)
 
+
   return (
     <Routes>
       <Route index element={<UserId userId={userId} name={name} userDeets={userData} />} />
