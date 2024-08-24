@@ -108,7 +108,7 @@ const ReferralPage = ({
             )}
 
             <div className="flex gap-2 mt-2 w-10/12">
-              <button className="flex gap-3 bg-light-green w-10/12 items-center justify-center" onClick={sendref}>
+              <button className="flex gap-3 bg-light-green w-10/12 items-center justify-center" onClick={()=>sendref()}>
                 <p className="text-white">Invite a friend</p>
                 <img src={contact} alt="" />
               </button>
