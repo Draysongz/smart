@@ -1,7 +1,7 @@
 // import { useState } from "react";
 import Lifestyle from "../components/Lifestyle";
 import Technology from "../components/Technology";
-import { Flex, useBreakpointValue, Image, Text, Box } from "@chakra-ui/react";
+import { Flex, useBreakpointValue, Image, Text,  } from "@chakra-ui/react";
 import cardBg from "../assets/cardBg.png";
 // import coin from "../assets/coin.png";
 import windIcon from "../assets/Icons/_0007_Wind.png";

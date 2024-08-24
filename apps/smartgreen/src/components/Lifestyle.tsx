@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { ClipLoader } from "react-spinners";
 import { Image } from "@chakra-ui/react";
 import smcoin from "../assets/smcoin.png";
 import { useUserApi } from "../hooks/useUserData";
 import apiClient from "../api-client";
-import { Users } from "api-contract";
+import { County, Users } from "api-contract";
 
 interface LifestyleProps {
   userId: number | undefined;
@@ -14,10 +14,20 @@ interface LifestyleProps {
 export default function Lifestyle({ userId, userData }: LifestyleProps) {
   const { data, isLoading } = apiClient.country.getAll.useQuery(['country'])
   const { purchaseLicense } = useUserApi();
+    const [sortedCards, setSortedCards] = useState<County[]>([]);
 
-  const cards = data?.body || [];
 
   let totalLicenseFee = 0;
+
+    const distanceFromGermany: Record<string, number> = {
+    "Germany": 0,
+    "Cyprus": 2850, 
+    "Morocco": 2600,
+    "Brazil": 9800,
+    "USA": 6500,
+    "Japan": 8900
+  
+  };
 
 
   if (userData?.energySources && userData.energySources.length > 0) {
@@ -29,6 +39,21 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
   }
 
   const userCountries = userData?.country || [];
+  useEffect(() => {
+    if (data) {
+      const sorted = [...data.body].sort((a, b) => {
+        if (a.name === "Germany") return -1;
+        if (b.name === "Germany") return 1;
+
+        const distanceA = distanceFromGermany[a.name] || Infinity;
+        const distanceB = distanceFromGermany[b.name] || Infinity;
+        return distanceA - distanceB;
+      });
+      setSortedCards(sorted);
+    }
+  }, [data]);
+
+
 
   if (isLoading) {
     return (
@@ -40,7 +65,7 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
 
   return (
     <div className="grid grid-cols-3 justify-between gap-2 mt-4 pb-32">
-       {cards.map((card, index) => {
+       {sortedCards.map((card, index) => {
         // Find the status of the current country in the user's data
         const userCountry = userCountries.find(c => c.name === card.name);
         const status = userCountry?.status || 'unlicensed';

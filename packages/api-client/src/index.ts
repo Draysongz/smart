@@ -20,7 +20,8 @@ export const ReferralUserSchema = z.object({
 
 export const CountrySchema =z.object({
    name: z.string(),
-   status: z.string()
+   status: z.string(),
+   distance: z.number().optional()
 })
 
 // Define the EnergySource schema

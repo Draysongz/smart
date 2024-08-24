@@ -53,7 +53,7 @@ export function useUserApi() {
     }
 
     // Check if the user is already referred
-    const hasBeenReferred = referralQuery.body.referrals?.some(referral => referral.userId === userId);
+    const hasBeenReferred = referralQuery.body.referrals?.some((referral: { userId: number }) => referral.userId === userId);
     if (hasBeenReferred) {
       console.log("User has already been referred.");
       return;

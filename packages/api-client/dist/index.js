@@ -19,7 +19,8 @@ exports.ReferralUserSchema = zod_1.z.object({
 });
 exports.CountrySchema = zod_1.z.object({
     name: zod_1.z.string(),
-    status: zod_1.z.string()
+    status: zod_1.z.string(),
+    distance: zod_1.z.number().optional()
 });
 // Define the EnergySource schema
 exports.EnergySourceSchema = zod_1.z.object({

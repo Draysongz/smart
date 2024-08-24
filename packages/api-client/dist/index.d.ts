@@ -31,12 +31,15 @@ export declare const ReferralUserSchema: z.ZodObject<{
 export declare const CountrySchema: z.ZodObject<{
     name: z.ZodString;
     status: z.ZodString;
+    distance: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     name: string;
     status: string;
+    distance?: number | undefined;
 }, {
     name: string;
     status: string;
+    distance?: number | undefined;
 }>;
 export declare const EnergySourceSchema: z.ZodObject<{
     type: z.ZodString;
@@ -141,12 +144,15 @@ export declare const UserSchema: z.ZodObject<{
     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
         name: z.ZodString;
         status: z.ZodString;
+        distance: z.ZodOptional<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
         name: string;
         status: string;
+        distance?: number | undefined;
     }, {
         name: string;
         status: string;
+        distance?: number | undefined;
     }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     name: string;
@@ -165,6 +171,7 @@ export declare const UserSchema: z.ZodObject<{
     country?: {
         name: string;
         status: string;
+        distance?: number | undefined;
     }[] | undefined;
     referralLink?: string | undefined;
     referrals?: {
@@ -202,6 +209,7 @@ export declare const UserSchema: z.ZodObject<{
     country?: {
         name: string;
         status: string;
+        distance?: number | undefined;
     }[] | undefined;
     floatingTapEnergy?: number | undefined;
     referralLink?: string | undefined;
@@ -325,12 +333,15 @@ export declare const contract: {
                 country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
+                    distance: z.ZodOptional<z.ZodNumber>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
                 name: string;
@@ -349,6 +360,7 @@ export declare const contract: {
                 country?: {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }[] | undefined;
                 referralLink?: string | undefined;
                 referrals?: {
@@ -386,6 +398,7 @@ export declare const contract: {
                 country?: {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }[] | undefined;
                 floatingTapEnergy?: number | undefined;
                 referralLink?: string | undefined;
@@ -503,12 +516,15 @@ export declare const contract: {
                     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         name: z.ZodString;
                         status: z.ZodString;
+                        distance: z.ZodOptional<z.ZodNumber>;
                     }, "strip", z.ZodTypeAny, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -527,6 +543,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     referralLink?: string | undefined;
                     referrals?: {
@@ -564,6 +581,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
@@ -693,12 +711,15 @@ export declare const contract: {
                     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         name: z.ZodString;
                         status: z.ZodString;
+                        distance: z.ZodOptional<z.ZodNumber>;
                     }, "strip", z.ZodTypeAny, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -717,6 +738,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     referralLink?: string | undefined;
                     referrals?: {
@@ -754,6 +776,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
@@ -883,12 +906,15 @@ export declare const contract: {
                     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         name: z.ZodString;
                         status: z.ZodString;
+                        distance: z.ZodOptional<z.ZodNumber>;
                     }, "strip", z.ZodTypeAny, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -907,6 +933,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     referralLink?: string | undefined;
                     referrals?: {
@@ -944,6 +971,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
@@ -1007,12 +1035,15 @@ export declare const contract: {
                 country: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
+                    distance: z.ZodOptional<z.ZodNumber>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }>, "many">>>;
                 username: z.ZodOptional<z.ZodString>;
                 floatingTapEnergy: z.ZodOptional<z.ZodDefault<z.ZodNumber>>;
@@ -1091,6 +1122,7 @@ export declare const contract: {
                 country?: {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }[] | undefined;
                 username?: string | undefined;
                 floatingTapEnergy?: number | undefined;
@@ -1135,6 +1167,7 @@ export declare const contract: {
                 country?: {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }[] | undefined;
                 username?: string | undefined;
                 floatingTapEnergy?: number | undefined;
@@ -1253,12 +1286,15 @@ export declare const contract: {
                     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         name: z.ZodString;
                         status: z.ZodString;
+                        distance: z.ZodOptional<z.ZodNumber>;
                     }, "strip", z.ZodTypeAny, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -1277,6 +1313,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     referralLink?: string | undefined;
                     referrals?: {
@@ -1314,6 +1351,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
@@ -1476,12 +1514,15 @@ export declare const contract: {
                     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         name: z.ZodString;
                         status: z.ZodString;
+                        distance: z.ZodOptional<z.ZodNumber>;
                     }, "strip", z.ZodTypeAny, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -1500,6 +1541,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     referralLink?: string | undefined;
                     referrals?: {
@@ -1537,6 +1579,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
@@ -1684,12 +1727,15 @@ export declare const contract: {
                     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         name: z.ZodString;
                         status: z.ZodString;
+                        distance: z.ZodOptional<z.ZodNumber>;
                     }, "strip", z.ZodTypeAny, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -1708,6 +1754,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     referralLink?: string | undefined;
                     referrals?: {
@@ -1745,6 +1792,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
@@ -1892,12 +1940,15 @@ export declare const contract: {
                     country: z.ZodOptional<z.ZodArray<z.ZodObject<{
                         name: z.ZodString;
                         status: z.ZodString;
+                        distance: z.ZodOptional<z.ZodNumber>;
                     }, "strip", z.ZodTypeAny, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }, {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }>, "many">>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
@@ -1916,6 +1967,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     referralLink?: string | undefined;
                     referrals?: {
@@ -1953,6 +2005,7 @@ export declare const contract: {
                     country?: {
                         name: string;
                         status: string;
+                        distance?: number | undefined;
                     }[] | undefined;
                     floatingTapEnergy?: number | undefined;
                     referralLink?: string | undefined;
@@ -2516,24 +2569,30 @@ export declare const contract: {
             body: z.ZodObject<{
                 name: z.ZodString;
                 status: z.ZodString;
+                distance: z.ZodOptional<z.ZodNumber>;
             }, "strip", z.ZodTypeAny, {
                 name: string;
                 status: string;
+                distance?: number | undefined;
             }, {
                 name: string;
                 status: string;
+                distance?: number | undefined;
             }>;
             path: "/api/country";
             responses: {
                 201: z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
+                    distance: z.ZodOptional<z.ZodNumber>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }>;
             };
             strictStatusCodes: true;
@@ -2543,24 +2602,30 @@ export declare const contract: {
             body: z.ZodArray<z.ZodObject<{
                 name: z.ZodString;
                 status: z.ZodString;
+                distance: z.ZodOptional<z.ZodNumber>;
             }, "strip", z.ZodTypeAny, {
                 name: string;
                 status: string;
+                distance?: number | undefined;
             }, {
                 name: string;
                 status: string;
+                distance?: number | undefined;
             }>, "many">;
             path: "/api/country/batch";
             responses: {
                 201: z.ZodArray<z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
+                    distance: z.ZodOptional<z.ZodNumber>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }>, "many">;
             };
             strictStatusCodes: true;
@@ -2572,12 +2637,15 @@ export declare const contract: {
                 200: z.ZodArray<z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
+                    distance: z.ZodOptional<z.ZodNumber>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }>, "many">;
             };
             strictStatusCodes: true;
@@ -2596,12 +2664,15 @@ export declare const contract: {
                 200: z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
+                    distance: z.ZodOptional<z.ZodNumber>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }>;
                 404: z.ZodObject<{
                     message: z.ZodString;
@@ -2625,24 +2696,30 @@ export declare const contract: {
             body: z.ZodObject<{
                 name: z.ZodOptional<z.ZodString>;
                 status: z.ZodOptional<z.ZodString>;
+                distance: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
             }, "strip", z.ZodTypeAny, {
                 name?: string | undefined;
                 status?: string | undefined;
+                distance?: number | undefined;
             }, {
                 name?: string | undefined;
                 status?: string | undefined;
+                distance?: number | undefined;
             }>;
             path: "/api/country/:name";
             responses: {
                 200: z.ZodObject<{
                     name: z.ZodString;
                     status: z.ZodString;
+                    distance: z.ZodOptional<z.ZodNumber>;
                 }, "strip", z.ZodTypeAny, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }, {
                     name: string;
                     status: string;
+                    distance?: number | undefined;
                 }>;
                 404: z.ZodObject<{
                     message: z.ZodString;
