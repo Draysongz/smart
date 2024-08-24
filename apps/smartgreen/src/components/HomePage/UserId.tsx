@@ -18,7 +18,7 @@ import { EnergySource, Users } from "api-contract";
 import { useUserApi } from "../../hooks/useUserData";
 import {io} from 'socket.io-client'
 
-const socket = io('http://localhost:3000');
+const socket = io('https://smart-1-hl3w.onrender.com');
 const floatUpAndFadeOut = keyframes`
   0% {
     transform: translateY(0px);
@@ -54,11 +54,11 @@ const rotateCoinRight = keyframes`
   }
 `;
 
-const levelMinPoints = [5000000, 15000000, 250000000, 50000000, 100000000, 200000000];
+const levelMinPoints = [0, 5000000, 15000000, 250000000, 50000000, 100000000];
 const levels = ["Spark Initiate", "Current Conductor", "Power Pioneer", "Voltage Vanguard", "Energy Elite", "Quantum Master"];
 
 const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | null; userDeets: Users | null }) => {
-  const [floatingEnergy, setFloatingEnergy] = useState(0);
+  const [floatingEnergy, setFloatingEnergy] = useState<number>();
   const [coinsEarned, setCoinsEarned] = useState(0);
   const [tappingEnergy, setTappingEnergy] = useState(0);
   const [tappingPower, setTappingPower] = useState(0);
@@ -155,9 +155,9 @@ const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | n
 
   const handleTap = async (clientX: number, clientY: number) => {
     if (!userId) return;
-    if (floatingEnergy - tappingPower <= 0) return;
+    if (floatingEnergy! - tappingPower <= 0) return;
 
-    setFloatingEnergy(curr => curr - tappingPower);
+    setFloatingEnergy(curr => curr! - tappingPower);
     setCoinsEarned(coins => coins + tappingPower);
     setScreenAxis(prv => [...prv, { x: clientX, y: clientY, id: Date.now() }]);
 
@@ -171,7 +171,7 @@ const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | n
 
     updateUserData(userId, {
       coinsEarned: coinsEarned + tappingPower,
-      floatingTapEnergy: floatingEnergy - tappingPower,
+      floatingTapEnergy: floatingEnergy! - tappingPower,
     });
   };
 
@@ -221,9 +221,9 @@ useEffect(() => {
   if (!userData) return;
   setInterval(() => {
     setFloatingEnergy(curr => {
-      if (curr + userData.refillEnergy >= userData.tapEnergy)
+      if (curr! + userData.refillEnergy >= userData.tapEnergy)
         return userData.tapEnergy;
-      return curr + userData.refillEnergy;
+      return curr! + userData.refillEnergy;
     });
   }, 3000);
 
@@ -233,7 +233,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId && floatingEnergy === 0) return;
     (async () => {
       updateUserData(userId, {
         floatingTapEnergy: floatingEnergy,

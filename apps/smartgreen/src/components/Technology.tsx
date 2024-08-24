@@ -6,10 +6,26 @@ import apiClient from "../api-client"
 import { EnergySource, Users } from "api-contract"
 import { useUserApi } from "../hooks/useUserData"
 import { toast } from "react-toastify"
+import gas from "../assets/Icons/_0006_Gas.png"
+import nuclear from '../assets/Icons/_0004_nuclear.png'
+import wind from '../assets/Icons/_0007_Wind.png'
+import wind3 from '../assets/Icons/_0009_3D-Wind-Device.png'
+import coal from '../assets/Icons/_0005_carbon.png'
+import solar from '../assets/Icons/_0008_Solar.png'
 
 interface TechProps {
   userId: number | undefined
   userData: Users | null
+}
+const assetImages: { [key: string]: string } = {
+
+  "Solar": solar,
+  "Gas": gas ,
+  "Coal": coal,
+  "Nuclear": nuclear,
+  "3D Wind": wind3 ,
+  "Conventional Wind":  wind
+
 }
 
 export default function Technology({ userId, userData}: TechProps) {
@@ -49,8 +65,7 @@ export default function Technology({ userId, userData}: TechProps) {
           name={card.type}
           perHr={card.productionRate}
           price={card.purchaseCost}
-          
-          image={smcoin}
+
           isEnabled={checkIfEnabled(index)}
           unlockingCondition={`Unlock by leveling ${sortedCards[index - 1]?.type} to level 5`}
           purchaseEnergy={purchaseEnergy} // Ensure userId is passed as a number
@@ -65,7 +80,6 @@ type TechnologyCardProps = {
   name: string
   perHr: number
   price: number
-  image: string
   isEnabled: boolean | undefined
   userData?: Users | null
   unlockingCondition: string
@@ -76,7 +90,6 @@ function TechnologyCard({
   name,
   perHr,
   price,
-  image,
   isEnabled,
   purchaseEnergy,
 }: TechnologyCardProps) {
@@ -105,6 +118,8 @@ function TechnologyCard({
     }
   };
 
+  const assetImage = assetImages[name] || smcoin
+
   return (
     <div className="relative cursor-pointer">
       <div
@@ -114,10 +129,9 @@ function TechnologyCard({
           <p className="text-sm text-center pb-2 border-b-[1px] w-full ">
             {name}
           </p>
-          <Image src={image} alt={name} w={'40%'} />
           <p className="font-semibold text-[12px] mt-3">Kw per hour</p>
-          <div className="flex items-center gap-1 mt-1">
-            <Image src={smcoin} alt="coin" />
+          <Image src={assetImage} alt="coin"  />
+          <div className="flex items-center gap-1 mt-1 flex-col gap-2">
             <p className="text-#E3E4E4 font-bold text-sm">+{perHr}</p>
           </div>
            {isEnabled && (
