@@ -20,7 +20,7 @@ export default {
       },
       backgroundImage: {
         'custom-gradient': 'linear-gradient(180deg, #0C472C 0%, #20A006 28%, #0A160D 100%)',
-        'custom-radial': 'radial-gradient(circle,  #132E25 , #132E25, #000)',
+        'custom-radial': 'radial-gradient(circle, #049547 0%, #007900 20%, black 100%)',
       },
       textColor: {
         'custom-gold': '#FCA61B',

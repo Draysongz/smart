@@ -85,13 +85,13 @@ const Boost = ({ userId, userData }: BoostProps) => {
               bgColor={"#132E25"}
               flexDirection={"column"}
               width={"110px"}
-              p={"5px"}
+              p={"10px"}
               rounded={"10px"}
             >
               <Text color={"white"}>Balance</Text>
               <Flex alignItems={"center"} className="gap-1">
-                <Image src={smcoin} alt="coin" w={"30%"} />
-                <Text color={"white"}>
+                <Image src={smcoin} alt="coin" w={"23%"} />
+                <Text color={"white"} className="text-[13px] overflow-x-hidden">
                   {userDeets
                     ? new Intl.NumberFormat().format(
                         Number(userDeets!.coinsEarned!)
@@ -113,8 +113,8 @@ const Boost = ({ userId, userData }: BoostProps) => {
                 Kw Per Hour
               </Text>
               <Flex alignItems={"center"} className="gap-1">
-                <Image src={smcoin} alt="coin" w={"30%"} />
-                <Text color={"#DADADA"}>
+                <Image src={smcoin} alt="coin" w={"23%"} />
+                <Text color={"#DADADA"} className="text-[15px] ">
                   {userDeets ? userDeets?.coinsPerHour : 0}
                 </Text>
               </Flex>
@@ -140,10 +140,10 @@ const Boost = ({ userId, userData }: BoostProps) => {
                           userDeets.energySources.length - 1
                         ].type
                       }
-                      width="30px"
-                      height="30px"
+                      width="23px"
+                      height="23px"
                     />
-                    <Text className="text-white">
+                    <Text className="text-white text-[15px]">
                       {
                         userDeets.energySources[
                           userDeets.energySources.length - 1
