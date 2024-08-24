@@ -9,6 +9,7 @@ import bg from "../../assets/bg.png";
 import listcon from "../../assets/listcont.png";
 import boxIcon from "../../assets/boxIcon.png";
 import { Users } from "api-contract";
+import WebApp from "@twa-dev/sdk";
 
 const ReferralPage = ({
   userId,
@@ -29,6 +30,13 @@ const ReferralPage = ({
     navigator.clipboard.writeText(`https://t.me/Greensmart_bot?start=refId-${userId}`);
     alert("Referral link copied!"); // Optional: Add a better user notification
   };
+
+  const sendref = async ()=>{
+    WebApp.switchInlineQuery(
+      `https://t.me/Greensmart_bot?start=refId-${userId}`,
+      ["users"]
+    )
+  }
 
   return (
     <section className="w-screen flex justify-center h-[100%] bg-black">
@@ -100,7 +108,7 @@ const ReferralPage = ({
             )}
 
             <div className="flex gap-2 mt-2 w-10/12">
-              <button className="flex gap-3 bg-light-green w-10/12 items-center justify-center">
+              <button className="flex gap-3 bg-light-green w-10/12 items-center justify-center" onClick={sendref}>
                 <p className="text-white">Invite a friend</p>
                 <img src={contact} alt="" />
               </button>
