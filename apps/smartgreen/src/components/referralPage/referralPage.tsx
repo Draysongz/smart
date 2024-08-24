@@ -32,7 +32,7 @@ const ReferralPage = ({
 
   return (
     <section className="w-screen flex justify-center h-[100%] bg-black">
-      <div className="border-t-custom-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-yellow h-full shadow-custom-Syellow mt-3 py-2">
+      <div className="border-t-custom-top rounded-[15px] border-y-custom-yellow w-full items-center bg-custom-yellow h-full shadow-custom-Syellow mt-3 py-2">
         <Box
           className="bg-dark-green w-full flex flex-col pt-4 items-center rounded-t-3xl h-[100%] pb-32 bg-cover bg-center"
           bgImage={bg}

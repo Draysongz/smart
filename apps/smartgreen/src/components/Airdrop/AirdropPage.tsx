@@ -37,7 +37,7 @@ const {isOpen, onClose, onOpen} = useDisclosure()
     return (
         <section className='w-screen flex justify-center bg-black'>
 
-        <div className='border-t-custom-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-yellow shadow-custom-Syellow mt-3 py-2 '>
+        <div className='border-t-custom-top rounded-[15px] border-y-custom-yellow w-full items-center bg-custom-yellow shadow-custom-Syellow mt-3 py-2 '>
 
         <Box className='bg-dark-green w-full flex flex-col pt-4 pb-32 items-center min-h-screen rounded-t-3xl bg-cover bg-center gap-5' bgImage={bg}>
 

@@ -107,7 +107,7 @@ const PowerUps= ({
       return (
           <section className='w-screen flex justify-center min-h-screen bg-black'>
   
-          <div className='border-t-custom-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-yellow min-h-screen overflow-x-hidden shadow-custom-Syellow mt-3 py-2 '>
+          <div className='border-t-custom-top rounded-[15px] border-y-custom-yellow w-full items-center bg-custom-yellow min-h-screen overflow-x-hidden shadow-custom-Syellow mt-3 py-2 '>
   
           <Box className='bg-dark-green w-full flex flex-col items-center justify-center rounded-t-3xl pt-20 pb-32 h-[100%] shadow-custom-Syellow' backgroundImage={bg} overflow={'scroll'}>
           <h2 className='text-white text-xl opacity-50'>Your balance</h2>
