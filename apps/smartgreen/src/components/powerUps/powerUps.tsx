@@ -23,7 +23,7 @@ import { useState, useEffect } from 'react';
 import { useUserApi } from '../../hooks/useUserData';
 import { toast } from 'react-toastify';
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io('http://localhost:3000');
 
 const PowerUps= ({
     userId,

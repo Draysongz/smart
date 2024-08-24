@@ -30,7 +30,7 @@ interface BoostProps {
   userData: Users | null
 }
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io('http://localhost:3000');
 
 const Boost = ({ userId, userData }: BoostProps) => {
   const [userDeets, setUserDeets] = useState<Users | null>()

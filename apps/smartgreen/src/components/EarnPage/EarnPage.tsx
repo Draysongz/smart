@@ -30,7 +30,7 @@ import { useUserApi } from "../../hooks/useUserData";
 import { toast } from "react-toastify";
 import {io} from 'socket.io-client'
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io('http://localhost:3000');
 
 type boostpops = {
   userId: number | undefined;

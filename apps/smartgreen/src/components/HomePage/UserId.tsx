@@ -18,7 +18,7 @@ import { EnergySource, Users } from "api-contract";
 import { useUserApi } from "../../hooks/useUserData";
 import {io} from 'socket.io-client'
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io('http://localhost:3000');
 const floatUpAndFadeOut = keyframes`
   0% {
     transform: translateY(0px);
@@ -54,7 +54,8 @@ const rotateCoinRight = keyframes`
   }
 `;
 
-const LEVEL_THRESHOLDS = [5000000, 15000000, 250000000, 50000000, 100000000, 200000000];
+const levelMinPoints = [5000000, 15000000, 250000000, 50000000, 100000000, 200000000];
+const levels = ["Spark Initiate", "Current Conductor", "Power Pioneer", "Voltage Vanguard", "Energy Elite", "Quantum Master"];
 
 const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | null; userDeets: Users | null }) => {
   const [floatingEnergy, setFloatingEnergy] = useState(0);
@@ -67,7 +68,6 @@ const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | n
   const [accumulatedEnergy, setAccumulatedEnergy] = useState(0);
   const [lastUpdateTime, setLastUpdateTime] = useState(Date.now());
   const [totalEnergyProductionRate, setTotalEnergyProductionRate] = useState(0);
-  const [userLevel, setUserLevel] = useState<number | 1>();
   const [userData, setUserData] = useState<Users | null>()
   console.log(userDeets)
 
@@ -97,30 +97,6 @@ const UserId = ({ userId, name, userDeets }: { userId: number ; name: string | n
     })
   }, [])
 
-  useEffect(() => {
-    if (!userData || !userId) return;
-
-    // Calculate the user level based on coinsEarned
-    const calculateUserLevel = (coins: number): number => {
-      for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
-        if (coins >= LEVEL_THRESHOLDS[i]) {
-          return i + 1; // Level is 1-based
-        }
-      }
-      return 1; // Default to level 1
-    };
-
-  
-    setUserLevel(calculateUserLevel(userData.coinsEarned));
-
-    // Update user data if the level changes
-    if (userData.coinsEarned !== coinsEarned || userData.userLevel !== userLevel) {
-      updateUserData(userId, {
-        userLevel: userLevel,
-      });
-    }
-
-  }, [userData, userId, ]);
 
 
 
@@ -284,7 +260,7 @@ useEffect(() => {
           <img src={contactIcon} alt="" />
           <p className="text-white">Welcome {name}</p>
         </div>
-        <ProgressBar userLevel={userLevel} userData={userDeets!} thresh={LEVEL_THRESHOLDS} />
+        <ProgressBar levels={levels} userData={userDeets!} levelMinPoints={levelMinPoints}  />
         <div className="border-t-custom-large-top rounded-t-3xl border-t-custom-yellow w-full items-center bg-custom-goldyellow max-h-700:border-t-custom-top h-[100%]">
           <Box
             className="w-full border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center py-9 flex flex-col gap-5 flex-grow max-h-700:p-3 h-[80vh]"

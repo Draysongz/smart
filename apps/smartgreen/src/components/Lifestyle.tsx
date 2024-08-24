@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { ClipLoader } from "react-spinners";
 import { Image } from "@chakra-ui/react";
 import smcoin from "../assets/smcoin.png";
 import { useUserApi } from "../hooks/useUserData";
 import apiClient from "../api-client";
-import { Users } from "api-contract";
+import { County, Users } from "api-contract";
 
 interface LifestyleProps {
   userId: number | undefined;
@@ -12,51 +12,48 @@ interface LifestyleProps {
 }
 
 export default function Lifestyle({ userId, userData }: LifestyleProps) {
-  const { data, isLoading } = apiClient.country.getAll.useQuery(['country']);
+  const { data, isLoading } = apiClient.country.getAll.useQuery(['country'])
   const { purchaseLicense } = useUserApi();
+    const [sortedCards, setSortedCards] = useState<County[]>([]);
 
-  const [sortedCards, setSortedCards] = useState<any[]>([]);
 
   let totalLicenseFee = 0;
 
+    const distanceFromGermany: Record<string, number> = {
+    "Germany": 0,
+    "Cyprus": 2850, 
+    "Morocco": 2600,
+    "Brazil": 9800,
+    "USA": 6500,
+    "Japan": 8900
+  
+  };
+
+
   if (userData?.energySources && userData.energySources.length > 0) {
+    console.log(userData.energySources)
     for (const energySource of userData.energySources) {
+        console.log(energySource.licenseFee)
       totalLicenseFee += energySource.licenseFee;
     }
   }
 
   const userCountries = userData?.country || [];
-
-  // Define real distances from Germany (Berlin) in kilometers
-  const distanceMap: { [key: string]: number } = {
-    "Germany": 0,
-    "Cyprus": 2850,       // Distance from Berlin to Nicosia
-    "Morocco": 2600,      // Distance from Berlin to Rabat
-    "Brazil": 9800,       // Distance from Berlin to Brasília
-    "USA": 6500,          // Distance from Berlin to Washington, D.C.
-    "Japan": 8900,        // Distance from Berlin to Tokyo
-  };
-
-  // Map fetched country names to known country names
-  const knownCountryNames = ["Germany", "Cyprus", "Morocco", "Brazil", "USA", "Japan"];
-
   useEffect(() => {
     if (data) {
-      const cards = data.body || [];
+      const sorted = [...data.body].sort((a, b) => {
+        if (a.name === "Germany") return -1;
+        if (b.name === "Germany") return 1;
 
-      // Filter and map the cards to ensure they only include known country names
-      const filteredCards = cards.filter((card: any) => knownCountryNames.includes(card.name));
-
-      // Sort based on the distance from Germany
-      const sortedCards = filteredCards.sort((a: any, b: any) => {
-        const distanceA = distanceMap[a.name] ?? Infinity;
-        const distanceB = distanceMap[b.name] ?? Infinity;
+        const distanceA = distanceFromGermany[a.name] || Infinity;
+        const distanceB = distanceFromGermany[b.name] || Infinity;
         return distanceA - distanceB;
       });
-
-      setSortedCards(sortedCards);
+      setSortedCards(sorted);
     }
   }, [data]);
+
+
 
   if (isLoading) {
     return (
@@ -68,8 +65,9 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
 
   return (
     <div className="grid grid-cols-3 justify-between gap-2 mt-4 pb-32">
-      {sortedCards.map((card: any, index: any) => {
-        const userCountry = userCountries.find((c: any) => c.name === card.name);
+       {sortedCards.map((card, index) => {
+        // Find the status of the current country in the user's data
+        const userCountry = userCountries.find(c => c.name === card.name);
         const status = userCountry?.status || 'unlicensed';
 
         return (
@@ -78,7 +76,7 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
             name={card.name}
             status={status}
             purchaseLicense={purchaseLicense}
-            cost={totalLicenseFee} 
+            cost={totalLicenseFee}  // Use the total license fee for the cost
             userId={userId}
             image={smcoin}
           />

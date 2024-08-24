@@ -10,7 +10,7 @@ import { Server } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: 'https://smartgreen.vercel.app', // Allow requests from this origin
+    origin: 'http://localhost:5173', // Allow requests from this origin
     methods: ['GET', 'POST'],
     credentials: true, // Allow cookies and other credentials to be sent
   },
