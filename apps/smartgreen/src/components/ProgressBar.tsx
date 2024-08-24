@@ -7,9 +7,7 @@ const levels = ["Spark Initiate", "Current Conductor", "Power Pioneer", "Voltage
 const ProgressBar = ({ userLevel, userData, thresh }: { userLevel: number | undefined, userData: Users, thresh: number[] }) => {
 
   // Log the props to verify they are updating
- alert(userLevel);
- alert( userData, )
- alert(thresh)
+ 
 
 
   if (userLevel === undefined || userLevel < 1 || userLevel > levels.length) {
