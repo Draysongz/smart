@@ -117,7 +117,6 @@ function LifestyleCard({
   purchaseLicense,
   cost,
   userId,
-  image,
 }: PropType) {
   const [isLoading, setIsLoading] = useState(false);
 
