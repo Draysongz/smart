@@ -5,9 +5,9 @@ import coin from "../../assets/Logo coin 1.png";
 import contact from "../../assets/contact.png";
 import NavigationBar from "../NavigationBar";
 import bg from "../../assets/bg.png";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box} from "@chakra-ui/react";
 // import { useDisclosure } from "@chakra-ui/react";
-import { Icon, Text } from "@chakra-ui/react";
+import { Icon, } from "@chakra-ui/react";
 // import { BsTwitterX } from "react-icons/bs";
 import { FaTiktok } from "react-icons/fa6";
 import { FaTelegram } from "react-icons/fa6";
@@ -27,7 +27,7 @@ import { useState, useEffect } from "react";
 //   DrawerFooter
 // } from "@chakra-ui/react";
 import { useUserApi } from "../../hooks/useUserData";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import {io} from 'socket.io-client'
 
 const socket = io('http://localhost:3000');
@@ -37,16 +37,18 @@ type boostpops = {
 //   userData: Users | null;
 };
 
-const dailyRewards = [
-  5000, 10000, 50000, 100000, 250000, 500000, 750000, 1000000, 2000000, 5000000,
-];
+// const dailyRewards = [
+//   5000, 10000, 50000, 100000, 250000, 500000, 750000, 1000000, 2000000, 5000000,
+// ];
 
 const EarnPage = ({ userId }: boostpops) => {
-  const [isClaiming, setIsClaiming] = useState(false);
-  const [canClaimToday, setCanClaimToday] = useState(false);
+  // const [isClaiming, setIsClaiming] = useState(false);
+  // const [canClaimToday, setCanClaimToday] = useState(false);
   const [userData, setUserData] = useState<Users | null>(null)
+
+  console.log(userData)
   // const {isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClosed} = useDisclosure()
-  const { updateUserData, getOne } = useUserApi();
+  const {  getOne } = useUserApi();
 
   useEffect(() => {
     const getUser = async (userId : number) => {
@@ -67,107 +69,107 @@ const EarnPage = ({ userId }: boostpops) => {
     })
   }, [])
 
-  useEffect(() => {
-    if (userData) {
-      const now = new Date();
-      const lastClaimDate = new Date(userData?.lastClaimDate || 0);
+  // useEffect(() => {
+  //   if (userData) {
+  //     const now = new Date();
+  //     const lastClaimDate = new Date(userData?.lastClaimDate || 0);
 
-      // Normalize current date to midnight
-      const nowDate = new Date(now.setHours(0, 0, 0, 0));
-      const lastClaimDateNormalized = new Date(
-        lastClaimDate.setHours(0, 0, 0, 0)
-      );
-      let dayDifference = nowDate.getTime() - lastClaimDateNormalized.getTime();
-      let currentDay = userData.streakLevel || 1;
+  //     // Normalize current date to midnight
+  //     const nowDate = new Date(now.setHours(0, 0, 0, 0));
+  //     const lastClaimDateNormalized = new Date(
+  //       lastClaimDate.setHours(0, 0, 0, 0)
+  //     );
+  //     let dayDifference = nowDate.getTime() - lastClaimDateNormalized.getTime();
+  //     let currentDay = userData.streakLevel || 1;
 
-      if (dayDifference > 1) {
-        // If missed a day, reset to Day 1
-        currentDay = 1;
-        // Set the current streak day
-        setCanClaimToday(true);
-      } else if (dayDifference === 0) {
-        // Already claimed today
-        setCanClaimToday(false);
-        return;
-      } else {
-        // Move to the next day
-        currentDay = (currentDay % 10) + 1;
-        // Set the current streak day
-        setCanClaimToday(true);
-      }
-    }
-  }, [userData]);
+  //     if (dayDifference > 1) {
+  //       // If missed a day, reset to Day 1
+  //       currentDay = 1;
+  //       // Set the current streak day
+  //       setCanClaimToday(true);
+  //     } else if (dayDifference === 0) {
+  //       // Already claimed today
+  //       setCanClaimToday(false);
+  //       return;
+  //     } else {
+  //       // Move to the next day
+  //       currentDay = (currentDay % 10) + 1;
+  //       // Set the current streak day
+  //       setCanClaimToday(true);
+  //     }
+  //   }
+  // }, [userData]);
 
-  const handleClaim = async () => {
-    if (userId === undefined) {
-      toast.error("User is required to claim rewards.");
-      return;
-    }
+  // const handleClaim = async () => {
+  //   if (userId === undefined) {
+  //     toast.error("User is required to claim rewards.");
+  //     return;
+  //   }
 
-    setIsClaiming(true);
-    try {
-      const now = new Date();
-      console.log(now);
-      const lastClaimDateStr =
-        userData?.lastClaimDate || "1970-01-01T00:00:00.000Z"; // Default to an old date if not set
-      const lastClaimDate = new Date(lastClaimDateStr);
-      console.log("last claim date", lastClaimDate);
+  //   setIsClaiming(true);
+  //   try {
+  //     const now = new Date();
+  //     console.log(now);
+  //     const lastClaimDateStr =
+  //       userData?.lastClaimDate || "1970-01-01T00:00:00.000Z"; // Default to an old date if not set
+  //     const lastClaimDate = new Date(lastClaimDateStr);
+  //     console.log("last claim date", lastClaimDate);
 
-      // Extract date components (year, month, day) for comparison
-      const nowYear = now.getUTCFullYear();
-      const nowMonth = now.getUTCMonth();
-      const nowDay = now.getUTCDay();
+  //     // Extract date components (year, month, day) for comparison
+  //     const nowYear = now.getUTCFullYear();
+  //     const nowMonth = now.getUTCMonth();
+  //     const nowDay = now.getUTCDay();
 
-      const lastClaimYear = lastClaimDate.getUTCFullYear();
-      const lastClaimMonth = lastClaimDate.getUTCMonth();
-      const lastClaimDay = lastClaimDate.getUTCDay();
-      console.log("now day", nowDay, "lastclaim date", lastClaimDay);
+  //     const lastClaimYear = lastClaimDate.getUTCFullYear();
+  //     const lastClaimMonth = lastClaimDate.getUTCMonth();
+  //     const lastClaimDay = lastClaimDate.getUTCDay();
+  //     console.log("now day", nowDay, "lastclaim date", lastClaimDay);
 
-      console.log(lastClaimDay);
+  //     console.log(lastClaimDay);
 
-      if (
-        nowYear === lastClaimYear &&
-        nowMonth === lastClaimMonth &&
-        nowDay === lastClaimDay
-      ) {
-        // Already claimed today
-        toast.info("You have already claimed your reward today.");
-        return;
-      }
+  //     if (
+  //       nowYear === lastClaimYear &&
+  //       nowMonth === lastClaimMonth &&
+  //       nowDay === lastClaimDay
+  //     ) {
+  //       // Already claimed today
+  //       toast.info("You have already claimed your reward today.");
+  //       return;
+  //     }
 
-      let currentDay = userData?.streakLevel || 1;
+  //     let currentDay = userData?.streakLevel || 1;
 
-      const dayDifference = Math.floor(
-        (now.getTime() - lastClaimDate.getTime()) / (1000 * 3600 * 24)
-      );
+  //     const dayDifference = Math.floor(
+  //       (now.getTime() - lastClaimDate.getTime()) / (1000 * 3600 * 24)
+  //     );
 
-      if (dayDifference > 1) {
-        // If missed a day, reset to Day 1
-        currentDay = 1;
-      } else {
-        // Move to the next day
-        currentDay = (currentDay % 10) + 1;
-      }
+  //     if (dayDifference > 1) {
+  //       // If missed a day, reset to Day 1
+  //       currentDay = 1;
+  //     } else {
+  //       // Move to the next day
+  //       currentDay = (currentDay % 10) + 1;
+  //     }
 
-      // Calculate reward based on the current day
-      const reward = dailyRewards[currentDay - 1];
+  //     // Calculate reward based on the current day
+  //     const reward = dailyRewards[currentDay - 1];
 
-      // Update user data
-      await updateUserData(userId, {
-        lastClaimDate: now.toISOString(), // Store the date in ISO format
-        streakLevel: currentDay,
-        coinsEarned: (userData?.coinsEarned || 0) + reward, // Add to existing coins
-      });
+  //     // Update user data
+  //     await updateUserData(userId, {
+  //       lastClaimDate: now.toISOString(), // Store the date in ISO format
+  //       streakLevel: currentDay,
+  //       coinsEarned: (userData?.coinsEarned || 0) + reward, // Add to existing coins
+  //     });
 
-      toast.success(
-        `Reward claimed successfully! You earned ${reward.toLocaleString()} coins.`
-      );
-    } catch (error) {
-      toast.error("Failed to claim reward. Please try again.");
-    } finally {
-      setIsClaiming(false);
-    }
-  };
+  //     toast.success(
+  //       `Reward claimed successfully! You earned ${reward.toLocaleString()} coins.`
+  //     );
+  //   } catch (error) {
+  //     toast.error("Failed to claim reward. Please try again.");
+  //   } finally {
+  //     setIsClaiming(false);
+  //   }
+  // };
 
   // const { isOpen, onClose, onOpen } = useDisclosure();
   return (
