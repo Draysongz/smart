@@ -27,7 +27,7 @@ export default function Technology({ userId, userData}: TechProps) {
 
   const checkIfEnabled = (index: number) => {
     // const previousCard = sortedCards[index - 1];
-    const isAlreadyPurchased = userData?.energySources!!.some(source => source.type === sortedCards[index].type);
+    const isAlreadyPurchased = userData?.energySources!!.some((source: EnergySource) => source.type === sortedCards[index].type);
     return isAlreadyPurchased;
   };
 

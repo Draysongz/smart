@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import { Image } from "@chakra-ui/react";
 import smcoin from "../assets/smcoin.png";
@@ -12,23 +12,45 @@ interface LifestyleProps {
 }
 
 export default function Lifestyle({ userId, userData }: LifestyleProps) {
-  const { data, isLoading } = apiClient.country.getAll.useQuery(['country'])
+  const { data, isLoading } = apiClient.country.getAll.useQuery(['country']);
   const { purchaseLicense } = useUserApi();
 
-  const cards = data?.body || [];
+  const [sortedCards, setSortedCards] = useState<any[]>([]);
 
   let totalLicenseFee = 0;
 
-
   if (userData?.energySources && userData.energySources.length > 0) {
-    console.log(userData.energySources)
     for (const energySource of userData.energySources) {
-        console.log(energySource.licenseFee)
       totalLicenseFee += energySource.licenseFee;
     }
   }
 
   const userCountries = userData?.country || [];
+
+  // Define real distances from Germany (Berlin) in kilometers
+  const distanceMap: { [key: string]: number } = {
+    "Germany": 0,
+    "Cyprus": 2850,       // Distance from Berlin to Nicosia
+    "Morocco": 2600,      // Distance from Berlin to Rabat
+    "Brazil": 9800,       // Distance from Berlin to Brasília
+    "USA": 6500,          // Distance from Berlin to Washington, D.C.
+    "Japan": 8900,        // Distance from Berlin to Tokyo
+  };
+
+  useEffect(() => {
+    if (data) {
+      const cards = data.body || [];
+
+      // Sort based on the distance from Germany
+      const sortedCards = cards.sort((a: any, b: any) => {
+        const distanceA = distanceMap[a.name] ?? Infinity;
+        const distanceB = distanceMap[b.name] ?? Infinity;
+        return distanceA - distanceB;
+      });
+
+      setSortedCards(sortedCards);
+    }
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -40,9 +62,8 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
 
   return (
     <div className="grid grid-cols-3 justify-between gap-2 mt-4 pb-32">
-       {cards.map((card, index) => {
-        // Find the status of the current country in the user's data
-        const userCountry = userCountries.find(c => c.name === card.name);
+      {sortedCards.map((card: any, index: any) => {
+        const userCountry = userCountries.find((c: any) => c.name === card.name);
         const status = userCountry?.status || 'unlicensed';
 
         return (
@@ -51,7 +72,7 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
             name={card.name}
             status={status}
             purchaseLicense={purchaseLicense}
-            cost={totalLicenseFee}  // Use the total license fee for the cost
+            cost={totalLicenseFee} 
             userId={userId}
             image={smcoin}
           />
