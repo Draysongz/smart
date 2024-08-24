@@ -45,7 +45,7 @@ export default function Business({ userId, userData }: BusinessProps) {
                 levelRequirement={card.levelRequirement}
                 purchaseAsset={purchaseAsset}
                 userId={userId}
-                userLevel={userData?.userLevel || 0} // Assuming userData has a level property
+                userLevel={userData?.userLevel!} // Assuming userData has a level property
                 isAlreadyPurchased={userData?.assets?.some(asset => asset.name === card.name) || false}
               />
             ))}
@@ -91,7 +91,8 @@ function BusinessCard({ name, price, levelRequirement, purchaseAsset, userId, us
     }
   };
 
-  const isDisabled = userLevel < levelRequirement || isAlreadyPurchased;
+const isDisabled = userLevel < levelRequirement && !isAlreadyPurchased;
+
 
   return (
     <div className="relative cursor-pointer">
@@ -107,11 +108,13 @@ function BusinessCard({ name, price, levelRequirement, purchaseAsset, userId, us
             <Image src={smcoin} alt="coin" />
           </div>
 
-          {isDisabled && (
-            <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white font-bold text-sm rounded-xl">
-              {isAlreadyPurchased ? "Already Purchased" : userLevel < levelRequirement?  `Level ${levelRequirement} required`: ""}
-            </div>
-          )}
+        {isDisabled && (
+      <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white font-bold text-sm rounded-xl">
+        {isAlreadyPurchased 
+          ? "Already Purchased" 
+          : `Level ${levelRequirement} required`}
+      </div>
+    )}
         </div>
 
         <div className="bg-[#7EB43C] rounded-xl h-14 flex justify-center items-center">
