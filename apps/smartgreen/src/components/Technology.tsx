@@ -131,7 +131,7 @@ function TechnologyCard({
           </p>
           <p className="font-semibold text-[12px] mt-3">Kw per hour</p>
           <Image src={assetImage} alt="coin"  />
-          <div className="flex items-center gap-1 mt-1 flex-col gap-2">
+          <div className="flex items-center gap-1 mt-1 flex-col gap-2 justify-end">
             <p className="text-#E3E4E4 font-bold text-sm">+{perHr}</p>
           </div>
            {isEnabled && (
