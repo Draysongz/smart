@@ -18,27 +18,27 @@ import ReferralPage from "./components/referralPage/referralPage"
 function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState<Users | null>(null)
-   const [userId, setUserId] = useState<number>()
-  const [firstName, setFirstName] = useState<string | null>(null)
-  const [username, setUserName] = useState<string | null>(null)
-  const params = new URLSearchParams(location.search)
-  const referralId = Number(params.get("referralId"))
+  //  const [userId, setUserId] = useState<number>()
+  // const [firstName, setFirstName] = useState<string | null>(null)
+  // const [username, setUserName] = useState<string | null>(null)
+  // const params = new URLSearchParams(location.search)
+  // const referralId = Number(params.get("referralId"))
 
-  // const userId = 2146305061
-  // const username = "habibilord"
-  // const firstName = "crypto dray"
-  // const referralId = 2146305061
+  const userId = 2146305061
+  const username = "habibilord"
+  const firstName = "crypto dray"
+  const referralId = 2146305061
 
-   useEffect(() => {
-    WebApp.expand()
-    const id = WebApp.initDataUnsafe.user?.id!
-    const username = WebApp.initDataUnsafe.user?.username!
-    const name = WebApp.initDataUnsafe.user?.first_name!
-    if (!id && !name) return
-    setUserId(id)
-    setFirstName(name)
-    setUserName(username!)
-  }, [])
+  //  useEffect(() => {
+  //   WebApp.expand()
+  //   const id = WebApp.initDataUnsafe.user?.id!
+  //   const username = WebApp.initDataUnsafe.user?.username!
+  //   const name = WebApp.initDataUnsafe.user?.first_name!
+  //   if (!id && !name) return
+  //   setUserId(id)
+  //   setFirstName(name)
+  //   setUserName(username!)
+  // }, [])
 
   const { getUserData } = useUserApi()
 

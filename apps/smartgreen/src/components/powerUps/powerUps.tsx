@@ -23,7 +23,7 @@ import { useState, useEffect } from 'react';
 import { useUserApi } from '../../hooks/useUserData';
 import { toast } from 'react-toastify';
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io('http://localhost:3000');
 
 const PowerUps= ({
     userId,
@@ -107,11 +107,11 @@ const PowerUps= ({
       return (
           <section className='w-screen flex justify-center min-h-screen bg-black'>
   
-          <div className='border-t-custom-large-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-goldyellow min-h-screen'>
+          <div className='border-t-custom-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-yellow min-h-screen overflow-x-hidden shadow-custom-Syellow mt-3 py-2 '>
   
-          <Box className='bg-dark-green w-full flex flex-col items-center justify-center rounded-t-3xl pt-20 pb-32 h-[100%]' backgroundImage={bg}>
+          <Box className='bg-dark-green w-full flex flex-col items-center justify-center rounded-t-3xl pt-20 pb-32 h-[100%] shadow-custom-Syellow' backgroundImage={bg} overflow={'scroll'}>
           <h2 className='text-white text-xl opacity-50'>Your balance</h2>
-          <div className='text-white font-bold flex bg-transparent items-center justify-center w-11/12 rounded-xl px-2 mb-10'>
+          <div className='text-white font-bold flex bg-transparent items-center justify-center w-10/12 rounded-xl px-2 mb-10'>
           <img src={coin} alt="" className='w-[15%]'/>
           <p className='text-3xl'>
         { userDeets ? new Intl.NumberFormat().format(Number(userDeets?.coinsEarned.toFixed(0)))!: 0}
@@ -119,8 +119,8 @@ const PowerUps= ({
         </div>
         <div className='w-[100%] flex flex-col gap-6'>
             <div className='w-full flex flex-col gap-1   items-center'>
-                        <p className='text-white text-[18px] font-semibold w-11/12 pb-[15px]'>Free Daily Booster</p>
-                    <div className='w-11/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8'onClick={onOpen}>
+                        <p className='text-white text-[18px] font-semibold w-10/12 pb-[15px]'>Free Daily Booster</p>
+                    <div className='w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8 'onClick={onOpen}>
 
 
                     <img src={bolt} alt="" className="w-6" />
@@ -129,7 +129,7 @@ const PowerUps= ({
                     <p className='text-custom-gold opacity-50'>6/6 available</p>
                     </span>
                     </div>
-                    <div className='w-11/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8 opacity-70'>
+                    <div className='w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8 opacity-70'>
                     <img src={spaceship} alt=""className=' w-8' />
                     <span className='flex flex-col'>
                         <p className='text-white whitespace-nowrap'>Turbo </p>
@@ -138,8 +138,8 @@ const PowerUps= ({
                     </div>
                     </div>
                     <div className='w-full flex flex-col gap-1   items-center'>
-                        <p className='text-white text-[18px] font-semibold w-11/12 pb-[15px]'>Boosters</p>
-                    <div className='w-11/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8'onClick={onSecondOpen}>
+                        <p className='text-white text-[18px] font-semibold w-10/12 pb-[15px]'>Boosters</p>
+                    <div className='w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8'onClick={onSecondOpen}>
                     <img src={cursor} alt=""className=' w-8' />
                     <span className='flex flex-col'>
                         <p className='text-white'>Multitap</p>
@@ -153,7 +153,7 @@ const PowerUps= ({
                     </span>
                     </span>
                     </div>
-                    <div className='w-11/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8'onClick={onThirdOpen}>
+                    <div className='w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-6 items-center px-8'onClick={onThirdOpen}>
                     <img src={battery} alt=""className=' w-8' />
                     <span className='flex flex-col'>
                         <p className='text-white'>Energy Limit</p>

@@ -1,36 +1,36 @@
 // import React from 'react';
 import coin from "../../assets/Logo coin 1.png";
-import gift from "../../assets/gift.png";
-import ticket from "../../assets/ticket.png";
+// import gift from "../../assets/gift.png";
+// import ticket from "../../assets/ticket.png";
 import contact from "../../assets/contact.png";
 import NavigationBar from "../NavigationBar";
 import bg from "../../assets/bg.png";
-import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+// import { useDisclosure } from "@chakra-ui/react";
 import { Icon, Text } from "@chakra-ui/react";
-import { BsTwitterX } from "react-icons/bs";
-import { FaInstagram } from "react-icons/fa6";
+// import { BsTwitterX } from "react-icons/bs";
 import { FaTiktok } from "react-icons/fa6";
 import { FaTelegram } from "react-icons/fa6";
-import { FaYoutube } from "react-icons/fa";
+import { FaYoutube, FaLinkedinIn } from "react-icons/fa";
 import { Users } from "api-contract";
-import { FaCalendarAlt } from "react-icons/fa";
+// import { FaCalendarAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import {
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  Input,
-  DrawerFooter
-} from "@chakra-ui/react";
+// import {
+//   Button,
+//   Drawer,
+//   DrawerBody,
+//   DrawerOverlay,
+//   DrawerContent,
+//   DrawerCloseButton,
+//   DrawerHeader,
+//   Input,
+//   DrawerFooter
+// } from "@chakra-ui/react";
 import { useUserApi } from "../../hooks/useUserData";
 import { toast } from "react-toastify";
 import {io} from 'socket.io-client'
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io('http://localhost:3000');
 
 type boostpops = {
   userId: number | undefined;
@@ -45,7 +45,7 @@ const EarnPage = ({ userId }: boostpops) => {
   const [isClaiming, setIsClaiming] = useState(false);
   const [canClaimToday, setCanClaimToday] = useState(false);
   const [userData, setUserData] = useState<Users | null>(null)
-  const {isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClosed} = useDisclosure()
+  // const {isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClosed} = useDisclosure()
   const { updateUserData, getOne } = useUserApi();
 
   useEffect(() => {
@@ -169,10 +169,10 @@ const EarnPage = ({ userId }: boostpops) => {
     }
   };
 
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  // const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <section className="w-screen flex justify-center h-[100%] bg-black">
-      <div className="border-t-custom-large-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-goldyellow h-full">
+      <div className="border-t-custom-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-goldyellow h-full shadow-custom-Syellow mt-3 py-2">
         <Box
           className="bg-dark-green w-full flex flex-col items-center justify-center rounded-t-3xl h-[100%] pb-32"
           backgroundImage={bg}
@@ -180,8 +180,8 @@ const EarnPage = ({ userId }: boostpops) => {
           <img src={coin} alt="" className="w-[33%]" />
           <h2 className="text-white text-3xl font-bold">Earn More Coins</h2>
           <div className="w-full flex flex-col gap-6  mt-[100px] items-center">
-            <div
-              className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8"
+            {/* <div
+              className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8"
               onClick={onOpen}
             >
               <img src={gift} alt="" />
@@ -190,42 +190,42 @@ const EarnPage = ({ userId }: boostpops) => {
                 <p className="text-custom-gold">+45,000</p>
               </span>
             </div>
-            <div onClick={onSecondOpen} className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
+            <div onClick={onSecondOpen} className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8">
               <img src={ticket} alt="" />
               <span className="flex flex-col">
-                <p className="text-white whitespace-nowrap">
+                <p className="text-white ">
                   Activate Promo Code.{" "}
                 </p>
                 <p className="text-custom-gold">+45,000</p>
               </span>
-            </div>
-            <div className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
+            </div> */}
+            <div className="w-10/12 bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8">
               <img src={contact} alt="" />
               <span className="flex flex-col">
-                <p className="text-white whitespace-nowrap">
+                <p className="text-white ">
                   Add 10 new friends (0/10)
                 </p>
                 <p className="text-custom-gold">+45,000</p>
               </span>
             </div>
-            <a href="https://x.com/s_energy_coin" className="w-10/12">
-              <div className=" bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
+            {/* <a href="https://x.com/s_energy_coin" className="w-10/12">
+              <div className=" bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8">
                 <Icon as={BsTwitterX} boxSize={6} color={"white"} />
                 <span className="flex flex-col">
-                  <p className="text-white whitespace-nowrap">Subscribe to X</p>
+                  <p className="text-white ">Subscribe to X</p>
                   <p className="text-custom-gold">+45,000</p>
                 </span>
               </div>
-            </a>
+            </a> */}
             <a
-              href="https://www.instagram.com/smart.energy.token/"
+              href="https://www.linkedin.com/company/smart-energy-token/"
               className="w-10/12"
             >
-              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
-                <Icon as={FaInstagram} boxSize={6} color={"white"} />
+              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8">
+                <Icon as={FaLinkedinIn} boxSize={6} color={"white"} />
                 <span className="flex flex-col">
-                  <p className="text-white whitespace-nowrap">
-                    Subscribe to Instagram
+                  <p className="text-white ">
+                    Subscribe to LinkedIn
                   </p>
                   <p className="text-custom-gold">+45,000</p>
                 </span>
@@ -235,21 +235,21 @@ const EarnPage = ({ userId }: boostpops) => {
               href="https://www.tiktok.com/@smart.energy.token"
               className="w-10/12"
             >
-              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
+              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8">
                 <Icon as={FaTiktok} boxSize={6} color={"white"} />
                 <span className="flex flex-col">
-                  <p className="text-white whitespace-nowrap">
+                  <p className="text-white ">
                     Subscribe to TikTok
                   </p>
                   <p className="text-custom-gold">+45,000</p>
                 </span>
               </div>
             </a>
-            <a href="https://t.me/+BtBJIPxsn21iOGQ8" className="w-10/12">
-              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
+            <a href="https://t.me/smartenergytoken" className="w-10/12">
+              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8">
                 <Icon as={FaTelegram} boxSize={6} color={"white"} />
                 <span className="flex flex-col">
-                  <p className="text-white whitespace-nowrap">
+                  <p className="text-white ">
                     Subscribe to Telegram
                   </p>
                   <p className="text-custom-gold">+45,000</p>
@@ -257,10 +257,10 @@ const EarnPage = ({ userId }: boostpops) => {
               </div>
             </a>
             <a href="https://youtube.com/@smartenergytoken" className="w-10/12">
-              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-16 items-center px-8">
+              <div className="bg-dark-green rounded-2xl h-[80px] flex gap-10 items-center px-8">
                 <Icon as={FaYoutube} boxSize={6} color={"white"} />
                 <span className="flex flex-col">
-                  <p className="text-white whitespace-nowrap">
+                  <p className="text-white ">
                     Subscribe to Youtube
                   </p>
                   <p className="text-custom-gold">+45,000</p>
@@ -272,7 +272,7 @@ const EarnPage = ({ userId }: boostpops) => {
         </Box>
       </div>
 
-      <Drawer isOpen={isOpen} placement="bottom" onClose={onClose}>
+      {/* <Drawer isOpen={isOpen} placement="bottom" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent
           bg="#132E25"
@@ -283,10 +283,10 @@ const EarnPage = ({ userId }: boostpops) => {
           borderTopRadius="25px"
         >
           <DrawerCloseButton color="white" />
-          {/* <DrawerHeader>Create your account</DrawerHeader> */}
+         
 
           <DrawerBody>
-            {/* <Input placeholder='Type here...' /> */}
+         
             <Box className=" flex flex-col items-center justify-center py-3 text-white gap-3">
               <Icon as={FaCalendarAlt} boxSize={20} color={"#FCA61B"} />
               <Flex className="flex-col text-center gap-3 w-[100%]">
@@ -371,10 +371,10 @@ const EarnPage = ({ userId }: boostpops) => {
 
          
         </DrawerContent>
-      </Drawer>
+      </Drawer> */}
 
         {/* Activate Promo Code */}
-        <Drawer
+        {/* <Drawer
         isOpen={isSecondOpen}
         placement='bottom'
         onClose={onSecondClosed}
@@ -397,7 +397,7 @@ const EarnPage = ({ userId }: boostpops) => {
             <Button colorScheme='blue'>Redeem</Button>
           </DrawerFooter>
         </DrawerContent>
-      </Drawer>
+      </Drawer> */}
     </section>
   );
 };

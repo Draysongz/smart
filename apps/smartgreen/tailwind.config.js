@@ -7,12 +7,16 @@ export default {
   theme: {
     extend: {
       screens: {
-        'max-h-700': {'raw': '(max-height: 900px)'}
+        'max-h-700': {'raw': '(max-height: 900px)'},
+        'max-h-600': {'raw': '(max-height: 750px)'}
       },
       gradientColorStops: {
         'custom-green': '#0C472C',
         'custom-light-green': '#20A006',
         'custom-black' : '#0A160D'
+      },
+      boxShadow: {
+        'custom-Syellow' : '5px 10px 15px 20px  rgba(255, 204, 35, 0.4)'
       },
       backgroundImage: {
         'custom-gradient': 'linear-gradient(180deg, #0C472C 0%, #20A006 28%, #0A160D 100%)',
@@ -23,7 +27,7 @@ export default {
         'custom-green': '#7EB43C',
       },
       backgroundColor: {
-        'custom-goldyellow': '#FCA61B',
+        'custom-goldyellow': '#FCA61B',        'custom-yellow': '#FFCC23',
         'custom-greentxt': '#7EB43C',
         'dark-green': '#132E25',
         'custom-greenbg': '#132E25',
@@ -36,7 +40,7 @@ export default {
         'custom-large-top': '20px', // Another example
       },
       borderColor: {
-        'custom-yellow': '#FCA61B', 
+        'custom-yellow': '#FFCC23', 
       },
       height: {
         'custom-small': '10vh', 

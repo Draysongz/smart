@@ -37,7 +37,7 @@ const {isOpen, onClose, onOpen} = useDisclosure()
     return (
         <section className='w-screen flex justify-center bg-black'>
 
-        <div className='border-t-custom-large-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-goldyellow'>
+        <div className='border-t-custom-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-yellow shadow-custom-Syellow mt-3 py-2 '>
 
         <Box className='bg-dark-green w-full flex flex-col pt-4 pb-32 items-center min-h-screen rounded-t-3xl bg-cover bg-center gap-5' bgImage={bg}>
 
@@ -46,7 +46,7 @@ const {isOpen, onClose, onOpen} = useDisclosure()
             <p className='text-white font-bold -mt-5 text-[2em]'>Airdrop</p>
         </div>
 
-        <div className='text-white font-bold flex bg-dark-green items-center justify-center w-11/12 h-[100px] rounded-xl px-2' onClick={onOpen}>
+        <div className='text-white font-bold flex bg-dark-green items-center justify-center w-10/12 h-[100px] rounded-xl px-2' onClick={onOpen}>
         <span className='w-[80%] text-center'>
         <Text className='font-extralight'>
                 AirDrop allocation points
@@ -59,7 +59,7 @@ const {isOpen, onClose, onOpen} = useDisclosure()
         <Icon as={FaInfoCircle} className='mt-[-60px]' />
         </div>
 
-        <Tabs variant='unstyled' colorScheme='green' bgColor={''} className='w-11/12'>
+        <Tabs variant='unstyled' colorScheme='green' bgColor={''} className='w-10/12'>
   <TabList bgColor={"rgba(19, 46, 37, 0.8)"} p={1} borderRadius={"12px"} className='' >
   <Tab
                 color={"#E7ECEA"}

@@ -18,7 +18,7 @@ import { EnergySource, Users } from "api-contract";
 import { useUserApi } from "../../hooks/useUserData";
 import {io} from 'socket.io-client'
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io('http://localhost:3000');
 const floatUpAndFadeOut = keyframes`
   0% {
     transform: translateY(0px);
@@ -278,16 +278,16 @@ useEffect(() => {
       <Spinner color="gray.500" />
     </Flex>
   ) : (
-    <section className="w-screen flex justify-center max-w-screen-sm">
+    <section className="w-screen flex justify-center max-w-screen-sm min-h-full">
       <div className="bg-black flex flex-col w-full pt-[15px]">
         <div className="w-full flex items-center gap-4 pl-[20px] h-[10vh]">
           <img src={contactIcon} alt="" />
           <p className="text-white">Welcome {name}</p>
         </div>
         <ProgressBar userLevel={userLevel} userData={userDeets!} thresh={LEVEL_THRESHOLDS} />
-        <div className="border-t-custom-large-top rounded-t-3xl border-t-custom-yellow w-full items-center bg-custom-goldyellow max-h-700:border-t-custom-top h-[100%]">
+        <div className="rounded-t-3xl bg-custom-goldyellow border-t-custom-yellow w-full items-center border-t-custom-top h-[100%]">
           <Box
-            className="w-full border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center py-9 flex flex-col gap-5 flex-grow max-h-700:p-3 h-[80vh]"
+            className="w-screen border-t-transparent rounded-t-3xl bg-custom-greenbg bg-cover bg-center flex flex-col  min-h-[80vh]  justify-between pb-16 pt-10"
             backgroundImage={bg}
           >
             <div className="w-full flex gap-4 text-center justify-center items-center max-h-700:gap-2 max-h-700:px-2">
@@ -321,7 +321,7 @@ useEffect(() => {
                 </span>
               </div>
             </div>
-            <div className="text-white flex gap-4 items-center justify-center font-bold text-5xl py-6 max-h-700:h-10">
+            <div className="text-white flex gap-4 items-center justify-center font-bold text-5xl max-h-700:h-10">
               <img src={coin} alt="" className="w-16" />
               <p className="max-h-700:text-3xl">
                 {coinsEarned ? new Intl.NumberFormat().format(Number(coinsEarned.toFixed(0)))! : 0}
@@ -347,22 +347,22 @@ useEffect(() => {
                   animation: `${rotateAnim} 0.1s ease`,
                 }}
                 onAnimationEnd={() => setRotateAnim("")}
-                className="w-[300px] h-[300px] flex flex-col rounded-full justify-center border-custom-large-top border-custom-yellow items-center bg-custom-radial max-h-700:border-custom-top max-h-700:w-[220px] max-h-700:h-[220px]"
+                className="w-[260px] h-[260px] flex flex-col rounded-full justify-center border-custom-top border-custom-yellow items-center bg-custom-radial max-h-700:border-custom-top max-h-600:w-[220px] max-h-600:h-[220px]"
               >
                 <img
                   src={fanBlade}
                   alt="Fan Blade"
-                  className={`w-[80%] mt-[10px] ml-[33px] max-h-700:w-[60%] max-h-700:h-[180px] max-h-700:mb-[-5px] max-h-700:ml-[22px] hidden`}
+                  className={`w-[80%] mt-[10px] ml-[33px] max-h-600:w-[60%] max-h-600:h-[180px] max-h-600:mb-[-5px] max-h-600:ml-[22px] hidden`}
                   style={{
                     animation: `${fanBladeAnim} 2s ease`
                   }}
                   onAnimationEnd={() => setFanBladeAnim("")}
                 />
-                <img src={fanSpinning} alt="" className={`max-h-700:w-[100%] max-h-700:h-[200px] max-h-700:mb-[-5px]`} />
+                <img src={fanSpinning} alt="" className={`max-h-600:w-[100%] max-h-600:h-[200px] max-h-600:mb-[-5px] z-[1]`} />
                 <img
                   src={fanStand}
                   alt=""
-                  className="w-[80%] mt-[-250px] mb-[-13px] h-[260px] max-h-700:w-[70%] max-h-700:h-[230px] max-h-700:mt-[-210px]"
+                  className="w-[80%] mt-[-250px] mb-[-13px] h-[260px] max-h-600:w-[70%] max-h-600:h-[230px] max-h-600:mt-[-210px] z-[0]"
                 />
               </div>
               {screenAxis.map(screen => (
@@ -382,7 +382,7 @@ useEffect(() => {
                 </Text>
               ))}
             </div>
-            <div className=" flex items-center justify-between mt-5 max-h-700:mt-2 px-5">
+            <div className=" flex items-center justify-between  px-5">
             <span className="flex gap-2 text-white items-center">
                   <img src={bolt} alt="" className="w-6" />
                   <p className="font-semibold">

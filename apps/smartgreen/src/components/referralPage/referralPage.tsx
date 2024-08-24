@@ -32,18 +32,18 @@ const ReferralPage = ({
 
   return (
     <section className="w-screen flex justify-center h-[100%] bg-black">
-      <div className="border-t-custom-large-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-goldyellow h-full">
+      <div className="border-t-custom-top rounded-t-3xl border-y-custom-yellow w-full items-center bg-custom-yellow h-full shadow-custom-Syellow mt-3 py-2">
         <Box
           className="bg-dark-green w-full flex flex-col pt-4 items-center rounded-t-3xl h-[100%] pb-32 bg-cover bg-center"
           bgImage={bg}
         >
           <img src={referralCoin} alt="" className="w-[33%]" />
-          <h2 className="text-white text-3xl font-bold">Invite your Friends</h2>
-          <p className="text-white pt-5 text-lg">
+          <h2 className="text-white text-3xl font-bold w-10/12 text-center">Invite your Friends</h2>
+          <p className="text-white pt-5 text-lg w-10/12 text-center">
             You and your friend will receive bonuses
           </p>
           <div className="w-full flex flex-col gap-4 mt-[40px] items-center">
-            <div className="w-11/12 bg-dark-green rounded-2xl flex gap-6 items-center p-5">
+            <div className="w-10/12 bg-dark-green rounded-2xl flex gap-6 items-center p-5">
               <img src={contact} alt="" />
               <span className="flex flex-col">
                 <p className="text-white">Invite a Friend</p>
@@ -53,7 +53,7 @@ const ReferralPage = ({
                 </span>
               </span>
             </div>
-            <div className="w-11/12 bg-dark-green rounded-2xl flex gap-6 items-center p-5">
+            <div className="w-10/12 bg-dark-green rounded-2xl flex gap-6 items-center p-5">
               <img src={contact} alt="" />
               <span className="flex flex-col">
                 <p className="text-white">
@@ -67,13 +67,13 @@ const ReferralPage = ({
             </div>
 
             {userData && referredUsers && referredUsers.length > 0 ? (
-              <div className="flex flex-col w-11/12 bg-dark-green rounded-2xl py-7 gap-5">
+              <div className="flex flex-col w-10/12 bg-dark-green rounded-2xl py-7 gap-5">
                 <p className="text-white pl-7 text-2xl">Friend List</p>
                 <ol className="flex flex-col gap-3 text-white" style={{ listStyleType: "decimal" }}>
                   {referredUsers.map((user, index) => (
                     <li
                       key={user.userId} // Assuming `user.userId` is a unique identifier
-                      className="flex items-center self-center bg-list-green w-11/12 h-[80px] rounded-xl px-4 gap-5"
+                      className="flex items-center self-center bg-list-green w-10/12 h-[80px] rounded-xl px-4 gap-5"
                     >
                       <p>{index + 1}.</p>
                       <img src={listcon} alt="" />
@@ -84,7 +84,7 @@ const ReferralPage = ({
                 </ol>
               </div>
             ) : (
-              <div className="flex flex-col w-11/12 bg-dark-green rounded-2xl py-7 gap-5 items-center">
+              <div className="flex flex-col w-10/12 bg-dark-green rounded-2xl py-7 gap-5 items-center">
                 <span className="flex w-full px-5 text-center">
                   <img src={contact} alt="" className="w-[30px]" />
                   <p className="text-white text-2xl font-semibold w-[80%]">
@@ -99,7 +99,7 @@ const ReferralPage = ({
               </div>
             )}
 
-            <div className="flex gap-2 mt-2 w-11/12">
+            <div className="flex gap-2 mt-2 w-10/12">
               <button className="flex gap-3 bg-light-green w-10/12 items-center justify-center">
                 <p className="text-white">Invite a friend</p>
                 <img src={contact} alt="" />

@@ -2,62 +2,54 @@
 import Lifestyle from "../components/Lifestyle";
 import Technology from "../components/Technology";
 import { Flex, useBreakpointValue, Image, Text, Box } from "@chakra-ui/react";
-import fanBlade from "../assets/FAN blade 1.png"
-import fanStand from "../assets/Fan Stand.png";
-import fanSpinning from "../assets/set-fan.gif"
 import cardBg from "../assets/cardBg.png";
 // import coin from "../assets/coin.png";
-import windIcon from "../assets/Icons/_0007_Wind.png"
+import windIcon from "../assets/Icons/_0007_Wind.png";
 import smcoin from "../assets/smcoin.png";
-import { 
-  Tabs, 
-  TabList, 
-  TabPanels, 
-  Tab, 
-  TabPanel 
-} from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Business from "../components/Business";
 import NavigationBar from "../components/NavigationBar";
 import { Users } from "api-contract";
 import { useEffect, useState } from "react";
-import  {io} from 'socket.io-client'
+import { io } from "socket.io-client";
 import { useUserApi } from "../hooks/useUserData";
-
-
 
 interface BoostProps {
   userId: number | undefined;
-  userData: Users | null
+  userData: Users | null;
 }
 
-const socket = io('https://smart-1-hl3w.onrender.com');
+const socket = io("http://localhost:3000");
 
 const Boost = ({ userId, userData }: BoostProps) => {
-  const [userDeets, setUserDeets] = useState<Users | null>()
- console.log(userData)
-  const breakpoint = useBreakpointValue({ base: "100vw", md: "78vw", lg: "100vw" });
+  const [userDeets, setUserDeets] = useState<Users | null>();
+  console.log(userData);
+  const breakpoint = useBreakpointValue({
+    base: "100vw",
+    md: "78vw",
+    lg: "100vw",
+  });
 
-  const {getOne} = useUserApi()
+  const { getOne } = useUserApi();
 
-    useEffect(() => {
-    const getUser = async (userId : number) => {
+  useEffect(() => {
+    const getUser = async (userId: number) => {
       try {
         const userResponse = await getOne(userId);
-       if(userResponse.status === 200){
-        setUserDeets(userResponse.body)
-       }
+        if (userResponse.status === 200) {
+          setUserDeets(userResponse.body);
+        }
       } catch (error) {}
     };
 
-    getUser(userId!)
+    getUser(userId!);
   }, []);
 
-  useEffect(()=>{
-    socket.on("userUpdated", (updatedUser)=>{
-      setUserDeets(updatedUser)
-    })
-  }, [])
-
+  useEffect(() => {
+    socket.on("userUpdated", (updatedUser) => {
+      setUserDeets(updatedUser);
+    });
+  }, []);
 
   return (
     <Flex direction={"column"} bgColor={"black"}>
@@ -71,78 +63,6 @@ const Boost = ({ userId, userData }: BoostProps) => {
         mt={3}
         boxShadow="5px 10px 15px 20px  rgba(255, 204, 35, 0.4)" // Increased opacity and spread
       >
-        <Box className="w-full justify-center items-center z-10 fixed bg-[#FFCC23] py-2">
-              <div
-                className="flex flex-col rounded-full justify-center border-custom-yellow items-center bg-custom-radial border-custom-top w-[220px] h-[220px] relative"
-              >
-                <img
-                  src={fanBlade}
-                  alt="Fan Blade"
-                  className={`w-[80%] mt-[10px] ml-[33px] max-h-700:w-[60%] max-h-700:h-[180px] max-h-700:mb-[-5px] max-h-700:ml-[22px] hidden`}
-                  
-                />
-                <img src={fanSpinning} alt="" className={`max-h-700:w-[100%] max-h-700:h-[200px] max-h-700:mb-[-5px]`} />
-                <img
-                  src={fanStand}
-                  alt=""
-                  className="w-[80%] mt-[-250px] mb-[-13px] h-[260px] max-h-700:w-[70%] max-h-700:h-[230px] max-h-700:mt-[-210px]"
-                />
-              </div>
-              <div className=" absolute top-[5%] right-5 flex flex-col gap-1">
-              <Flex justifyContent={"center"} bgColor={'#132E25'} flexDirection={'column'} width={'120px'} p={'5px'}
-              rounded={'10px'}>
-              <Text color={"white"}>
-                Balance
-              </Text>
-              <Flex alignItems={"center"} className="gap-1">
-              <Image src={smcoin} alt="coin" w={'30%'} />
-              <Text color={"white"}>
-                {userDeets ? new Intl.NumberFormat().format(Number(userDeets.coinsEarned.toFixed(0)))! : 0}
-              </Text>
-              </Flex>
-          </Flex>
-
-          <Flex
-            bgColor={"#132E25"}
-            justifyContent={"center"}
-            flexDirection={'column'}
-            width={'120px'} 
-            p={'5px'}
-            rounded={'10px'}
-          >
-            <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
-              Kw Per Hour
-            </Text>
-            <Flex alignItems={"center"} className="gap-1">
-              <Image src={smcoin} alt="coin" w={'30%'} />
-              <Text color={"#DADADA"}>
-                {userDeets ? userDeets?.coinsPerHour : 0}
-              </Text>
-            </Flex>
-          </Flex>
-     <Flex bgColor={"#132E25"} justifyContent={"center"} flexDirection={'column'} width={'120px'} p={'5px'} rounded={'10px'}>
-  <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
-    Energy Source
-  </Text>
-      {userDeets?.energySources && userDeets.energySources.length > 0 &&  (
-  <Flex alignItems={"center"} className="gap-1">
-
-      <Image
-        src={windIcon} // Display the latest energy source
-        alt={userDeets.energySources[userDeets.energySources.length - 1].type}
-        width="30px"
-        height="30px"
-      />
-      <Text className="text-white">{userDeets.energySources[userDeets.energySources.length - 1].type}</Text>
- 
-  </Flex>
-     )}
-</Flex>
-
-
-              </div>
-
-            </Box>
         <Flex
           mt={"1%"}
           borderTopRadius={"20px"}
@@ -153,18 +73,89 @@ const Boost = ({ userId, userData }: BoostProps) => {
           bgImage={cardBg}
           bgColor={"#0C472C"}
           h={"97vh"}
-          overflow={'scroll'}
+          overflow={"scroll"}
           boxShadow="5px 10px 15px 20px  rgba(255, 204, 35, 0.4)"
           align={"center"}
           paddingTop={"15px"}
           gap={5}
-          position={'relative'}
-          top={"250px"}
-          zIndex={'0'}
         >
+          <div className=" flex justify-center gap-1">
+            <Flex
+              justifyContent={"center"}
+              bgColor={"#132E25"}
+              flexDirection={"column"}
+              width={"110px"}
+              p={"5px"}
+              rounded={"10px"}
+            >
+              <Text color={"white"}>Balance</Text>
+              <Flex alignItems={"center"} className="gap-1">
+                <Image src={smcoin} alt="coin" w={"30%"} />
+                <Text color={"white"}>
+                  {userDeets
+                    ? new Intl.NumberFormat().format(
+                        Number(userDeets!.coinsEarned!)
+                      )
+                    : 0}
+                </Text>
+              </Flex>
+            </Flex>
 
+            <Flex
+              bgColor={"#132E25"}
+              justifyContent={"center"}
+              flexDirection={"column"}
+              width={"110px"}
+              p={"5px"}
+              rounded={"10px"}
+            >
+              <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
+                Kw Per Hour
+              </Text>
+              <Flex alignItems={"center"} className="gap-1">
+                <Image src={smcoin} alt="coin" w={"30%"} />
+                <Text color={"#DADADA"}>
+                  {userDeets ? userDeets?.coinsPerHour : 0}
+                </Text>
+              </Flex>
+            </Flex>
+            <Flex
+              bgColor={"#132E25"}
+              justifyContent={"center"}
+              flexDirection={"column"}
+              width={"110px"}
+              p={"5px"}
+              rounded={"10px"}
+            >
+              <Text fontWeight={"bold"} fontSize={"small"} color={"#DADADA"}>
+                Energy Source
+              </Text>
+              {userDeets?.energySources &&
+                userDeets.energySources.length > 0 && (
+                  <Flex alignItems={"center"} className="gap-1">
+                    <Image
+                      src={windIcon} // Display the latest energy source
+                      alt={
+                        userDeets.energySources[
+                          userDeets.energySources.length - 1
+                        ].type
+                      }
+                      width="30px"
+                      height="30px"
+                    />
+                    <Text className="text-white">
+                      {
+                        userDeets.energySources[
+                          userDeets.energySources.length - 1
+                        ].type
+                      }
+                    </Text>
+                  </Flex>
+                )}
+            </Flex>
+          </div>
           <Tabs variant="unstyled" px={3} align="center">
-            <TabList bgColor={"#132E25"} p={1} borderRadius={"12px"} >
+            <TabList bgColor={"#132E25"} p={1} borderRadius={"12px"}>
               <Tab
                 color={"#E7ECEA"}
                 _selected={{
@@ -196,17 +187,17 @@ const Boost = ({ userId, userData }: BoostProps) => {
                   border: "none",
                 }}
               >
-               Assets
+                Assets
               </Tab>
             </TabList>
             <TabPanels>
-               <TabPanel>
-                <Technology userId={userId}  userData={userDeets!} />
+              <TabPanel>
+                <Technology userId={userId} userData={userDeets!} />
               </TabPanel>
               <TabPanel>
-               <Lifestyle userId={userId} userData={userDeets!}/>
+                <Lifestyle userId={userId} userData={userDeets!} />
               </TabPanel>
-               <TabPanel>
+              <TabPanel>
                 <Business userId={userId} userData={userDeets!} />
               </TabPanel>
             </TabPanels>
