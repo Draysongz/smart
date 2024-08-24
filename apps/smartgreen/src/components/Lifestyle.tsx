@@ -37,12 +37,18 @@ export default function Lifestyle({ userId, userData }: LifestyleProps) {
     "Japan": 8900,        // Distance from Berlin to Tokyo
   };
 
+  // Map fetched country names to known country names
+  const knownCountryNames = ["Germany", "Cyprus", "Morocco", "Brazil", "USA", "Japan"];
+
   useEffect(() => {
     if (data) {
       const cards = data.body || [];
 
+      // Filter and map the cards to ensure they only include known country names
+      const filteredCards = cards.filter((card: any) => knownCountryNames.includes(card.name));
+
       // Sort based on the distance from Germany
-      const sortedCards = cards.sort((a: any, b: any) => {
+      const sortedCards = filteredCards.sort((a: any, b: any) => {
         const distanceA = distanceMap[a.name] ?? Infinity;
         const distanceB = distanceMap[b.name] ?? Infinity;
         return distanceA - distanceB;
