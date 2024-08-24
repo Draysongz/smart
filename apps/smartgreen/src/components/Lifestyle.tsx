@@ -6,7 +6,7 @@ import { useUserApi } from "../hooks/useUserData";
 import apiClient from "../api-client";
 import { County, Users } from "api-contract";
 import germany from '../assets/Icons/_0002_germany.png'
-import cyprus from "../assets/icons/_0001_Cyprus.png"
+import cyprus from "../Icons/Cyprus.png"
 import morocco from '../assets/Icons/_0003_morocco.png'
 import brazil from '../assets/Icons/_0000_brazil.png'
 
