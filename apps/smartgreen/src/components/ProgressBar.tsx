@@ -33,6 +33,9 @@ const ProgressBar = ({ levels, userData, levelMinPoints }: { levels: string[] | 
     })
   },[validLevelIndex])
 
+  if(!userData && !progressPercentage){
+    return "Loading"
+  }
 
 
   return (
