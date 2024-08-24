@@ -91,7 +91,7 @@ function BusinessCard({ name, price, levelRequirement, purchaseAsset, userId, us
     }
   };
 
-const isDisabled = userLevel < levelRequirement && !isAlreadyPurchased;
+const isDisabled = userLevel < levelRequirement || isAlreadyPurchased;
 
 
   return (
@@ -111,8 +111,8 @@ const isDisabled = userLevel < levelRequirement && !isAlreadyPurchased;
         {isDisabled && (
       <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white font-bold text-sm rounded-xl">
         {isAlreadyPurchased 
-          ? "Already Purchased" 
-          : `Level ${levelRequirement} required`}
+          ? "Already Purchased" :
+          userLevel < levelRequirement ? `Level ${levelRequirement} required`: ""}
       </div>
     )}
         </div>
